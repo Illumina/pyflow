@@ -1,0 +1,7 @@
+
+.PHONY: A B
+A: B
+	@echo "Made it!"
+
+B:
+	sleep 5

@@ -1,0 +1,74 @@
+1.Get example task file and launch command.
+
+
+launch cmd:
+"""
+/illumina/software/casava/CASAVA-1.8.2/bin/taskServer.pl --tasksFile=/illumina/builds/lox/Saturn/Saturn1_BB0065ACXX_builds/temp_build/tasks.21_09_49_26_01_12.txt --host=ukch-dev-lndt01 --mode=sge 
+
+/illumina/software/casava/CASAVA-1.8.2/bin/taskServer.pl --tasksFile=/illumina/builds/lox/Saturn/Saturn1_BB0065ACXX_builds/temp_build/tasks.21_09_49_26_01_12.txt --host=localhost --jobsLimit=1 --mode=local
+"""
+
+
+new task specification file:
+xml
+contains tasks and edges
+no special checkpoints anymore, these are just tasks without commands
+a separate "status" file associates a state with each task
+
+
+OR: new task specification script:
+perl
+too much change at once
+
+dynamic_task_manager:
+w=WorkflowClass(config)
+w.run(filename)
+s.init(mode="local|sge",
+       ncores=X|inf,
+       workflow_file_prefix,
+       is_continue=0|1)
+s.add_task(label,description,command);
+s.add_dependency(label,label2,is_optional);
+s.close()
+
+
+dynamic task manager:
+workflow_dir is used to write the stdout and stderr log, as well as the status file
+prefix/runid.stderr.log
+prefix/runid.stdout.log
+prefix/runid.taskstatus.txt
+prefix/taskstatus.txt
+prefix/workflow_run_history.txt
+
+
+s.add_task(label,command,n_cores,[task_dep_list])
+s.add_task(label,command,n_cores,[task_dep_list])
+
+
+Error policy:
+Stop launching new jobs. Record total number of errors and write this on final log line.
+write_to_file: dir/tasks.error.txt
+
+Logs (all append only):
+# all messages from the workflow engine itself:
+dir/logs/workflow_log.txt 
+# all messages from task, including the task wrapper:
+dir/logs/tasks_stderr_log.txt
+dir/logs/tasks_stdout_log.txt 
+
+persistence data:
+# record of all data supplied in each add-task call:
+dir/tasks.info.txt (unique append-only)
+dir/task.history.txt
+
+convenience:
+dir/tasks.corehourtime.txt (append-only)
+dir/tasks.dot (refresh at complete workflow specification)
+
+
+if isContinue:
+1) read in state files and reconstruct data structures from these for complete tasks only, set a new isContinued bit, which persists until the new workflow confirms it with an addTask(). An isContinued task cannot be run, but this doesn't matter sense these are complete tasks only.
+Complete tasks must match their original descriptions, but all other tasks can change
+2) use these to verify and reassign runstate for completed tasks only
+
+

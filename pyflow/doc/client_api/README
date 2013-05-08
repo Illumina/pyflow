@@ -1,0 +1,12 @@
+Pre-generated client API documentation is here:
+
+WorkflowRunner_API_html_doc
+
+Full API documentation can be created as an html tree using the script:
+'make_WorkflowRunner_API_html_doc.bash'
+
+Note this requires the program 'epydoc'.
+
+A simpler ascii documentation page can be generated in pydoc by running:
+'make_WorkflowRunner_API_simple_doc.py'
+

@@ -1,0 +1,53 @@
+pyflow:
+switch to standard python logging module
+summarize total warnings and errors at end of run -- have a per run log folder to store this stuff
+abiltiy to change global defaults at the start of a script.
+add timeouts
+add a callable task, to allow delayed execution of pure python (how to prevent user from doing intense computation on this task?)
+allow file task dependencies
+specify maxcpuCores -- communicate back through an env variable
+better run_num bump
+allow tasks to specify a set of output files, to make nfs tracking better
+allow filenames as task ids
+
+bagPipes:
+check/warning for default sample sheet case
+Java mem grower? -- scan for "java.lang.OutOfMemoryError" and add more memory?
+
+****Add logging for events expected to be rare: any qstat timeout/retry
+****Good system to detect two pyflow jobs trying to use the same pyflow.data directory
+****Get git describe into pyflow automatically
+****version number management
+****Pyflow use two layers of tmp folders
+****Provide last ?10? lines of task stderr on notification when a task fails
+****turn on thread mem reduction
+****Don't write graph on update -- instead provide a script to generate this.
+****setup taskWrapper->parent communication via stderr
+****add something more 'psubmake-ish' for the makefile handling
+****mode change should not interfere with continuation (make/qmake)
+****send cmd as arg list in addition to string
+****resource management for memory (on local at least)
+****specify a mapping function between resources and SGE qsub phrases -- allow this to be overridden for different SGE configurations.
+****add subworkflows as tasks (this goes in a subworkflow namespace)
+****waitForTask() right now blocks the specification of all other non-dependent tasks. Think of a scheme to get around this -- threads in the worklow function?
+****color graph
+****write dot file (on command?, automatically at end of workflow specification?)
+****add run parameters to log
+****add public log function
+****add exception notification email
+****make error notifacation email more robust
+****email events: onComplete, onFirstTaskError
+****create dryrun mode, include runMode() in interface
+****start working on persistence
+****start developing total task time methods
+****add task retry
+****rename file and git to 'pyflow'
+****add forceLocal flag to enable qmake/make runs
+****start working on SGE
+****put task stdout/stderr somewhere
+****write most workflow exceptions to workflow_log
+****check task names for spaces
+****should jobs be killed on ctrl-c?
+****start developing error handle/report polices
+****check that subprocess is correct for intense tasks
+****fix task4 bug

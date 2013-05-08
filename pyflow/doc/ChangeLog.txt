@@ -1,0 +1,158 @@
+v1.0 20130507
+* relicenced to Illumina Open Source Software License v1
+v0.6.26 20130304
+* fix bug in forceContinue'd workflow runs
+v0.6.25 20130221
+* Add optional warning and error log which contains all logged warning or error messages.
+* allow specification of a custom notification message on successful workflow completion
+* allow any task to specify its own retry parameters, overriding the
+run-level parameters of the same name
+* add retryMode to allow task retry to be applied to local mode
+v0.6.24 20121128
+* accelerate localhost task sweep so that short-running task workflows can
+execute more quickly
+* create new mutex option to addTask, this allows a set of tasks to share a mutex
+id, causing no more than one in the group to be executed at the same time
+v0.6.23 20121018
+* change cwd parameter to not require directory to exist
+* fix version number search so that an non-installed version does not require git to be installed
+v0.6.22 20121002
+* fix custom environment option to be more robust in various sge contexts
+v0.6.21 20120925
+* add option to supply custom environment variables to any task
+* fix error message when invalid runmode is given
+v0.6.20 20120920
+* increase # of retries and timeout length for qstat call
+v0.6.19 20120914
+* check for and allow OSError on fsync call.
+v0.6.18 201207
+* ignore available memory limit in non-local run modes
+* detect if multiple active pyflow jobs are attempting to use the same data
+directory
+v0.6.17 20120622
+* minor cleanups: add python version to reports and python 2.7.2 warning to
+logs
+v0.6.16 20120529
+* issue error when task specifies itself as a dependency
+* fix issue which could cause pyflow to hang when using python 2.7.2 in sge
+mode, hang can still occur in local mode. python 2.7.2 should be avoided.
+v0.6.15 20120525
+* Improved developer logging: dump stack for all threads in python 2.5+ during the update interval
+* Additional sge command error logging
+* automate pyflow version setting and add this to workflow logs
+* improved logging scalability for 10000+ task workflows
+* improved API documentation
+v0.6.14.1 20120518
+* remove typo bug
+v0.6.14 20120507
+* Add timeouts to sge qsub and qstat commands in case these hang (observed at
+low fequency on sd clusters)
+* Write SGE job_number to log for evey qsub-ed job
+* Write the name of the longest queued and longest running tasks in the status
+update report.
+* Add new demo demonstrating commandline settings for workflow run arguments
+v0.6.13 20120503
+* Fix regression in sge make jobs introduced with queue option
+v0.6.12 20120429
+* Add cwd argument to addTask to change wd before task execution
+v0.6.11 20120424
+* Remove sub-workflows from status update report
+* Dump full qsub arg list for each sge job to temporary logs in case of sge anomoly
+* Log sge job number in case of anomolous state at end of sge job
+* taskWrapper logs hostname as soon as possible in case of error
+* More reliable (but slower) flush used for log writes
+* Add option to provide a list of arguments to qsub/qmake (to specify queue
+most likely)
+* Add option to turn off logging to stderr.
+v0.6.10 20120419
+* Provide a 'heartbeat' task status update to the log at a specified
+interval.
+v0.6.9
+* Improve robustness against NFS update delay for task wrapper file
+* Include more sge error details in Notification email 
+v0.6.8 20120319
+* Better handling on terminal hang-up: capture and ignore SIGHUP and 
+handle failed writes to stderr. You should still use nohup where needed,
+but if you don't, then proper logging and notification will continue.
+* flush log writes
+v0.6.7 20120316
+* add tail of task stderr stream to nofications when tasks fail
+* apply ctrl-C task shutdown to SIGTERM as well
+v0.6.6 20120315
+* include configuration for uscp-prd cluster
+* Passive graph creation
+* Reduce thread stack size in later versions of python
+* More robust ctrl-C shutdown behavior (master workflow on own thread)
+v0.6.5 20120308
+* bagPipes fix
+v0.6.4 20120307
+* Consume filehandles more efficiently when running a very large number of
+local jobs. Reset SGE default max jobs to something reasonable (128). Allow
+logging to continue even after filehandles are exhausted in case it manages
+to happen.
+v0.6.3 20120305
+* Switch sge mode from using qsub sync to a more scalable qsub-and-poll scheme
+This immediately removes the 99 job sge limit, and provides the infrastructure
+for queueing or running timeout on tasks.
+v0.6.2
+* allow commands to be submitted as argument lists (in addition to shell
+strings, as before). Argument lists allow longer commands and obviate a
+variety of quoting issues. 
+* Change site configuration to an object scheme which simplifies site
+customization.
+* change qmake tasks from parallel env to dynamic allocation mode 
+* allow qmake jobs to retry without an expiration window
+* improved reporting of failed make jobs
+* fixed minor issue with make path cleanup
+v0.6.1 20120228
+* primarily a bagPipes release
+* fixed isForceLocal task bug introduced in 0.6
+* fixed make task bug introduced in 0.6
+v0.6 20120227
+* primarily a bagPipes release
+* added task priority option
+
+v0.5.5 20120224
+* more robust hostname lookup combines ip query and alias list
+* fix runner.bash demo failures on some machines
+* fix pyflowTaskWrapper stderr caching
+v0.5.4 20120224
+* fix configuration for non-sge hosts 
+v0.5.2 20120222
+* chuk pthread fix for pyflow tasks
+v0.5.1 20120221
+* Added autmatic chuk sge configuration to allow bagPipes to complete
+in the uk.
+* Various fixes from uk testing: (1) full hostname is correctly found in 
+the uk now (2) default configuration for email is it now comes form 
+"pyflow-bot@"YOUR_DOMAIN_NAME now. This is required to correctly
+get mail sent from a uk box.
+v0.5 20120220
+* Cutting version of pyFlow to sync with first bagPipes prototype
+* add max SGE jobs to configuration parameters -- default set to 96
+* Fix sub-workflows to shutdown properly after task shutdown
+* More robust handling of commands with quoting and special characters
+* Non-breaking API change: isTaskComplete lets you query whether a task
+is in the workflow and completed  -- useful for sane interupt/resume behavior
+* Non-breaking API change: limitNCores(n) and limitMemMb(n) can be used now to
+reduce your resource request to the maximum available for this run.
+
+v0.4 20120216
+* Added memory to the task resource tracking
+* Created pyflowConfig file which contains site specific code --
+moved resource to qsub argument translation functions into this
+config file
+* Non-breaking API change: Added isCmdStable option to addTask to specify that a command
+can change on workflow resume.
+* Non-breaking API change: all add*() methods return task label
+
+v0.3 20120213
+* Full support for recursive WorkflowRunner task specification -- provide any
+other WorkflowRunner instance as a task in a workflow() definition.
+* Report Exceptions in TaskRunner objects as task errors
+* Report list of failed tasks even during a waitForTasks() holding loop.
+
+v0.2 20120207
+First versioned released. Major addition is a complete command-line interface
+for the bcl converter demo
+
