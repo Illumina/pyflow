@@ -1,0 +1,520 @@
+<?xml version="1.0" encoding="ascii"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>pyflow.SGETaskRunner</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css" />
+  <script type="text/javascript" src="epydoc.js"></script>
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+      <th class="navbar" width="100%"></th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <span class="breadcrumbs">
+        <a href="pyflow-module.html">Module&nbsp;pyflow</a> ::
+        Class&nbsp;SGETaskRunner
+      </span>
+    </td>
+    <td>
+      <table cellpadding="0" cellspacing="0">
+        <!-- hide/show private -->
+        <tr><td align="right"><span class="options">[<a href="javascript:void(0);" class="privatelink"
+    onclick="toggle_private();">hide&nbsp;private</a>]</span></td></tr>
+        <tr><td align="right"><span class="options"
+            >[<a href="frames.html" target="_top">frames</a
+            >]&nbsp;|&nbsp;<a href="pyflow.SGETaskRunner-class.html"
+            target="_top">no&nbsp;frames</a>]</span></td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<!-- ==================== CLASS DESCRIPTION ==================== -->
+<h1 class="epydoc">Class SGETaskRunner</h1><p class="nomargin-top"><span class="codelink"><a href="pyflow-pysrc.html#SGETaskRunner">source&nbsp;code</a></span></p>
+<center>
+<center>  <map id="uml_class_diagram_for_pyflow_s" name="uml_class_diagram_for_pyflow_s">
+<area shape="rect" id="node35" href="pyflow.SGETaskRunner-class.html#getFullCmd" title="pyflow.SGETaskRunner.getFullCmd" alt="" coords="367,756,553,775"/>
+<area shape="rect" id="node35" href="pyflow.SGETaskRunner-class.html#setInitialRunstate" title="pyflow.SGETaskRunner.setInitialRunstate" alt="" coords="367,775,553,793"/>
+<area shape="rect" id="node35" href="pyflow.SGETaskRunner-class.html#setNewJobId" title="if stopped here, this is the case where a ctrl&#45;c was entered while the qsub command was being submitted, so we must kill the job here:" alt="" coords="367,793,553,812"/>
+<area shape="rect" id="node35" href="pyflow.SGETaskRunner-class.html#runOnce" title="pyflow.SGETaskRunner.runOnce" alt="" coords="367,812,553,831"/>
+<area shape="rect" id="node35" href="pyflow.SGETaskRunner-class.html#stop" title="overload thead stop function to provide a qdel any running tasks." alt="" coords="367,831,553,849"/>
+<area shape="rect" id="node1" href="pyflow.SGETaskRunner-class.html" title="pyflow.SGETaskRunner" alt="" coords="355,723,565,855"/>
+<area shape="rect" id="node36" href="pyflow.CommandTaskRunner-class.html#taskWrapper" title="pyflow.CommandTaskRunner.taskWrapper" alt="" coords="17,639,901,657"/>
+<area shape="rect" id="node36" href="pyflow.CommandTaskRunner-class.html#__init__" title="x.__init__(...) initializes x; see x.__class__.__doc__ for signature" alt="" coords="17,660,901,679"/>
+<area shape="rect" id="node36" href="pyflow.CommandTaskRunner-class.html#getExitMsg" title="Attempt to extract exit message from a failed command task, do not complain in case of any errors in task signal file for this case." alt="" coords="17,679,901,697"/>
+<area shape="rect" id="node2" href="pyflow.CommandTaskRunner-class.html" title="Parent to local and SGE TaskRunner specializations for command tasks" alt="" coords="5,614,912,703"/>
+<area shape="rect" id="node39" href="javascript:void(0);" title="threading.Thread.name" alt="" coords="376,95,544,113"/>
+<area shape="rect" id="node39" href="javascript:void(0);" title="threading.Thread.ident" alt="" coords="376,113,544,132"/>
+<area shape="rect" id="node39" href="javascript:void(0);" title="threading.Thread.daemon" alt="" coords="376,132,544,151"/>
+<area shape="rect" id="node39" href="javascript:void(0);" title="repr(x)" alt="" coords="376,153,544,172"/>
+<area shape="rect" id="node39" href="javascript:void(0);" title="threading.Thread.start" alt="" coords="376,172,544,191"/>
+<area shape="rect" id="node39" href="javascript:void(0);" title="threading.Thread.join" alt="" coords="376,191,544,209"/>
+<area shape="rect" id="node39" href="javascript:void(0);" title="threading.Thread.isAlive" alt="" coords="376,209,544,228"/>
+<area shape="rect" id="node39" href="javascript:void(0);" title="threading.Thread.is_alive" alt="" coords="376,228,544,247"/>
+<area shape="rect" id="node39" href="javascript:void(0);" title="threading.Thread.isDaemon" alt="" coords="376,247,544,265"/>
+<area shape="rect" id="node39" href="javascript:void(0);" title="threading.Thread.setDaemon" alt="" coords="376,265,544,284"/>
+<area shape="rect" id="node39" href="javascript:void(0);" title="threading.Thread.getName" alt="" coords="376,284,544,303"/>
+<area shape="rect" id="node39" href="javascript:void(0);" title="threading.Thread.setName" alt="" coords="376,303,544,321"/>
+<area shape="rect" id="node3" href="javascript:void(0);" title="threading.Thread" alt="" coords="364,70,556,327"/>
+<area shape="rect" id="node38" href="pyflow.StoppableThread-class.html#stopAll" title="quick global stop signal for threads that happen to poll stopped() very &#160;soon after event" alt="" coords="409,380,509,399"/>
+<area shape="rect" id="node38" href="pyflow.StoppableThread-class.html#stopped" title="pyflow.StoppableThread.stopped" alt="" coords="409,399,509,417"/>
+<area shape="rect" id="node4" href="pyflow.StoppableThread-class.html" title="Thread class with a stop() method." alt="" coords="397,347,520,423"/>
+<area shape="rect" id="node37" href="pyflow.BaseTaskRunner-class.html#run" title="BaseTaskRunner&#39;s run() method ensures that we can capture exceptions which &#160;might occur in this thread." alt="" coords="369,476,549,495"/>
+<area shape="rect" id="node37" href="pyflow.BaseTaskRunner-class.html#setRunstate" title="pyflow.BaseTaskRunner.setRunstate" alt="" coords="369,495,549,513"/>
+<area shape="rect" id="node37" href="pyflow.BaseTaskRunner-class.html#flowLog" title="pyflow.BaseTaskRunner.flowLog" alt="" coords="369,513,549,532"/>
+<area shape="rect" id="node37" href="pyflow.BaseTaskRunner-class.html#infoLog" title="pyflow.BaseTaskRunner.infoLog" alt="" coords="369,532,549,551"/>
+<area shape="rect" id="node37" href="pyflow.BaseTaskRunner-class.html#warningLog" title="pyflow.BaseTaskRunner.warningLog" alt="" coords="369,551,549,569"/>
+<area shape="rect" id="node37" href="pyflow.BaseTaskRunner-class.html#errorLog" title="pyflow.BaseTaskRunner.errorLog" alt="" coords="369,569,549,588"/>
+<area shape="rect" id="node6" href="pyflow.BaseTaskRunner-class.html" title="Each individual command&#45;task or sub workflow task is run on its own thread using a class inherited from BaseTaskRunner" alt="" coords="357,443,560,594"/>
+<area shape="rect" id="node5" href="javascript:void(0);" title="threading._Verbose" alt="" coords="391,6,529,50"/>
+</map>
+  <img src="uml_class_diagram_for_pyflow_s.png" alt='' usemap="#uml_class_diagram_for_pyflow_s" ismap="ismap" class="graph-without-title" />
+</center>
+</center>
+<hr />
+<!-- ==================== INSTANCE METHODS ==================== -->
+<a name="section-InstanceMethods"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Instance Methods</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-InstanceMethods"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="getFullCmd"></a><span class="summary-sig-name">getFullCmd</span>(<span class="summary-sig-arg">self</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyflow-pysrc.html#SGETaskRunner.getFullCmd">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyflow.SGETaskRunner-class.html#setInitialRunstate" class="summary-sig-name">setInitialRunstate</a>(<span class="summary-sig-arg">self</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyflow-pysrc.html#SGETaskRunner.setInitialRunstate">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyflow.SGETaskRunner-class.html#setNewJobId" class="summary-sig-name">setNewJobId</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">*args</span>,
+        <span class="summary-sig-arg">**kw</span>)</span><br />
+      if stopped here, this is the case where a ctrl-c was entered while 
+      the qsub command was being submitted, so we must kill the job here:</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyflow-pysrc.html#SGETaskRunner.setNewJobId">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="runOnce"></a><span class="summary-sig-name">runOnce</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">retInfo</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyflow-pysrc.html#SGETaskRunner.runOnce">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyflow.SGETaskRunner-class.html#_killJob" class="summary-sig-name" onclick="show_private();">_killJob</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">*args</span>,
+        <span class="summary-sig-arg">**kw</span>)</span><br />
+      (possibly) asyncronous job kill</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyflow-pysrc.html#SGETaskRunner._killJob">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyflow.SGETaskRunner-class.html#stop" class="summary-sig-name">stop</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">*args</span>,
+        <span class="summary-sig-arg">**kw</span>)</span><br />
+      overload thead stop function to provide a qdel any running tasks.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyflow-pysrc.html#SGETaskRunner.stop">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" class="summary">
+    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="pyflow.CommandTaskRunner-class.html">CommandTaskRunner</a></code></b>:
+      <code><a href="pyflow.CommandTaskRunner-class.html#__init__">__init__</a></code>,
+      <code><a href="pyflow.CommandTaskRunner-class.html#getExitMsg">getExitMsg</a></code>
+      </p>
+    <div class="private">    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="pyflow.CommandTaskRunner-class.html">CommandTaskRunner</a></code></b> (private):
+      <code><a href="pyflow.CommandTaskRunner-class.html#_run" onclick="show_private();">_run</a></code>
+      </p></div>
+    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="pyflow.BaseTaskRunner-class.html">BaseTaskRunner</a></code></b>:
+      <code><a href="pyflow.BaseTaskRunner-class.html#errorLog">errorLog</a></code>,
+      <code><a href="pyflow.BaseTaskRunner-class.html#flowLog">flowLog</a></code>,
+      <code><a href="pyflow.BaseTaskRunner-class.html#infoLog">infoLog</a></code>,
+      <code><a href="pyflow.BaseTaskRunner-class.html#run">run</a></code>,
+      <code><a href="pyflow.BaseTaskRunner-class.html#setRunstate">setRunstate</a></code>,
+      <code><a href="pyflow.BaseTaskRunner-class.html#warningLog">warningLog</a></code>
+      </p>
+    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="pyflow.StoppableThread-class.html">StoppableThread</a></code></b>:
+      <code><a href="pyflow.StoppableThread-class.html#stopped">stopped</a></code>
+      </p>
+    <p class="indent-wrapped-lines"><b>Inherited from <code>threading.Thread</code></b>:
+      <code>__repr__</code>,
+      <code>getName</code>,
+      <code>isAlive</code>,
+      <code>isDaemon</code>,
+      <code>is_alive</code>,
+      <code>join</code>,
+      <code>setDaemon</code>,
+      <code>setName</code>,
+      <code>start</code>
+      </p>
+    <div class="private">    <p class="indent-wrapped-lines"><b>Inherited from <code>threading.Thread</code></b> (private):
+      <code>_set_daemon</code>,
+      <code>_set_ident</code>
+      </p></div>
+    <div class="private">    <p class="indent-wrapped-lines"><b>Inherited from <code>threading._Verbose</code></b> (private):
+      <code>_note</code>
+      </p></div>
+    <p class="indent-wrapped-lines"><b>Inherited from <code>object</code></b>:
+      <code>__delattr__</code>,
+      <code>__format__</code>,
+      <code>__getattribute__</code>,
+      <code>__hash__</code>,
+      <code>__new__</code>,
+      <code>__reduce__</code>,
+      <code>__reduce_ex__</code>,
+      <code>__setattr__</code>,
+      <code>__sizeof__</code>,
+      <code>__str__</code>,
+      <code>__subclasshook__</code>
+      </p>
+    </td>
+  </tr>
+</table>
+<!-- ==================== STATIC METHODS ==================== -->
+<a name="section-StaticMethods"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Static Methods</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-StaticMethods"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+  <tr>
+    <td colspan="2" class="summary">
+    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="pyflow.StoppableThread-class.html">StoppableThread</a></code></b>:
+      <code><a href="pyflow.StoppableThread-class.html#stopAll">stopAll</a></code>
+      </p>
+    </td>
+  </tr>
+</table>
+<!-- ==================== CLASS VARIABLES ==================== -->
+<a name="section-ClassVariables"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Class Variables</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-ClassVariables"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+  <tr>
+    <td colspan="2" class="summary">
+    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="pyflow.CommandTaskRunner-class.html">CommandTaskRunner</a></code></b>:
+      <code><a href="pyflow.CommandTaskRunner-class.html#taskWrapper">taskWrapper</a></code>
+      </p>
+    <div class="private">    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="pyflow.StoppableThread-class.html">StoppableThread</a></code></b> (private):
+      <code><a href="pyflow.StoppableThread-class.html#_stopAll" onclick="show_private();">_stopAll</a></code>
+      </p></div>
+    </td>
+  </tr>
+</table>
+<!-- ==================== PROPERTIES ==================== -->
+<a name="section-Properties"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Properties</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-Properties"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+  <tr>
+    <td colspan="2" class="summary">
+    <p class="indent-wrapped-lines"><b>Inherited from <code>threading.Thread</code></b>:
+      <code>daemon</code>,
+      <code>ident</code>,
+      <code>name</code>
+      </p>
+    <p class="indent-wrapped-lines"><b>Inherited from <code>object</code></b>:
+      <code>__class__</code>
+      </p>
+    </td>
+  </tr>
+</table>
+<!-- ==================== METHOD DETAILS ==================== -->
+<a name="section-MethodDetails"></a>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Method Details</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-MethodDetails"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+</table>
+<a name="setInitialRunstate"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">setInitialRunstate</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyflow-pysrc.html#SGETaskRunner.setInitialRunstate">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  
+  <dl class="fields">
+    <dt>Overrides:
+        <a href="pyflow.BaseTaskRunner-class.html#setInitialRunstate">BaseTaskRunner.setInitialRunstate</a>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="setNewJobId"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">setNewJobId</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">*args</span>,
+        <span class="sig-arg">**kw</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyflow-pysrc.html#SGETaskRunner.setNewJobId">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>if stopped here, this is the case where a ctrl-c was entered while the
+  qsub command was being submitted, so we must kill the job here:</p>
+  <dl class="fields">
+    <dt>Decorators:</dt>
+    <dd><ul class="nomargin-top">
+        <li><code>@lockMethod</code></li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="_killJob"></a>
+<div class="private">
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">_killJob</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">*args</span>,
+        <span class="sig-arg">**kw</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyflow-pysrc.html#SGETaskRunner._killJob">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>(possibly) asyncronous job kill</p>
+  <dl class="fields">
+    <dt>Decorators:</dt>
+    <dd><ul class="nomargin-top">
+        <li><code>@lockMethod</code></li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="stop"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">stop</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">*args</span>,
+        <span class="sig-arg">**kw</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyflow-pysrc.html#SGETaskRunner.stop">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>overload thead stop function to provide a qdel any running tasks.</p>
+  <dl class="fields">
+    <dt>Decorators:</dt>
+    <dd><ul class="nomargin-top">
+        <li><code>@lockMethod</code></li>
+    </ul></dd>
+    <dt>Overrides:
+        <a href="pyflow.StoppableThread-class.html#stop">StoppableThread.stop</a>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<br />
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+      <th class="navbar" width="100%"></th>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%%">
+  <tr>
+    <td align="left" class="footer">
+    Generated by Epydoc 3.0.1 on Tue May  7 18:42:25 2013
+    </td>
+    <td align="right" class="footer">
+      <a target="mainFrame" href="http://epydoc.sourceforge.net"
+        >http://epydoc.sourceforge.net</a>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  <!--
+  // Private objects are initially displayed (because if
+  // javascript is turned off then we want them to be
+  // visible); but by default, we want to hide them.  So hide
+  // them unless we have a cookie that says to show them.
+  checkCookie();
+  // -->
+</script>
+</body>
+</html>

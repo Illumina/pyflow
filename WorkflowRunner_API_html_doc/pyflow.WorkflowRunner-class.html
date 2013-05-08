@@ -1,0 +1,1043 @@
+<?xml version="1.0" encoding="ascii"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>pyflow.WorkflowRunner</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css" />
+  <script type="text/javascript" src="epydoc.js"></script>
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th bgcolor="#70b0f0" class="navbar-select"
+          >&nbsp;&nbsp;&nbsp;Home&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="class-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+      <th class="navbar" width="100%"></th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <span class="breadcrumbs">
+        pyflow ::
+        WorkflowRunner ::
+        Class&nbsp;WorkflowRunner
+      </span>
+    </td>
+    <td>
+      <table cellpadding="0" cellspacing="0">
+        <!-- hide/show private -->
+        <tr><td align="right"><span class="options"
+            >[<a href="frames.html" target="_top">frames</a
+            >]&nbsp;|&nbsp;<a href="pyflow.WorkflowRunner-class.html"
+            target="_top">no&nbsp;frames</a>]</span></td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<!-- ==================== CLASS DESCRIPTION ==================== -->
+<h1 class="epydoc">Class WorkflowRunner</h1><p class="nomargin-top"></p>
+<pre class="base-tree">
+object --+
+         |
+        <strong class="uidshort">WorkflowRunner</strong>
+</pre>
+
+<hr />
+<p>This object is designed to be inherited by a class in client code. 
+  This inheriting class can override the <a 
+  href="pyflow.WorkflowRunner-class.html#workflow" 
+  class="link">workflow()</a> method to define the tasks that need to be 
+  run and their dependencies.</p>
+  <p>The inheriting class defining a workflow can be executed in client 
+  code by calling the WorkflowRunner.run() method. This method provides 
+  various run options such as whether to run locally or on sge.</p>
+
+<!-- ==================== INSTANCE METHODS ==================== -->
+<a name="section-InstanceMethods"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td align="left" colspan="2" class="table-header">
+    <span class="table-header">Instance Methods</span></td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyflow.WorkflowRunner-class.html#run" class="summary-sig-name">run</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">mode</span>=<span class="summary-sig-default"><code class="variable-quote">'</code><code class="variable-string">local</code><code class="variable-quote">'</code></span>,
+        <span class="summary-sig-arg">dataDirRoot</span>=<span class="summary-sig-default"><code class="variable-quote">'</code><code class="variable-string">.</code><code class="variable-quote">'</code></span>,
+        <span class="summary-sig-arg">isContinue</span>=<span class="summary-sig-default">False</span>,
+        <span class="summary-sig-arg">isForceContinue</span>=<span class="summary-sig-default">False</span>,
+        <span class="summary-sig-arg">nCores</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">memMb</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">isDryRun</span>=<span class="summary-sig-default">False</span>,
+        <span class="summary-sig-arg">retryMax</span>=<span class="summary-sig-default">2</span>,
+        <span class="summary-sig-arg">retryWait</span>=<span class="summary-sig-default">90</span>,
+        <span class="summary-sig-arg">retryWindow</span>=<span class="summary-sig-default">360</span>,
+        <span class="summary-sig-arg">retryMode</span>=<span class="summary-sig-default"><code class="variable-quote">'</code><code class="variable-string">nonlocal</code><code class="variable-quote">'</code></span>,
+        <span class="summary-sig-arg">mailTo</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">updateInterval</span>=<span class="summary-sig-default">60</span>,
+        <span class="summary-sig-arg">schedulerArgList</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">isQuiet</span>=<span class="summary-sig-default">False</span>,
+        <span class="summary-sig-arg">warningLogFile</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">errorLogFile</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">successMsg</span>=<span class="summary-sig-default">None</span>)</span><br />
+      Call this method to execute the workflow() method overridden in a 
+      child class and specify the resources available for the worfklow to 
+      run.</td>
+          <td align="right" valign="top">
+            
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyflow.WorkflowRunner-class.html#addTask" class="summary-sig-name">addTask</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">label</span>,
+        <span class="summary-sig-arg">command</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">cwd</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">env</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">nCores</span>=<span class="summary-sig-default">1</span>,
+        <span class="summary-sig-arg">memMb</span>=<span class="summary-sig-default">2048</span>,
+        <span class="summary-sig-arg">dependencies</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">priority</span>=<span class="summary-sig-default">0</span>,
+        <span class="summary-sig-arg">isForceLocal</span>=<span class="summary-sig-default">False</span>,
+        <span class="summary-sig-arg">isCommandMakePath</span>=<span class="summary-sig-default">False</span>,
+        <span class="summary-sig-arg">isTaskStable</span>=<span class="summary-sig-default">True</span>,
+        <span class="summary-sig-arg">mutex</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">retryMax</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">retryWait</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">retryWindow</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">retryMode</span>=<span class="summary-sig-default">None</span>)</span><br />
+      Add task to workflow, including resource requirements and 
+      specification of dependencies.</td>
+          <td align="right" valign="top">
+            
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyflow.WorkflowRunner-class.html#addWorkflowTask" class="summary-sig-name">addWorkflowTask</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">label</span>,
+        <span class="summary-sig-arg">workflowRunnerInstance</span>,
+        <span class="summary-sig-arg">dependencies</span>=<span class="summary-sig-default">None</span>)</span><br />
+      Add another WorkflowRunner instance as a task to this workflow.</td>
+          <td align="right" valign="top">
+            
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyflow.WorkflowRunner-class.html#waitForTasks" class="summary-sig-name">waitForTasks</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">labels</span>=<span class="summary-sig-default">None</span>)</span><br />
+      Wait for a list of tasks to complete.</td>
+          <td align="right" valign="top">
+            
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyflow.WorkflowRunner-class.html#isTaskComplete" class="summary-sig-name">isTaskComplete</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">taskLabel</span>)</span><br />
+      Query if a spefic task is in the workflow and completed without 
+      error.</td>
+          <td align="right" valign="top">
+            
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyflow.WorkflowRunner-class.html#getRunMode" class="summary-sig-name">getRunMode</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Get the current run mode</td>
+          <td align="right" valign="top">
+            
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">Integer value or 'unlimited'</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyflow.WorkflowRunner-class.html#getNCores" class="summary-sig-name">getNCores</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Get the current run core limit</td>
+          <td align="right" valign="top">
+            
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyflow.WorkflowRunner-class.html#limitNCores" class="summary-sig-name">limitNCores</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">nCores</span>)</span><br />
+      Takes an task nCores argument and reduces it to the maximum value 
+      allowed for the current run.</td>
+          <td align="right" valign="top">
+            
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">Integer value or 'unlimited'</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyflow.WorkflowRunner-class.html#getMemMb" class="summary-sig-name">getMemMb</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Get the current run's total memory limit (in megabytes)</td>
+          <td align="right" valign="top">
+            
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyflow.WorkflowRunner-class.html#limitMemMb" class="summary-sig-name">limitMemMb</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">memMb</span>)</span><br />
+      Takes a task memMb argument and reduces it to the maximum value 
+      allowed for the current run.</td>
+          <td align="right" valign="top">
+            
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyflow.WorkflowRunner-class.html#isDryRun" class="summary-sig-name">isDryRun</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Get isDryRun flag value.</td>
+          <td align="right" valign="top">
+            
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyflow.WorkflowRunner-class.html#flowLog" class="summary-sig-name">flowLog</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">msg</span>,
+        <span class="summary-sig-arg">logState</span>=<span class="summary-sig-default">1</span>)</span><br />
+      Send a message to the WorkflowRunner's log.</td>
+          <td align="right" valign="top">
+            
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyflow.WorkflowRunner-class.html#workflow" class="summary-sig-name">workflow</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Workflow definition defined in child class</td>
+          <td align="right" valign="top">
+            
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" class="summary">
+    <p class="indent-wrapped-lines"><b>Inherited from <code>object</code></b>:
+      <code>__delattr__</code>,
+      <code>__format__</code>,
+      <code>__getattribute__</code>,
+      <code>__hash__</code>,
+      <code>__init__</code>,
+      <code>__new__</code>,
+      <code>__reduce__</code>,
+      <code>__reduce_ex__</code>,
+      <code>__repr__</code>,
+      <code>__setattr__</code>,
+      <code>__sizeof__</code>,
+      <code>__str__</code>,
+      <code>__subclasshook__</code>
+      </p>
+    </td>
+  </tr>
+</table>
+<!-- ==================== STATIC METHODS ==================== -->
+<a name="section-StaticMethods"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td align="left" colspan="2" class="table-header">
+    <span class="table-header">Static Methods</span></td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">Either 'unlimited', or a string representation of the integer limit</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyflow.WorkflowRunner-class.html#runModeDefaultCores" class="summary-sig-name">runModeDefaultCores</a>(<span class="summary-sig-arg">mode</span>)</span><br />
+      Get the default core limit for run mode (local,sge,..)</td>
+          <td align="right" valign="top">
+            
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+</table>
+<!-- ==================== PROPERTIES ==================== -->
+<a name="section-Properties"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td align="left" colspan="2" class="table-header">
+    <span class="table-header">Properties</span></td>
+</tr>
+  <tr>
+    <td colspan="2" class="summary">
+    <p class="indent-wrapped-lines"><b>Inherited from <code>object</code></b>:
+      <code>__class__</code>
+      </p>
+    </td>
+  </tr>
+</table>
+<!-- ==================== METHOD DETAILS ==================== -->
+<a name="section-MethodDetails"></a>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td align="left" colspan="2" class="table-header">
+    <span class="table-header">Method Details</span></td>
+</tr>
+</table>
+<a name="run"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">run</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">mode</span>=<span class="sig-default"><code class="variable-quote">'</code><code class="variable-string">local</code><code class="variable-quote">'</code></span>,
+        <span class="sig-arg">dataDirRoot</span>=<span class="sig-default"><code class="variable-quote">'</code><code class="variable-string">.</code><code class="variable-quote">'</code></span>,
+        <span class="sig-arg">isContinue</span>=<span class="sig-default">False</span>,
+        <span class="sig-arg">isForceContinue</span>=<span class="sig-default">False</span>,
+        <span class="sig-arg">nCores</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">memMb</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">isDryRun</span>=<span class="sig-default">False</span>,
+        <span class="sig-arg">retryMax</span>=<span class="sig-default">2</span>,
+        <span class="sig-arg">retryWait</span>=<span class="sig-default">90</span>,
+        <span class="sig-arg">retryWindow</span>=<span class="sig-default">360</span>,
+        <span class="sig-arg">retryMode</span>=<span class="sig-default"><code class="variable-quote">'</code><code class="variable-string">nonlocal</code><code class="variable-quote">'</code></span>,
+        <span class="sig-arg">mailTo</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">updateInterval</span>=<span class="sig-default">60</span>,
+        <span class="sig-arg">schedulerArgList</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">isQuiet</span>=<span class="sig-default">False</span>,
+        <span class="sig-arg">warningLogFile</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">errorLogFile</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">successMsg</span>=<span class="sig-default">None</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Call this method to execute the workflow() method overridden in a 
+  child class and specify the resources available for the worfklow to 
+  run.</p>
+  <p>Task retry behaviour: Retry attempts will be made per the arguments 
+  below for distributed workflow runs (eg. sge run mode). Note this means 
+  that retries will be attempted for tasks with an 'isForceLocal' setting 
+  during distributed runs.</p>
+  <p>Task error behaviour: When a task error occurs the task manager stops 
+  submitting new tasks and allows all currently running tasks to complete. 
+  Note that in this case 'task error' means that the task could not be 
+  completed after exhausting attempted retries.</p>
+  <p>Workflow exception behaviour: Any exceptions thrown from the python 
+  code of classes derived from WorkflowRunner will be logged and trigger 
+  notification (e.g. email). The exception will not come down to the 
+  client's stack. In sub-workflows the exception is handled exactly like a 
+  task error (ie. task submission is shut-down and remaining tasks are 
+  allowed to complete). An exception in the master workflow will lead to 
+  workflow termination without waiting for currently running tasks to 
+  finish.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>mode</code></strong> - Workflow run mode. Current options are (local|sge)</li>
+        <li><strong class="pname"><code>dataDirRoot</code></strong> - All workflow data is written to {dataDirRoot}/pyflow.data/ These 
+          include workflow/task logs, persistent task state data, and 
+          summary run info. Two workflows cannot simultaneously use the 
+          same dataDir.</li>
+        <li><strong class="pname"><code>isContinue</code></strong> - If True, continue workflow from a previous incomplete run based 
+          on the workflow data files. You must use the same dataDirRoot as 
+          a previous run for this to work.  Set to 'Auto' to have the run 
+          continue only if the previous dataDir exists.  (default: False)</li>
+        <li><strong class="pname"><code>isForceContinue</code></strong> - Only used if isContinue is not False. Normally when isContinue is
+          run, the commands of completed tasks are checked to ensure they 
+          match. When isForceContinue is true, failing this check is 
+          reduced from an error to a warning</li>
+        <li><strong class="pname"><code>nCores</code></strong> - Total number of cores available, or 'unlimited', sge is currently
+          configured for a maximum job count of 128, any value higher than 
+          this in sge mode will be reduced to the maximum.  (default: 1 for
+          local mode, 128 for sge mode)</li>
+        <li><strong class="pname"><code>memMb</code></strong> - Total memory available (in megabytes), or 'unlimited', Note that 
+          this value will be ignored in non-local modes (such as sge), 
+          because in this case total memory available is expected to be 
+          known by the scheduler for each node in its cluster. (default: 
+          2048*nCores for local mode, 'unlimited' for sge mode)</li>
+        <li><strong class="pname"><code>isDryRun</code></strong> - List the commands to be executed without running them. Note that 
+          recursive and dynamic workflows will potentially have to account 
+          for the fact that expected files will be missing -- here 
+          'recursive workflow' refers to any workflow which uses the 
+          addWorkflowTask() method, and 'dynamic workflow' refers to any 
+          workflow which uses the waitForTasks() method. These types of 
+          workflows can query this status with the isDryRun() to make 
+          accomadations.  (default: False)</li>
+        <li><strong class="pname"><code>retryMax</code></strong> - Maximum number of task retries</li>
+        <li><strong class="pname"><code>retryWait</code></strong> - Delay (in seconds) before resubmitting task</li>
+        <li><strong class="pname"><code>retryWindow</code></strong> - Maximum time (in seconds) after the first task submission in 
+          which retries are allowed. A value of zero or less puts no limit 
+          on the time when retries will be attempted. Retries are always 
+          allowed (up to retryMax times), for failed make jobs.</li>
+        <li><strong class="pname"><code>retryMode</code></strong> - Modes are 'nonlocal' and 'all'. For 'nonlocal' retries are not 
+          attempted in local run mode. For 'all' retries are attemped for 
+          any run mode. The default mode is 'nonolocal'.</li>
+        <li><strong class="pname"><code>mailTo</code></strong> - An email string or container of emails. Notification will be sent
+          to each email address when either (1) the run successfully 
+          completes (2) the first task error occurs or (3) an unhandled 
+          exception is raised. The intention is to send one status message 
+          per run() indicating either success or the reason for failure. 
+          This should occur for all cases except a host hardware/power 
+          failure.  Note that mail comes from 
+          'pyflow-bot@workstation-centos64' (configurable), which may be 
+          classified as junk-mail by your system.</li>
+        <li><strong class="pname"><code>updateInterval</code></strong> - How often (in minutes) should pyflow log a status update message 
+          summarizing the run status.  Set this to zero or less to turn the
+          update off.</li>
+        <li><strong class="pname"><code>schedulerArgList</code></strong> - A list of arguments can be specified to be passed on to an 
+          external scheduler when non-local modes are used (e.g. in sge 
+          mode you could pass schedulerArgList=['-q','work.q'] to put the 
+          whole pyflow job into the sge work.q queue)</li>
+        <li><strong class="pname"><code>isQuiet</code></strong> - Don't write any logging output to stderr (but still write log to 
+          pyflow_log.txt)</li>
+        <li><strong class="pname"><code>warningLogFile</code></strong> - Replicate all warning messages to the specified file. Warning 
+          messages will still appear in the standard logs, this file will 
+          contain a subset of the log messages pertaining to warings only.</li>
+        <li><strong class="pname"><code>errorLogFile</code></strong> - Replicate all error messages to the specified file. Error 
+          messages will still appear in the standard logs, this file will 
+          contain a subset of the log messages pertaining to errors only. 
+          It should be empty for a successful run.</li>
+        <li><strong class="pname"><code>successMsg</code></strong> - Provide a string containing a custom message which will be 
+          prepended to pyflow's standard success notification. This message
+          will appear in the log and any configured notifications (e.g. 
+          email). The message may contain linebreaks.</li>
+    </ul></dd>
+    <dt>Returns:</dt>
+        <dd>0 if all tasks completed successfully and 1 otherwise</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="addTask"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">addTask</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">label</span>,
+        <span class="sig-arg">command</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">cwd</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">env</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">nCores</span>=<span class="sig-default">1</span>,
+        <span class="sig-arg">memMb</span>=<span class="sig-default">2048</span>,
+        <span class="sig-arg">dependencies</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">priority</span>=<span class="sig-default">0</span>,
+        <span class="sig-arg">isForceLocal</span>=<span class="sig-default">False</span>,
+        <span class="sig-arg">isCommandMakePath</span>=<span class="sig-default">False</span>,
+        <span class="sig-arg">isTaskStable</span>=<span class="sig-default">True</span>,
+        <span class="sig-arg">mutex</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">retryMax</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">retryWait</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">retryWindow</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">retryMode</span>=<span class="sig-default">None</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Add task to workflow, including resource requirements and 
+  specification of dependencies. Dependency tasks must already exist in the
+  workflow.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>label</code></strong> - A string used to identify each task. The label must be composed 
+          of only ascii letters, digits, underscores and dashes (ie. 
+          /[A-Za-z0-9_-]+/). The label must also be unique within the 
+          workflow, and non-empty.</li>
+        <li><strong class="pname"><code>command</code></strong> - The task command. Commands can be: (1) a shell string (2) an 
+          iterable container of strings (argument list) (3) None. In all 
+          cases strings must not contain newline characters. A single 
+          string is typically used for commands that require shell features
+          (such as pipes), an argument list can be used for any other 
+          commands, this is often a useful way to simplify quoting issues 
+          or to submit extremely long commands. The default command (None),
+          can be used to create a 'checkpoint', ie. a task which does not 
+          run anything, but provides a label associated with the completion
+          of a set of dependencies.</li>
+        <li><strong class="pname"><code>cwd</code></strong> - Specify current working directory to use for command execution. 
+          Note that if submitting the command as an argument list (as 
+          opposed to a shell string) the executable (arg[0]) is searched 
+          for before changing the working directory, so you cannot specify 
+          the executable relative to the cwd setting. If submitting a shell
+          string command this restriction does not apply.</li>
+        <li><strong class="pname"><code>env</code></strong> - A map of environment variables for this task, for example 
+          'env={&quot;PATH&quot;: &quot;/usr/bin&quot;}'. When env is set 
+          to None (the default) the environment of the pyflow client 
+          process is used.</li>
+        <li><strong class="pname"><code>nCores</code></strong> - Number of cpu threads required</li>
+        <li><strong class="pname"><code>memMb</code></strong> - Amount of memory required (in megabytes)</li>
+        <li><strong class="pname"><code>dependencies</code></strong> (A single string, or set, tuple or list of strings) - A label string or container of labels specifying all dependent 
+          tasks. Dependent tasks must already exist in the workflow.</li>
+        <li><strong class="pname"><code>priority</code></strong> - Among all tasks which are eligible to run at the same time, 
+          launch tasks with higher priority first. this value can be set 
+          from[-100,100]. Note that this will strongly control the order of
+          task launch on a local run, but will only control task submission
+          order to a secondary scheduler (like sge). All jobs with the same
+          priority are already submitted in order from highest to lowest 
+          nCores requested, so there is no need to set priorities to 
+          replicate this behaviour. The taskManager can start executing 
+          tasks as soon as each addTask() method is called, so 
+          lower-priority tasks may be launched first if they are specified 
+          first in the workflow.</li>
+        <li><strong class="pname"><code>isForceLocal</code></strong> - Force this task to run locally when a distributed task mode is 
+          used. This can be used to launch very small jobs outside of the 
+          sge queue. Note that 'isForceLocal' jobs launched during a 
+          non-local task mode are not subject to resource management, so it
+          is important that these represent small jobs. Tasks which delete,
+          move or touch a small number of files are ideal for this setting.</li>
+        <li><strong class="pname"><code>isCommandMakePath</code></strong> - If true, command is assumed to be a path containing a makefile. 
+          It will be run using make/qmake according to the run's mode and 
+          the task's isForceLocal setting</li>
+        <li><strong class="pname"><code>isTaskStable</code></strong> - If false, indicates that the task command and/or dependencies may
+          change if the run is interrupted and restarted. A command marked 
+          as unstable will not be checked to make sure it matches its 
+          previous definition during run continuation. Unstable examples: 
+          command contains a date/time, or lists a set of files which are 
+          deleted at some point in the workflow, etc.</li>
+        <li><strong class="pname"><code>mutex</code></strong> - Provide an optional id associated with a pyflow task mutex. For 
+          all tasks with the same mutex id, no more than one will be run at
+          once. Id name must follow task id restrictions. Mutex ids are 
+          global across all recursively invoked workflows. Example use 
+          case: This feature has been added as a simpler alternative to 
+          file locking, to ensure sequential, but not ordered, access to a 
+          file.</li>
+        <li><strong class="pname"><code>retryMax</code></strong> - The number of times this task will be retried after failing. If 
+          defined, this overrides the workflow retryMax value.</li>
+        <li><strong class="pname"><code>retryWait</code></strong> - The number of seconds to wait before relaunching a failed task. 
+          If defined, this overrides the workflow retryWait value.</li>
+        <li><strong class="pname"><code>retryWindow</code></strong> - The number of seconds after job submission in which retries will 
+          be attemped for non-make jobs. A value of zero or less causes 
+          retries to be attempted anytime after job submission. If defined,
+          this overrides the workflow retryWindow value.</li>
+        <li><strong class="pname"><code>retryMode</code></strong> - Modes are 'nonlocal' and 'all'. For 'nonlocal' retries are not 
+          attempted in local run mode. For 'all' retries are attemped for 
+          any run mode. If defined, this overrides the workflow retryMode 
+          value.</li>
+    </ul></dd>
+    <dt>Returns:</dt>
+        <dd>The 'label' argument is returned without modification.</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="addWorkflowTask"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">addWorkflowTask</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">label</span>,
+        <span class="sig-arg">workflowRunnerInstance</span>,
+        <span class="sig-arg">dependencies</span>=<span class="sig-default">None</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Add another WorkflowRunner instance as a task to this workflow. The 
+  added Workflow's workflow() method will be called once the dependencies 
+  specified in this call have completed. Once started, all of the submitted
+  workflow's method calls (like addTask) will be placed into the enclosing 
+  workflow instance and bound by the run parameters of the enclosing 
+  workflow.</p>
+  <p>This task will be marked complete once the submitted workflow's 
+  workflow() method has finished, and any tasks it initated have 
+  completed.</p>
+  <p>Note that all workflow tasks will have their own tasks namespaced with
+  the workflow task label. This namespace is recursive in the case that you
+  add workflow tasks which add their own workflow tasks, etc.</p>
+  <p>Note that the submitted workflow instance will be deep copied before 
+  being altered in any way.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>label</code></strong> - A string used to identify each task. The label must be composed 
+          of only ascii letters, digits, underscores and dashes (ie. 
+          /[A-Za-z0-9_-]+/). The label must also be unique within the 
+          workflow, and non-empty.</li>
+        <li><strong class="pname"><code>workflowRunnerInstance</code></strong> - A <a href="pyflow.WorkflowRunner-class.html" 
+          class="link">WorkflowRunner</a> instance.</li>
+        <li><strong class="pname"><code>dependencies</code></strong> (A single string, or set, tuple or list of strings) - A label string or container of labels specifying all dependent 
+          tasks. Dependent tasks must already exist in the workflow.</li>
+    </ul></dd>
+    <dt>Returns:</dt>
+        <dd>The 'label' argument is returned without modification.</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="waitForTasks"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">waitForTasks</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">labels</span>=<span class="sig-default">None</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Wait for a list of tasks to complete.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>labels</code></strong> (A single string, or set, tuple or list of strings) - Container of task labels to wait for. If an empty container is 
+          given or no list is provided then wait for all outstanding tasks 
+          to complete.</li>
+    </ul></dd>
+    <dt>Returns:</dt>
+        <dd>In case of an error in a task being waited for, or in one of 
+          these task's dependencies, the function returns 1. Else return 0.</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="isTaskComplete"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">isTaskComplete</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">taskLabel</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Query if a spefic task is in the workflow and completed without 
+  error.</p>
+  <p>This can assist workflows with providing stable interrupt/resume 
+  behaviour.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>taskLabel</code></strong> - A task string</li>
+    </ul></dd>
+    <dt>Returns:</dt>
+        <dd>Completion status of task</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="getRunMode"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getRunMode</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Get the current run mode</p>
+  <p>This can be used to access the current run mode from within the 
+  workflow function. Although the runmode should be transparent to client 
+  code, this is occassionally needed to hack workarounds.</p>
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>Current run mode</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="getNCores"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getNCores</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Get the current run core limit</p>
+  <p>This function can be used to access the current run's core limit from 
+  within the workflow function. This can be useful to eg. limit the number 
+  of cores requested by a single task.</p>
+  <dl class="fields">
+    <dt>Returns: Integer value or 'unlimited'</dt>
+        <dd>Total cores available to this workflow run</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="limitNCores"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">limitNCores</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">nCores</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Takes an task nCores argument and reduces it to the maximum value 
+  allowed for the current run.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>nCores</code></strong> - Proposed core requirement</li>
+    </ul></dd>
+    <dt>Returns:</dt>
+        <dd>Min(nCores,Total cores available to this workflow run)</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="getMemMb"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getMemMb</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Get the current run's total memory limit (in megabytes)</p>
+  <dl class="fields">
+    <dt>Returns: Integer value or 'unlimited'</dt>
+        <dd>Memory limit in megabytes</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="limitMemMb"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">limitMemMb</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">memMb</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Takes a task memMb argument and reduces it to the maximum value 
+  allowed for the current run.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>memMb</code></strong> - Proposed task memory requiremnt in megabytes</li>
+    </ul></dd>
+    <dt>Returns:</dt>
+        <dd>Min(memMb,Total memory available to this workflow run)</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="isDryRun"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">isDryRun</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Get isDryRun flag value.</p>
+  <p>When the dryrun flag is set, no commands are actually run. Querying 
+  this flag allows dynamic workflows to correct for dry run behaviours, 
+  such as tasks which do no produce expected files.</p>
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>DryRun status flag</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="runModeDefaultCores"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">runModeDefaultCores</span>(<span class="sig-arg">mode</span>)</span>
+    <br /><em class="fname">Static Method</em>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Get the default core limit for run mode (local,sge,..)</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>mode</code></strong> - run mode, as specified in <a 
+          href="pyflow.WorkflowRunner-class.html#run" class="link">the 
+          run() method</a></li>
+    </ul></dd>
+    <dt>Returns: Either 'unlimited', or a string representation of the integer limit</dt>
+        <dd>Default maximum number of cores for mode</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="flowLog"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">flowLog</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">msg</span>,
+        <span class="sig-arg">logState</span>=<span class="sig-default">1</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Send a message to the WorkflowRunner's log.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>msg</code></strong> (A string or an array of strings. String arrays will be separated 
+          by newlines in the log.) - Log message</li>
+        <li><strong class="pname"><code>logState</code></strong> (A value in pyflow.LogState.{INFO,WARNING,ERROR}) - Message severity, defaults to INFO.</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="workflow"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">workflow</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Workflow definition defined in child class</p>
+  <p>This method should be overriden in the class derived from <a 
+  href="pyflow.WorkflowRunner-class.html" class="link">WorkflowRunner</a> 
+  to specify the actual workflow logic. Client code should not call this 
+  method directly.</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<br />
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th bgcolor="#70b0f0" class="navbar-select"
+          >&nbsp;&nbsp;&nbsp;Home&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="class-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+      <th class="navbar" width="100%"></th>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%%">
+  <tr>
+    <td align="left" class="footer">
+    Generated by Epydoc 3.0.1 on Tue May  7 18:42:14 2013
+    </td>
+    <td align="right" class="footer">
+      <a target="mainFrame" href="http://epydoc.sourceforge.net"
+        >http://epydoc.sourceforge.net</a>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  <!--
+  // Private objects are initially displayed (because if
+  // javascript is turned off then we want them to be
+  // visible); but by default, we want to hide them.  So hide
+  // them unless we have a cookie that says to show them.
+  checkCookie();
+  // -->
+</script>
+</body>
+</html>

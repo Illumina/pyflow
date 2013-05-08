@@ -82,27 +82,14 @@ Look at the demo programs. If new to pyflow the recommended order is:</p>
 <li>memoryDemo – a simple demonstration illustrating the effect of task memory requirement settings.</li>
 <li>bclToBwaBam
 This demo shows a workflow which takes a bcl basecalls directory, converts to fastq and aligns with BWA, consolidating each aligned sample into a single sample BAM.</li>
-</ul><p>See API documentation:
-On the wiki: pyFlow API
-Or by executing: pyflow/docs/getApiDoc.py
-See bagPipes methods for pyFlow usage on larger-scale workflows.
-New status update feature
-A task summary report is logged every 60 minutes (configurable with updateInterval setting). An example update report is as follows:</p>
 
-<p>[StatusUpdate] ***** BWAWorkflow StatusUpdate *****
-[StatusUpdate] Workflow specification is complete?: False
-[StatusUpdate] Task status (waiting/queued/running/complete/error): 29/12/62/73/0
-[StatusUpdate] Longest ongoing queued task time (hrs): 0.0128
-[StatusUpdate] Longest ongoing queued task name: 'foo'
-[StatusUpdate] Longest ongoing running task time (hrs): 0.3167
-[StatusUpdate] Longest ongoing running task name: 'bar'
-Example recursive workflow task graph:</p>
+<h3>Client Workflow API:</h3>
 
-<p>[add]</p>
+<p><a href="WorkflowRunner_API_html_doc/index.html"><strong>Epydoc API info here</strong></a></p>
 
 <h3>Workflow developer API:</h3>
 
-<p>[add]</p>
+<p><a href="pyflow_devleoper_html_doc/index.html"><strong>Epydoc API info here</strong></a></p>
 
 <h3>Internal pyflow autodoc:</h3>
       </section>
