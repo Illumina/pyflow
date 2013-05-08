@@ -21,14 +21,16 @@ fi
 
 
 get_abs_path() {
-    cd $1; pwd -P
+    (cd $1; pwd -P)
 }
 
 
-thisdir=$(get_abs_path $(dirname $0))
+script_dir=$(get_abs_path $(dirname $0))
 outdir=$(pwd)
+echo $outdir
 
-cd $thisdir
+cd $script_dir
+echo $script_dir
 gitversion=$(git describe | sed s/^v//)
 
 if [ "$pname_root" == "" ]; then
@@ -40,7 +42,7 @@ pname=$outdir/$pname_root
 cd ..
 
 # use archive instead of copy so that we clean up any tmp files in the working directory:
-git archive --prefix=$pname_root/ HEAD:pyflow/ | tar -x -C $thisdir
+git archive --prefix=$pname_root/ HEAD:pyflow/ | tar -x -C $outdir
 
 # make version number substitutions:
 cat pyflow/src/pyflow.py |\

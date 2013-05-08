@@ -8,10 +8,11 @@ the pyflow distribution tarball.
 To create a release tarball corresponding to a specific version, run:
 
 """
-git clone XYZ pyflow
+git clone git://github.com/ctsa/pyflow.git pyflow
 cd pyflow
-git checkout VERSION
+git checkout ${VERSION}
 ./scratch/make_release_tarball.bash
+# tarball is "./pyflow-${VERSION}.tar.gz"
 """
 
 -------------------------------------------------
