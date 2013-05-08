@@ -33,19 +33,14 @@
 <li>Define workflows as python code</li>
 <li>Run workflows on localhost or sge</li>
 <li>Continue workflows which have partially completed</li>
-<li>Task resource management: Specify number of threads and memory</li>
-<li>required for each task</li>
-<li>Recursive workflow specification: take any existing pyFlow object and</li>
-<li>use it as a task in another pyFlow.</li>
-<li>Dynamic workflow specification: define a wait on task specification rather</li>
-<li>than just tasks, so that tasks can be defined based on the results of </li>
-<li>upstream tasks (note: recursive workflows are an even better way to do this)</li>
+<li>Task resource management: Specify number of threads and memory required for each task</li>
+<li>Recursive workflow specification: take any existing pyFlow object and use it as a task in another pyFlow.</li>
+<li>Dynamic workflow specification: define a wait on task specification rather than just tasks,
+so that tasks can be defined based on the results of upstream tasks (note: recursive workflows are an even better way to do this)</li>
 <li>Detects and reports all failed tasks with consistent workflow-level logging.</li>
-<li>Task-level logging: All task stderr is logged and decorated,</li>
-<li>eg. [time][host][workflow_run][taskid]</li>
+<li>Task-level logging: All task stderr is logged and decorated, eg. [time][host][workflow_run][taskid]</li>
 <li>Task timing: Task wrapper function provides wall time for every task</li>
-<li>Task priority: Tasks which are simultanously eligable to run can be assigned</li>
-<li>relative priorities to be run or queued first.</li>
+<li>Task priority: Tasks which are simultanously eligable to run can be assigned relative priorities to be run or queued first.</li>
 <li>Change environment variables or working directory for each task.</li>
 <li>Email notification on job completion/error/exception</li>
 <li>Provide ongoing task summary report at specified intervals</li>
