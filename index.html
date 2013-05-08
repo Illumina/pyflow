@@ -1,0 +1,115 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Pyflow by ctsa</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>Pyflow</h1>
+        <p>a lightweight parallel task engine</p>
+
+        <p class="view"><a href="https://github.com/ctsa/pyflow">View the Project on GitHub <small>ctsa/pyflow</small></a></p>
+
+
+        <ul>
+          <li><a href="https://github.com/ctsa/pyflow/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/ctsa/pyflow/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/ctsa/pyflow">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <p>pyFlow is a tool to manage tasks in the context of a task dependency graph. It has some similarities to make. pyFlow is not a program – it is a python module, and workflows are defined using pyFlow by writing regular python code with the pyFlow API.</p>
+
+<h3>Use case:</h3>
+
+<p>pyFlow has been optimized to be lightweight and simple to use for prototype/RD workflows.</p>
+
+<h3>Features:</h3>
+
+<ul>
+<li>Define workflows as python code</li>
+<li>Run workflows on localhost or sge</li>
+<li>Continue workflows which have partially completed</li>
+<li>Task resource management: Specify number of threads and memory</li>
+<li>required for each task</li>
+<li>Recursive workflow specification: take any existing pyFlow object and</li>
+<li>use it as a task in another pyFlow.</li>
+<li>Dynamic workflow specification: define a wait on task specification rather</li>
+<li>than just tasks, so that tasks can be defined based on the results of </li>
+<li>upstream tasks (note: recursive workflows are an even better way to do this)</li>
+<li>Detects and reports all failed tasks with consistent workflow-level logging.</li>
+<li>Task-level logging: All task stderr is logged and decorated,</li>
+<li>eg. [time][host][workflow_run][taskid]</li>
+<li>Task timing: Task wrapper function provides wall time for every task</li>
+<li>Task priority: Tasks which are simultanously eligable to run can be assigned</li>
+<li>relative priorities to be run or queued first.</li>
+<li>Change environment variables or working directory for each task.</li>
+<li>Email notification on job completion/error/exception</li>
+<li>Provide ongoing task summary report at specified intervals</li>
+<li>Specify additional external scheduler arguments (e.g. specify queue name to SGE)</li>
+<li>Output task graph in dot format</li>
+</ul><h3>Requirements:</h3>
+
+<p>pyflow's only requirement is python. pyflow is supported on python 2 versions 2.4+, except note that python 2.7.2 should not be used due to a critical multithread bug in the python interpreter which impacts many pyflow runs.</p>
+
+<h3>Getting Started</h3>
+
+<p>To use an existing pyflow workflow or develop a new one, you may need to download or generate the latest pyflow installation tarball (see top-level README.txt on git repository)</p>
+
+<p>To develop a new pyflow workflow:
+Start by downloading the latest pyflow tarball (from version history section below).
+See pyflow/README.txt
+Look at the demo programs. If new to pyflow the recommended order is:</p>
+
+<ul>
+<li>helloWorld – simplest workflow</li>
+<li>simpleDemo – a basic feature sandbox</li>
+<li>subWorkflow – shows how recursive workflow invocation works</li>
+<li>runOptionsDemo – shows an example of how workflow run options can be acquired from command-line arguments.</li>
+<li>cwdDemo – a simple demonstration of how the 'cwd' option is used on task calls.</li>
+<li>memoryDemo – a simple demonstration illustrating the effect of task memory requirement settings.</li>
+<li>bclToBwaBam
+This demo shows a workflow which takes a bcl basecalls directory, converts to fastq and aligns with BWA, consolidating each aligned sample into a single sample BAM.</li>
+</ul><p>See API documentation:
+On the wiki: pyFlow API
+Or by executing: pyflow/docs/getApiDoc.py
+See bagPipes methods for pyFlow usage on larger-scale workflows.
+New status update feature
+A task summary report is logged every 60 minutes (configurable with updateInterval setting). An example update report is as follows:</p>
+
+<p>[StatusUpdate] ***** BWAWorkflow StatusUpdate *****
+[StatusUpdate] Workflow specification is complete?: False
+[StatusUpdate] Task status (waiting/queued/running/complete/error): 29/12/62/73/0
+[StatusUpdate] Longest ongoing queued task time (hrs): 0.0128
+[StatusUpdate] Longest ongoing queued task name: 'foo'
+[StatusUpdate] Longest ongoing running task time (hrs): 0.3167
+[StatusUpdate] Longest ongoing running task name: 'bar'
+Example recursive workflow task graph:</p>
+
+<p>[add]</p>
+
+<h3>Workflow developer API:</h3>
+
+<p>[add]</p>
+
+<h3>Internal pyflow autodoc:</h3>
+      </section>
+      <footer>
+        <p>This project is maintained by <a href="https://github.com/ctsa">ctsa</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
+    </div>
+    <script src="javascripts/scale.fix.js"></script>
+    
+  </body>
+</html>
