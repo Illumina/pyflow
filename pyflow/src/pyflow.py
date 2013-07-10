@@ -1904,12 +1904,17 @@ class TaskNode(object) :
         return retval
 
 
-    def _isDeadWalker(self) :
+    def _isDeadWalker(self, searched) :
         "recursive helper function for isDead()"
+
+        # the fact that you're still searching means that it must have returned False last time:
+        if self in searched : return False
+        searched.add(self)
+
         if self.isError() : return True
         if self.isComplete() : return False
         for p in self.parents :
-            if p._isDeadWalker() : return True
+            if p._isDeadWalker(searched) : return True
         return False
 
     @lockMethod
@@ -1919,8 +1924,11 @@ class TaskNode(object) :
         because it either has an error or there is an error in an
         upstream dependency
         """
-        return self._isDeadWalker()
 
+        # searched is used to restrict the complexity of this
+        # operation on large graphs:
+        searched = set()
+        return self._isDeadWalker(searched)
 
     @lockMethod
     def setRunstate(self, runstate, updateTimeStamp=None) :
@@ -2047,12 +2055,17 @@ class TaskDAG(object) :
             retval.append(self.labelMap[(taskNamespace, taskLabel)])
         return retval
 
-    def _isRunExhaustedNode(self, node) :
+    def _isRunExhaustedNode(self, node, searched) :
+
+        # the fact that you're still searching means that it must have returned true last time:
+        if node in searched : return True
+        searched.add(node)
+
         if not node.isDone() :
             return False
         if node.isComplete() :
             for c in node.children :
-                if not self._isRunExhaustedNode(c) :
+                if not self._isRunExhaustedNode(c, searched) :
                     return False
         return True
 
@@ -2061,8 +2074,12 @@ class TaskDAG(object) :
         """
         Returns true if the run is as complete as possible due to errors
         """
+
+        # searched is used to restrict the complexity of this
+        # operation on large graphs:
+        searched = set()
         for node in self.getHeadNodes() :
-            if not self._isRunExhaustedNode(node) :
+            if not self._isRunExhaustedNode(node,searched) :
                 return False
         return True
 
@@ -2076,14 +2093,18 @@ class TaskDAG(object) :
         return True
 
 
-    def _getReadyTasksFromNode(self, node, ready) :
+    def _getReadyTasksFromNode(self, node, ready, searched) :
         "helper function for getReadyTasks"
+
+        if node in searched : return
+        searched.add(node)
+
         if node.isReady() :
             ready.add(node)
         else:
             if not node.isComplete() :
                 for c in node.parents :
-                    self._getReadyTasksFromNode(c, ready)
+                    self._getReadyTasksFromNode(c, ready, searched)
 
 
     @lockMethod
@@ -2092,15 +2113,22 @@ class TaskDAG(object) :
         Go through DAG from the tail nodes and find all tasks which
         have all prerequisites completed:
         """
+
         completed = self.markCheckPointsComplete()
         ready = set()
+        # searched is used to restrict the complexity of this
+        # operation on large graphs:
+        searched = set()
         for node in self.getTailNodes() :
-            self._getReadyTasksFromNode(node, ready)
+            self._getReadyTasksFromNode(node, ready, searched)
         return (list(ready), list(completed))
 
 
-    def _markCheckPointsCompleteFromNode(self, node, completed) :
+    def _markCheckPointsCompleteFromNode(self, node, completed, searched) :
         "helper function for markCheckPointsComplete"
+
+        if node in searched : return
+        searched.add(node)
 
         if (node.payload.type() == "command") and (node.payload.cmd.cmd is None) and (node.isReady()) :
             node.setRunstate("complete")
@@ -2108,7 +2136,7 @@ class TaskDAG(object) :
 
         if node.isComplete() :
             for c in node.children :
-                self._markCheckPointsCompleteFromNode(c, completed)
+                self._markCheckPointsCompleteFromNode(c, completed, searched)
 
 
     @lockMethod
@@ -2118,8 +2146,11 @@ class TaskDAG(object) :
         (task.cmd=None) jobs that are ready as complete:
         """
         completed = set()
+        # searched is used to restrict the complexity of this
+        # operation on large graphs:
+        searched = set()
         for node in self.getHeadNodes() :
-            self._markCheckPointsCompleteFromNode(node, completed)
+            self._markCheckPointsCompleteFromNode(node, completed, searched)
         return completed
 
 
