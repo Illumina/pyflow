@@ -38,10 +38,12 @@ class TestWorkflowRunner(unittest.TestCase) :
         if os.path.isdir(self.testPath) :
             shutil.rmtree(self.testPath)
 
+
     def test_createDataDir(self) :
         w=NullWorkflow()
         w.run("local",self.testPath,isQuiet=True)
         self.assertTrue(os.path.isdir(self.testPath))
+
 
     def test_badMode(self) :
         w=NullWorkflow()
@@ -107,6 +109,7 @@ class TestWorkflowRunner(unittest.TestCase) :
         r1.join()
         self.assertTrue(r1.retval1==0)
 
+
     def test_forceContinue(self) :
         class TestWorkflow(WorkflowRunner) :
             color="red"
@@ -128,6 +131,7 @@ class TestWorkflowRunner(unittest.TestCase) :
         retval=w.run("local",self.testPath,isContinue=True,isForceContinue=True,isQuiet=True)
         self.assertTrue(retval==0)
 
+
     def test_badContinue(self) :
         w=NullWorkflow()
         try:
@@ -136,11 +140,13 @@ class TestWorkflowRunner(unittest.TestCase) :
         except Exception:
             self.assertTrue(sys.exc_info()[1].args[0].find("Cannot continue run") != -1)
 
+
     def test_goodContinue(self) :
         w=NullWorkflow()
         retval1=w.run("local",self.testPath,isQuiet=True)
         retval2=w.run("local",self.testPath,isContinue=True,isQuiet=True)
         self.assertTrue((retval1==0) and (retval2==0))
+
 
     def test_autoContinue(self) :
         w=NullWorkflow()
@@ -184,6 +190,7 @@ class TestWorkflowRunner(unittest.TestCase) :
         w=TestWorkflow()
         self.assertTrue(0==w.run("local",self.testPath,isQuiet=True))
 
+
     def test_deadSibling(self) :
         """
         Tests that when a task error occurs in one sub-workflow, its
@@ -212,6 +219,7 @@ class TestWorkflowRunner(unittest.TestCase) :
         w=MasterWorkflow()
         self.assertTrue(1==w.run("local",self.testPath,nCores=2,isQuiet=True))
 
+
     def test_selfDependency1(self) :
         """
         """
@@ -221,6 +229,43 @@ class TestWorkflowRunner(unittest.TestCase) :
                 
         w=SelfWorkflow()
         self.assertTrue(1==w.run("local",self.testPath,isQuiet=True))
+
+
+    def test_expGraphScaling(self) :
+        """
+        This tests that pyflow does not scale poorly with highly connected subgraphs.
+
+        When the error occurs, it locks the primary thread, so we put the test workflow
+        on it's own thread so that we can time it and issue an error.
+
+        Issue reported by R Kelley and A Halpern
+        """
+
+        import threading
+
+        class ScalingWorkflow(WorkflowRunner) :
+            def workflow(self2) :
+                tasks = set()
+                for idx in xrange(60) :
+                    sidx = str(idx)
+                    tasks.add(self2.addTask("task_" + sidx, "echo " + sidx, dependencies = tasks))
+                self2.waitForTasks("task_50")
+                tasks.add(self2.addTask("task_1000", "echo 1000", dependencies = tasks))
+
+        class runner(threading.Thread) :
+            def __init__(self2) :
+                threading.Thread.__init__(self2)
+                self2.setDaemon(True)
+
+            def run(self2) :
+                w=ScalingWorkflow()
+                w.run("local",self.testPath,isQuiet=True)
+
+        r1=runner()
+        r1.start()
+        r1.join(30)
+        self.assertTrue(not r1.isAlive())
+
 
 if __name__ == '__main__' :
     unittest.main()
