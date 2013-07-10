@@ -1,4 +1,6 @@
-v1.0 20130507
+v1.0.1 20130710
+* Fix O(exp) scaling problems in DAG handling methods
+v1.0.0 20130507
 * relicenced to Illumina Open Source Software License v1
 v0.6.26 20130304
 * fix bug in forceContinue'd workflow runs
