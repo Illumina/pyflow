@@ -1854,6 +1854,9 @@ class TaskNode(object) :
         self.label = label
         self.payload = payload
         self.isContinued = isContinued
+        
+        self.isIgnoreThis = False
+        self.isIgnoreChildren = False
 
         self.parents = set()
         self.children = set()
@@ -1895,7 +1898,7 @@ class TaskNode(object) :
     @lockMethod
     def isReady(self) :
         "task is ready to be run"
-        retval = ((self.runstate == "waiting") and (self.errorstate == 0))
+        retval = ((self.runstate == "waiting") and (self.errorstate == 0) and (not self.isIgnoreThis))
         if retval :
             for p in self.parents :
                 if not p.isComplete() :
@@ -1995,6 +1998,7 @@ class TaskDAG(object) :
 
     def __init__(self, isContinue, isForceContinue, isDryRun,
                  taskInfoFile, taskStateFile, workflowClassName,
+                 ignoreChildrenOf,
                  flowLog) :
         """
         No other object gets to access the taskStateFile, file locks
@@ -2006,6 +2010,7 @@ class TaskDAG(object) :
         self.taskInfoFile = taskInfoFile
         self.taskStateFile = taskStateFile
         self.workflowClassName = workflowClassName
+        self.ignoreChildrenOf = ignoreChildrenOf
         self.flowLog = flowLog
 
         # unique id for each task in each run -- not persistent across continued runs:
@@ -2043,7 +2048,7 @@ class TaskDAG(object) :
 
     @lockMethod
     def getTailNodes(self) :
-        "all tasks with no children"
+        "all tasks with no (runnable) children"
         return list(self.tailNodes)
 
     @lockMethod
@@ -2052,7 +2057,9 @@ class TaskDAG(object) :
         retval = []
         for (taskNamespace, taskLabel) in self.addOrder :
             if namespace != taskNamespace : continue
-            retval.append(self.labelMap[(taskNamespace, taskLabel)])
+            node=self.labelMap[(taskNamespace, taskLabel)]
+            if node.isIgnoreThis : continue
+            retval.append(node)
         return retval
 
     def _isRunExhaustedNode(self, node, searched) :
@@ -2061,12 +2068,13 @@ class TaskDAG(object) :
         if node in searched : return True
         searched.add(node)
 
-        if not node.isDone() :
-            return False
-        if node.isComplete() :
-            for c in node.children :
-                if not self._isRunExhaustedNode(c, searched) :
-                    return False
+        if not node.isIgnoreThis :
+            if not node.isDone() :
+                return False
+            if node.isComplete() :
+                for c in node.children :
+                    if not self._isRunExhaustedNode(c, searched) :
+                        return False
         return True
 
     @lockMethod
@@ -2088,6 +2096,7 @@ class TaskDAG(object) :
     def isRunComplete(self) :
         "returns true if run is complete and error free"
         for node in self.labelMap.values():
+            if node.isIgnoreThis : continue
             if not node.isComplete() :
                 return False
         return True
@@ -2213,13 +2222,25 @@ class TaskDAG(object) :
             self.writeTaskInfo(task)
             self.writeTaskStatus()
 
-        # update head and tail node info:
-        self.tailNodes.add(task)
+        # determine if this is an ignoreChildrenOf node
+        if label in self.ignoreChildrenOf :
+            task.isIgnoreChildren = True
+
+        # determine if this is an ignoreChildrenOf descendnet
         for p in task.parents :
-            if p in self.tailNodes :
-                self.tailNodes.remove(p)
-        if len(task.parents) == 0 :
-            self.headNodes.add(task)
+            if p.isIgnoreChildren :
+                task.isIgnoreThis = True
+                task.isIgnoreChildren = True
+                break
+
+        # update head and tail node info:
+        if not task.isIgnoreThis :
+            self.tailNodes.add(task)
+            for p in task.parents :
+                if p in self.tailNodes :
+                    self.tailNodes.remove(p)
+            if len(task.parents) == 0 :
+                self.headNodes.add(task)
 
 
     @lockMethod
@@ -2716,11 +2737,12 @@ class WorkflowRunner(object) :
             isQuiet=False,
             warningLogFile=None,
             errorLogFile=None,
-            successMsg=None) :
+            successMsg=None,
+            ignoreChildrenOf=None) :
         """
         Call this method to execute the workflow() method overridden
         in a child class and specify the resources available for the
-        worfklow to run.
+        workflow to run.
 
         Task retry behaviour: Retry attempts will be made per the
         arguments below for distributed workflow runs (eg. sge run
@@ -2846,6 +2868,11 @@ class WorkflowRunner(object) :
                            notification. This message will appear in the log
                            and any configured notifications (e.g. email). The
                            message may contain linebreaks.
+
+        @param ignoreChildrenOf: A task label string or container of task labels. All children
+                                 of these task labels will not be run.
+        @type ignoreChildrenOf: A single string, or set, tuple or list of strings
+
         """
 
         # Setup pyflow signal handlers:
@@ -2924,7 +2951,8 @@ class WorkflowRunner(object) :
                               isQuiet=isQuiet,
                               warningLogFile=warningLogFile,
                               errorLogFile=errorLogFile,
-                              successMsg=successMsg)
+                              successMsg=successMsg,
+                              ignoreChildrenOf=setzer(ignoreChildrenOf))
                 retval = self._runWorkflow(param)
 
             except SigTermException:
@@ -3458,7 +3486,7 @@ class WorkflowRunner(object) :
         #
 
         def updateStatusFromTask(task, status) :
-            if   not task.isDone() :
+            if not task.isDone() :
                 status.isAllTaskDone = False
             elif not task.isComplete() :
                 status.retval = 1
@@ -3675,7 +3703,7 @@ class WorkflowRunner(object) :
         # setup other instance data:
         self._tdag = TaskDAG(cdata.param.isContinue, cdata.param.isForceContinue, cdata.param.isDryRun,
                              cdata.taskInfoFile, cdata.taskStateFile,
-                             cdata.param.workflowClassName, self._flowLog)
+                             cdata.param.workflowClassName, cdata.param.ignoreChildrenOf, self._flowLog)
         self._tman = None
 
         def backupFile(inputFile) :

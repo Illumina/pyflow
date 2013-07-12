@@ -267,6 +267,22 @@ class TestWorkflowRunner(unittest.TestCase) :
         self.assertTrue(not r1.isAlive())
 
 
+    def test_ignoreChildrenOf(self) :
+        """
+        run() option to ignore all tasks below a specified task node
+        """
+        class SelfWorkflow(WorkflowRunner) :
+            def workflow(self2) :
+                file="%s/tmp.txt" % (self.testPath)
+                self2.addTask("A","sleep 1")
+                self2.addTask("B","sleep 1",dependencies="A")
+                self2.addTask("C","sleep 1",dependencies=("A","B"))
+ 
+        w=SelfWorkflow()
+        self.assertTrue(0==w.run("local",self.testPath,isQuiet=True,ignoreChildrenOf="B"))
+        self.assertTrue(not w.isTaskComplete("C"))
+
+
 if __name__ == '__main__' :
     unittest.main()
 
