@@ -1854,16 +1854,19 @@ class TaskNode(object) :
         self.label = label
         self.payload = payload
         self.isContinued = isContinued
-        
-        # if true, do not execute this task, or honor it as a dependency for child tasks
+
+        # if true, do not execute this task or honor it as a dependency for child tasks
         self.isIgnoreThis = False
-        
-        # set the ignore state for all children of this task to true
+
+        # if true, set the ignore state for all children of this task to true
         self.isIgnoreChildren = False
-        
+
         # if true, this task and its dependents will be automatically mareked as completed (until
-        # a markNonDependentsComplete node is found)
+        # a startFromTasks node is found)
         self.isAutoCompleted = False
+
+        # task is reset to waiting runstate in a continued run
+        self.isReset = False
 
         self.parents = set()
         self.children = set()
@@ -2006,7 +2009,7 @@ class TaskDAG(object) :
 
     def __init__(self, isContinue, isForceContinue, isDryRun,
                  taskInfoFile, taskStateFile, workflowClassName,
-                 markNonDependentsComplete, ignoreDependentsOf,
+                 startFromTasks, ignoreTasksAfter, resetTasks,
                  flowLog) :
         """
         No other object gets to access the taskStateFile, file locks
@@ -2018,8 +2021,9 @@ class TaskDAG(object) :
         self.taskInfoFile = taskInfoFile
         self.taskStateFile = taskStateFile
         self.workflowClassName = workflowClassName
-        self.markNonDependentsComplete = markNonDependentsComplete
-        self.ignoreDependentsOf = ignoreDependentsOf
+        self.startFromTasks = startFromTasks
+        self.ignoreTasksAfter = ignoreTasksAfter
+        self.resetTasks = resetTasks
         self.flowLog = flowLog
 
         # unique id for each task in each run -- not persistent across continued runs:
@@ -2115,7 +2119,7 @@ class TaskDAG(object) :
         "helper function for getReadyTasks"
 
         if node.isIgnoreThis : return
-        
+
         if node in searched : return
         searched.add(node)
 
@@ -2231,15 +2235,29 @@ class TaskDAG(object) :
             task.parents.add(parent)
             parent.children.add(task)
 
+
+        if isContinued :
+            isReset=False
+            if label in self.resetTasks :
+                isReset=True
+            else :
+                for p in task.parents :
+                    if p.isReset :
+                        isReset = True
+                        break
+            if isReset :
+                task.setRunstate("waiting")
+                task.isReset=True
+
         if not isContinued:
             self.writeTaskInfo(task)
             self.writeTaskStatus()
 
-        # determine if this is an ignoreDependentsOf node
-        if label in self.ignoreDependentsOf :
+        # determine if this is an ignoreTasksAfter node
+        if label in self.ignoreTasksAfter :
             task.isIgnoreChildren = True
 
-        # determine if this is an ignoreDependentsOf descendent
+        # determine if this is an ignoreTasksAfter descendent
         for p in task.parents :
             if p.isIgnoreChildren :
                 task.isIgnoreThis = True
@@ -2251,14 +2269,14 @@ class TaskDAG(object) :
             self.headNodes.add(task)
 
         # update isAutoCompleted:
-        if (self.markNonDependentsComplete and 
-            (label not in self.markNonDependentsComplete)) :
+        if (self.startFromTasks and
+            (label not in self.startFromTasks)) :
             task.isAutoCompleted = True
             for p in task.parents :
                 if not p.isAutoCompleted :
                     task.isAutoCompleted = False
                     break
-        
+
         if task.isAutoCompleted :
             task.setRunstate("complete")
 
@@ -2773,8 +2791,9 @@ class WorkflowRunner(object) :
             warningLogFile=None,
             errorLogFile=None,
             successMsg=None,
-            markNonDependentsComplete=None,
-            ignoreDependentsOf=None) :
+            startFromTasks=None,
+            ignoreTasksAfter=None,
+            resetTasks=None) :
         """
         Call this method to execute the workflow() method overridden
         in a child class and specify the resources available for the
@@ -2905,15 +2924,20 @@ class WorkflowRunner(object) :
                            and any configured notifications (e.g. email). The
                            message may contain linebreaks.
 
-        @param markNonDependentsComplete: A task label string or container of task labels. Any tasks which
-                                   are not in this set or descendents of this set will be marked as 
-                                   completed.
-        @type markNonDependentsComplete: A single string, or set, tuple or list of strings
+        @param startFromTasks: A task label string or container of task labels. Any tasks which
+                               are not in this set or descendents of this set will be marked as
+                               completed.
+        @type startFromTasks: A single string, or set, tuple or list of strings
 
-        @param ignoreDependentsOf: A task label string or container of task labels. All descendents
+        @param ignoreTasksAfter: A task label string or container of task labels. All descendents
                                  of these task labels will be ignored.
-        @type ignoreDependentsOf: A single string, or set, tuple or list of strings
+        @type ignoreTasksAfter: A single string, or set, tuple or list of strings
 
+        @param resetTasks: A task label string or container of task labels. These tasks and all
+                           of their descendents will be reset to the "waiting" state to be re-run.
+                           Note this option will only effect a workflow which has been continued
+                           from a previous run.
+        @type resetTasks: A single string, or set, tuple or list of strings
         """
 
         # Setup pyflow signal handlers:
@@ -2993,8 +3017,9 @@ class WorkflowRunner(object) :
                               warningLogFile=warningLogFile,
                               errorLogFile=errorLogFile,
                               successMsg=successMsg,
-                              markNonDependentsComplete=setzer(markNonDependentsComplete),
-                              ignoreDependentsOf=setzer(ignoreDependentsOf))
+                              startFromTasks=setzer(startFromTasks),
+                              ignoreTasksAfter=setzer(ignoreTasksAfter),
+                              resetTasks=setzer(resetTasks))
                 retval = self._runWorkflow(param)
 
             except SigTermException:
@@ -3745,7 +3770,8 @@ class WorkflowRunner(object) :
         # setup other instance data:
         self._tdag = TaskDAG(cdata.param.isContinue, cdata.param.isForceContinue, cdata.param.isDryRun,
                              cdata.taskInfoFile, cdata.taskStateFile, cdata.param.workflowClassName,
-                             cdata.param.markNonDependentsComplete, cdata.param.ignoreDependentsOf, self._flowLog)
+                             cdata.param.startFromTasks, cdata.param.ignoreTasksAfter, cdata.param.resetTasks,
+                             self._flowLog)
         self._tman = None
 
         def backupFile(inputFile) :
