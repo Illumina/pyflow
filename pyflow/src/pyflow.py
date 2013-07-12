@@ -1855,8 +1855,15 @@ class TaskNode(object) :
         self.payload = payload
         self.isContinued = isContinued
         
+        # if true, do not execute this task, or honor it as a dependency for child tasks
         self.isIgnoreThis = False
+        
+        # set the ignore state for all children of this task to true
         self.isIgnoreChildren = False
+        
+        # if true, this task and its dependents will be automatically mareked as completed (until
+        # a markNonDependentsComplete node is found)
+        self.isAutoCompleted = False
 
         self.parents = set()
         self.children = set()
@@ -1901,6 +1908,7 @@ class TaskNode(object) :
         retval = ((self.runstate == "waiting") and (self.errorstate == 0) and (not self.isIgnoreThis))
         if retval :
             for p in self.parents :
+                if p.isIgnoreThis : continue
                 if not p.isComplete() :
                     retval = False
                     break
@@ -1998,7 +2006,7 @@ class TaskDAG(object) :
 
     def __init__(self, isContinue, isForceContinue, isDryRun,
                  taskInfoFile, taskStateFile, workflowClassName,
-                 ignoreChildrenOf,
+                 markNonDependentsComplete, ignoreDependentsOf,
                  flowLog) :
         """
         No other object gets to access the taskStateFile, file locks
@@ -2010,7 +2018,8 @@ class TaskDAG(object) :
         self.taskInfoFile = taskInfoFile
         self.taskStateFile = taskStateFile
         self.workflowClassName = workflowClassName
-        self.ignoreChildrenOf = ignoreChildrenOf
+        self.markNonDependentsComplete = markNonDependentsComplete
+        self.ignoreDependentsOf = ignoreDependentsOf
         self.flowLog = flowLog
 
         # unique id for each task in each run -- not persistent across continued runs:
@@ -2105,6 +2114,8 @@ class TaskDAG(object) :
     def _getReadyTasksFromNode(self, node, ready, searched) :
         "helper function for getReadyTasks"
 
+        if node.isIgnoreThis : return
+        
         if node in searched : return
         searched.add(node)
 
@@ -2135,6 +2146,8 @@ class TaskDAG(object) :
 
     def _markCheckPointsCompleteFromNode(self, node, completed, searched) :
         "helper function for markCheckPointsComplete"
+
+        if node.isIgnoreThis : return
 
         if node in searched : return
         searched.add(node)
@@ -2222,25 +2235,47 @@ class TaskDAG(object) :
             self.writeTaskInfo(task)
             self.writeTaskStatus()
 
-        # determine if this is an ignoreChildrenOf node
-        if label in self.ignoreChildrenOf :
+        # determine if this is an ignoreDependentsOf node
+        if label in self.ignoreDependentsOf :
             task.isIgnoreChildren = True
 
-        # determine if this is an ignoreChildrenOf descendnet
+        # determine if this is an ignoreDependentsOf descendent
         for p in task.parents :
             if p.isIgnoreChildren :
                 task.isIgnoreThis = True
                 task.isIgnoreChildren = True
                 break
 
-        # update head and tail node info:
+        # update headNodes
+        if len(task.parents) == 0 :
+            self.headNodes.add(task)
+
+        # update isAutoCompleted:
+        if (self.markNonDependentsComplete and 
+            (label not in self.markNonDependentsComplete)) :
+            task.isAutoCompleted = True
+            for p in task.parents :
+                if not p.isAutoCompleted :
+                    task.isAutoCompleted = False
+                    break
+        
+        if task.isAutoCompleted :
+            task.setRunstate("complete")
+
+        # update tailNodes:
         if not task.isIgnoreThis :
             self.tailNodes.add(task)
             for p in task.parents :
                 if p in self.tailNodes :
                     self.tailNodes.remove(p)
-            if len(task.parents) == 0 :
-                self.headNodes.add(task)
+
+        # check dependency runState consistency:
+        if task.isDone() :
+            for p in task.parents :
+                if p.isIgnoreThis : continue
+                if p.isComplete() : continue
+                raise Exception("Task: '%s' has invalid continuation state. Task dependencies are incomplete")
+
 
 
     @lockMethod
@@ -2738,7 +2773,8 @@ class WorkflowRunner(object) :
             warningLogFile=None,
             errorLogFile=None,
             successMsg=None,
-            ignoreChildrenOf=None) :
+            markNonDependentsComplete=None,
+            ignoreDependentsOf=None) :
         """
         Call this method to execute the workflow() method overridden
         in a child class and specify the resources available for the
@@ -2869,9 +2905,14 @@ class WorkflowRunner(object) :
                            and any configured notifications (e.g. email). The
                            message may contain linebreaks.
 
-        @param ignoreChildrenOf: A task label string or container of task labels. All children
-                                 of these task labels will not be run.
-        @type ignoreChildrenOf: A single string, or set, tuple or list of strings
+        @param markNonDependentsComplete: A task label string or container of task labels. Any tasks which
+                                   are not in this set or descendents of this set will be marked as 
+                                   completed.
+        @type markNonDependentsComplete: A single string, or set, tuple or list of strings
+
+        @param ignoreDependentsOf: A task label string or container of task labels. All descendents
+                                 of these task labels will be ignored.
+        @type ignoreDependentsOf: A single string, or set, tuple or list of strings
 
         """
 
@@ -2952,7 +2993,8 @@ class WorkflowRunner(object) :
                               warningLogFile=warningLogFile,
                               errorLogFile=errorLogFile,
                               successMsg=successMsg,
-                              ignoreChildrenOf=setzer(ignoreChildrenOf))
+                              markNonDependentsComplete=setzer(markNonDependentsComplete),
+                              ignoreDependentsOf=setzer(ignoreDependentsOf))
                 retval = self._runWorkflow(param)
 
             except SigTermException:
@@ -3702,8 +3744,8 @@ class WorkflowRunner(object) :
 
         # setup other instance data:
         self._tdag = TaskDAG(cdata.param.isContinue, cdata.param.isForceContinue, cdata.param.isDryRun,
-                             cdata.taskInfoFile, cdata.taskStateFile,
-                             cdata.param.workflowClassName, cdata.param.ignoreChildrenOf, self._flowLog)
+                             cdata.taskInfoFile, cdata.taskStateFile, cdata.param.workflowClassName,
+                             cdata.param.markNonDependentsComplete, cdata.param.ignoreDependentsOf, self._flowLog)
         self._tman = None
 
         def backupFile(inputFile) :
