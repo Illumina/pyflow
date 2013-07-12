@@ -266,20 +266,35 @@ class TestWorkflowRunner(unittest.TestCase) :
         r1.join(30)
         self.assertTrue(not r1.isAlive())
 
+    def test_startFromTasks(self) :
+        """
+        run() option to ignore all tasks before a specified task node
+        """
+        file="%s/tmp.txt" % (self.testPath)
 
-    def test_ignoreChildrenOf(self) :
+        class SelfWorkflow(WorkflowRunner) :
+            def workflow(self2) :
+                self2.addTask("A","touch "+file)
+                self2.addTask("B","sleep 1",dependencies="A")
+                self2.addTask("C","sleep 1",dependencies=("A","B"))
+ 
+        w=SelfWorkflow()
+        self.assertTrue(0==w.run("local",self.testPath,isQuiet=True,startFromTasks="B"))
+        self.assertTrue(not os.path.exists(file))
+
+
+    def test_ignoreTasksAfter(self) :
         """
         run() option to ignore all tasks below a specified task node
         """
         class SelfWorkflow(WorkflowRunner) :
             def workflow(self2) :
-                file="%s/tmp.txt" % (self.testPath)
                 self2.addTask("A","sleep 1")
                 self2.addTask("B","sleep 1",dependencies="A")
                 self2.addTask("C","sleep 1",dependencies=("A","B"))
  
         w=SelfWorkflow()
-        self.assertTrue(0==w.run("local",self.testPath,isQuiet=True,ignoreChildrenOf="B"))
+        self.assertTrue(0==w.run("local",self.testPath,isQuiet=True,ignoreTasksAfter="B"))
         self.assertTrue(not w.isTaskComplete("C"))
 
 
