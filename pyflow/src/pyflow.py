@@ -2883,7 +2883,7 @@ class WorkflowRunner(object) :
                 retries are attemped for any run mode. The default mode
                 is 'nonolocal'.
 
-        @param mailTo: An email string or container of emails. Notification
+        @param mailTo: An email address or container of email addresses. Notification
                   will be sent to each email address when
                   either (1) the run successfully completes (2) the
                   first task error occurs or (3) an unhandled
@@ -2924,19 +2924,20 @@ class WorkflowRunner(object) :
                            and any configured notifications (e.g. email). The
                            message may contain linebreaks.
 
-        @param startFromTasks: A task label string or container of task labels. Any tasks which
+        @param startFromTasks: A task label or container of task labels. Any tasks which
                                are not in this set or descendants of this set will be marked as
                                completed.
         @type startFromTasks: A single string, or set, tuple or list of strings
 
-        @param ignoreTasksAfter: A task label string or container of task labels. All descendants
+        @param ignoreTasksAfter: A task label or container of task labels. All descendants
                                  of these task labels will be ignored.
         @type ignoreTasksAfter: A single string, or set, tuple or list of strings
 
-        @param resetTasks: A task label string or container of task labels. These tasks and all
+        @param resetTasks: A task label or container of task labels. These tasks and all
                            of their descendants will be reset to the "waiting" state to be re-run.
                            Note this option will only effect a workflow which has been continued
-                           from a previous run.
+                           from a previous run. This will not overide any nodes alterned by the
+                           startFromTasks setting in the case that both options are used together.
         @type resetTasks: A single string, or set, tuple or list of strings
         """
 
@@ -3103,7 +3104,7 @@ class WorkflowRunner(object) :
 
         @param memMb: Amount of memory required (in megabytes)
 
-        @param dependencies: A label string or container of labels specifying all dependent
+        @param dependencies: A task label or container of task labels specifying all dependent
                         tasks. Dependent tasks must already exist in
                         the workflow.
         @type dependencies: A single string, or set, tuple or list of strings
