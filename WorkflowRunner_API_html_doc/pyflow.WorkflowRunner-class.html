@@ -103,9 +103,12 @@ object --+
         <span class="summary-sig-arg">isQuiet</span>=<span class="summary-sig-default">False</span>,
         <span class="summary-sig-arg">warningLogFile</span>=<span class="summary-sig-default">None</span>,
         <span class="summary-sig-arg">errorLogFile</span>=<span class="summary-sig-default">None</span>,
-        <span class="summary-sig-arg">successMsg</span>=<span class="summary-sig-default">None</span>)</span><br />
+        <span class="summary-sig-arg">successMsg</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">startFromTasks</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">ignoreTasksAfter</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">resetTasks</span>=<span class="summary-sig-default">None</span>)</span><br />
       Call this method to execute the workflow() method overridden in a 
-      child class and specify the resources available for the worfklow to 
+      child class and specify the resources available for the workflow to 
       run.</td>
           <td align="right" valign="top">
             
@@ -445,7 +448,10 @@ object --+
         <span class="sig-arg">isQuiet</span>=<span class="sig-default">False</span>,
         <span class="sig-arg">warningLogFile</span>=<span class="sig-default">None</span>,
         <span class="sig-arg">errorLogFile</span>=<span class="sig-default">None</span>,
-        <span class="sig-arg">successMsg</span>=<span class="sig-default">None</span>)</span>
+        <span class="sig-arg">successMsg</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">startFromTasks</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">ignoreTasksAfter</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">resetTasks</span>=<span class="sig-default">None</span>)</span>
   </h3>
   </td><td align="right" valign="top"
     >&nbsp;
@@ -453,7 +459,7 @@ object --+
   </tr></table>
   
   <p>Call this method to execute the workflow() method overridden in a 
-  child class and specify the resources available for the worfklow to 
+  child class and specify the resources available for the workflow to 
   run.</p>
   <p>Task retry behaviour: Retry attempts will be made per the arguments 
   below for distributed workflow runs (eg. sge run mode). Note this means 
@@ -513,13 +519,13 @@ object --+
         <li><strong class="pname"><code>retryMode</code></strong> - Modes are 'nonlocal' and 'all'. For 'nonlocal' retries are not 
           attempted in local run mode. For 'all' retries are attemped for 
           any run mode. The default mode is 'nonolocal'.</li>
-        <li><strong class="pname"><code>mailTo</code></strong> - An email string or container of emails. Notification will be sent
-          to each email address when either (1) the run successfully 
-          completes (2) the first task error occurs or (3) an unhandled 
-          exception is raised. The intention is to send one status message 
-          per run() indicating either success or the reason for failure. 
-          This should occur for all cases except a host hardware/power 
-          failure.  Note that mail comes from 
+        <li><strong class="pname"><code>mailTo</code></strong> - An email address or container of email addresses. Notification 
+          will be sent to each email address when either (1) the run 
+          successfully completes (2) the first task error occurs or (3) an 
+          unhandled exception is raised. The intention is to send one 
+          status message per run() indicating either success or the reason 
+          for failure. This should occur for all cases except a host 
+          hardware/power failure.  Note that mail comes from 
           'pyflow-bot@workstation-centos64' (configurable), which may be 
           classified as junk-mail by your system.</li>
         <li><strong class="pname"><code>updateInterval</code></strong> - How often (in minutes) should pyflow log a status update message 
@@ -542,6 +548,17 @@ object --+
           prepended to pyflow's standard success notification. This message
           will appear in the log and any configured notifications (e.g. 
           email). The message may contain linebreaks.</li>
+        <li><strong class="pname"><code>startFromTasks</code></strong> (A single string, or set, tuple or list of strings) - A task label or container of task labels. Any tasks which are not
+          in this set or descendants of this set will be marked as 
+          completed.</li>
+        <li><strong class="pname"><code>ignoreTasksAfter</code></strong> (A single string, or set, tuple or list of strings) - A task label or container of task labels. All descendants of 
+          these task labels will be ignored.</li>
+        <li><strong class="pname"><code>resetTasks</code></strong> (A single string, or set, tuple or list of strings) - A task label or container of task labels. These tasks and all of 
+          their descendants will be reset to the &quot;waiting&quot; state 
+          to be re-run. Note this option will only effect a workflow which 
+          has been continued from a previous run. This will not overide any
+          nodes alterned by the startFromTasks setting in the case that 
+          both options are used together.</li>
     </ul></dd>
     <dt>Returns:</dt>
         <dd>0 if all tasks completed successfully and 1 otherwise</dd>
@@ -610,7 +627,7 @@ object --+
           process is used.</li>
         <li><strong class="pname"><code>nCores</code></strong> - Number of cpu threads required</li>
         <li><strong class="pname"><code>memMb</code></strong> - Amount of memory required (in megabytes)</li>
-        <li><strong class="pname"><code>dependencies</code></strong> (A single string, or set, tuple or list of strings) - A label string or container of labels specifying all dependent 
+        <li><strong class="pname"><code>dependencies</code></strong> (A single string, or set, tuple or list of strings) - A task label or container of task labels specifying all dependent
           tasks. Dependent tasks must already exist in the workflow.</li>
         <li><strong class="pname"><code>priority</code></strong> - Among all tasks which are eligible to run at the same time, 
           launch tasks with higher priority first. this value can be set 
@@ -1021,7 +1038,7 @@ object --+
 <table border="0" cellpadding="0" cellspacing="0" width="100%%">
   <tr>
     <td align="left" class="footer">
-    Generated by Epydoc 3.0.1 on Tue May  7 18:42:14 2013
+    Generated by Epydoc 3.0.1 on Mon Jul 15 08:57:48 2013
     </td>
     <td align="right" class="footer">
       <a target="mainFrame" href="http://epydoc.sourceforge.net"

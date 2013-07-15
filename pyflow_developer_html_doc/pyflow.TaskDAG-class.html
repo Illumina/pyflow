@@ -55,21 +55,21 @@
 <h1 class="epydoc">Class TaskDAG</h1><p class="nomargin-top"><span class="codelink"><a href="pyflow-pysrc.html#TaskDAG">source&nbsp;code</a></span></p>
 <center>
 <center>  <map id="uml_class_diagram_for_pyflow_t" name="uml_class_diagram_for_pyflow_t">
-<area shape="rect" id="node51" href="pyflow.TaskDAG-class.html#__init__" title="No other object gets to access the taskStateFile, file locks are not &#160;required (but thread locks are)" alt="" coords="17,39,677,57"/>
-<area shape="rect" id="node51" href="pyflow.TaskDAG-class.html#isTaskPresent" title="pyflow.TaskDAG.isTaskPresent" alt="" coords="17,57,677,76"/>
-<area shape="rect" id="node51" href="pyflow.TaskDAG-class.html#getTask" title="pyflow.TaskDAG.getTask" alt="" coords="17,76,677,95"/>
-<area shape="rect" id="node51" href="pyflow.TaskDAG-class.html#getHeadNodes" title="all tasks with no parents" alt="" coords="17,95,677,113"/>
-<area shape="rect" id="node51" href="pyflow.TaskDAG-class.html#getTailNodes" title="all tasks with no children" alt="" coords="17,113,677,132"/>
-<area shape="rect" id="node51" href="pyflow.TaskDAG-class.html#getAllNodes" title="get all nodes in this namespace" alt="" coords="17,132,677,151"/>
-<area shape="rect" id="node51" href="pyflow.TaskDAG-class.html#isRunExhausted" title="Returns true if the run is as complete as possible due to errors" alt="" coords="17,151,677,169"/>
-<area shape="rect" id="node51" href="pyflow.TaskDAG-class.html#isRunComplete" title="returns true if run is complete and error free" alt="" coords="17,169,677,188"/>
-<area shape="rect" id="node51" href="pyflow.TaskDAG-class.html#getReadyTasks" title="Go through DAG from the tail nodes and find all tasks which have all &#160;prerequisites completed:" alt="" coords="17,188,677,207"/>
-<area shape="rect" id="node51" href="pyflow.TaskDAG-class.html#markCheckPointsComplete" title="traverse from head nodes down, marking any checkpoints (task.cmd=None) jobs that are ready as complete:" alt="" coords="17,207,677,225"/>
-<area shape="rect" id="node51" href="pyflow.TaskDAG-class.html#addTask" title="add new task to the DAG" alt="" coords="17,225,677,244"/>
-<area shape="rect" id="node51" href="pyflow.TaskDAG-class.html#writeTaskStatus" title="atomic update of the runstate and errorstate for all tasks" alt="" coords="17,244,677,263"/>
-<area shape="rect" id="node51" href="pyflow.TaskDAG-class.html#getTaskStatus" title="Enumerate status of command tasks (but look at sub&#45;workflows to determine &#160;if specification is complete)" alt="" coords="17,263,677,281"/>
-<area shape="rect" id="node51" href="pyflow.TaskDAG-class.html#writeTaskInfo" title="appends a description of new tasks to the taskInfo file" alt="" coords="17,281,677,300"/>
-<area shape="rect" id="node1" href="pyflow.TaskDAG-class.html" title="Holds all tasks and their dependencies." alt="" coords="5,6,688,306"/>
+<area shape="rect" id="node51" href="pyflow.TaskDAG-class.html#__init__" title="No other object gets to access the taskStateFile, file locks are not &#160;required (but thread locks are)" alt="" coords="17,39,957,57"/>
+<area shape="rect" id="node51" href="pyflow.TaskDAG-class.html#isTaskPresent" title="pyflow.TaskDAG.isTaskPresent" alt="" coords="17,57,957,76"/>
+<area shape="rect" id="node51" href="pyflow.TaskDAG-class.html#getTask" title="pyflow.TaskDAG.getTask" alt="" coords="17,76,957,95"/>
+<area shape="rect" id="node51" href="pyflow.TaskDAG-class.html#getHeadNodes" title="all tasks with no parents" alt="" coords="17,95,957,113"/>
+<area shape="rect" id="node51" href="pyflow.TaskDAG-class.html#getTailNodes" title="all tasks with no (runnable) children" alt="" coords="17,113,957,132"/>
+<area shape="rect" id="node51" href="pyflow.TaskDAG-class.html#getAllNodes" title="get all nodes in this namespace" alt="" coords="17,132,957,151"/>
+<area shape="rect" id="node51" href="pyflow.TaskDAG-class.html#isRunExhausted" title="Returns true if the run is as complete as possible due to errors" alt="" coords="17,151,957,169"/>
+<area shape="rect" id="node51" href="pyflow.TaskDAG-class.html#isRunComplete" title="returns true if run is complete and error free" alt="" coords="17,169,957,188"/>
+<area shape="rect" id="node51" href="pyflow.TaskDAG-class.html#getReadyTasks" title="Go through DAG from the tail nodes and find all tasks which have all &#160;prerequisites completed:" alt="" coords="17,188,957,207"/>
+<area shape="rect" id="node51" href="pyflow.TaskDAG-class.html#markCheckPointsComplete" title="traverse from head nodes down, marking any checkpoints (task.cmd=None) jobs that are ready as complete:" alt="" coords="17,207,957,225"/>
+<area shape="rect" id="node51" href="pyflow.TaskDAG-class.html#addTask" title="add new task to the DAG" alt="" coords="17,225,957,244"/>
+<area shape="rect" id="node51" href="pyflow.TaskDAG-class.html#writeTaskStatus" title="atomic update of the runstate and errorstate for all tasks" alt="" coords="17,244,957,263"/>
+<area shape="rect" id="node51" href="pyflow.TaskDAG-class.html#getTaskStatus" title="Enumerate status of command tasks (but look at sub&#45;workflows to determine &#160;if specification is complete)" alt="" coords="17,263,957,281"/>
+<area shape="rect" id="node51" href="pyflow.TaskDAG-class.html#writeTaskInfo" title="appends a description of new tasks to the taskInfo file" alt="" coords="17,281,957,300"/>
+<area shape="rect" id="node1" href="pyflow.TaskDAG-class.html" title="Holds all tasks and their dependencies." alt="" coords="5,6,968,306"/>
 </map>
   <img src="uml_class_diagram_for_pyflow_t.png" alt='' usemap="#uml_class_diagram_for_pyflow_t" ismap="ismap" class="graph-without-title" />
 </center>
@@ -110,6 +110,9 @@
         <span class="summary-sig-arg">taskInfoFile</span>,
         <span class="summary-sig-arg">taskStateFile</span>,
         <span class="summary-sig-arg">workflowClassName</span>,
+        <span class="summary-sig-arg">startFromTasks</span>,
+        <span class="summary-sig-arg">ignoreTasksAfter</span>,
+        <span class="summary-sig-arg">resetTasks</span>,
         <span class="summary-sig-arg">flowLog</span>)</span><br />
       No other object gets to access the taskStateFile, file locks are not 
       required (but thread locks are)</td>
@@ -186,7 +189,7 @@
           <td><span class="summary-sig"><a href="pyflow.TaskDAG-class.html#getTailNodes" class="summary-sig-name">getTailNodes</a>(<span class="summary-sig-arg">self</span>,
         <span class="summary-sig-arg">*args</span>,
         <span class="summary-sig-arg">**kw</span>)</span><br />
-      all tasks with no children</td>
+      all tasks with no (runnable) children</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="pyflow-pysrc.html#TaskDAG.getTailNodes">source&nbsp;code</a></span>
             
@@ -222,7 +225,8 @@
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
           <td><span class="summary-sig"><a name="_isRunExhaustedNode"></a><span class="summary-sig-name">_isRunExhaustedNode</span>(<span class="summary-sig-arg">self</span>,
-        <span class="summary-sig-arg">node</span>)</span></td>
+        <span class="summary-sig-arg">node</span>,
+        <span class="summary-sig-arg">searched</span>)</span></td>
           <td align="right" valign="top">
             <span class="codelink"><a href="pyflow-pysrc.html#TaskDAG._isRunExhaustedNode">source&nbsp;code</a></span>
             
@@ -278,7 +282,8 @@
         <tr>
           <td><span class="summary-sig"><a name="_getReadyTasksFromNode"></a><span class="summary-sig-name">_getReadyTasksFromNode</span>(<span class="summary-sig-arg">self</span>,
         <span class="summary-sig-arg">node</span>,
-        <span class="summary-sig-arg">ready</span>)</span><br />
+        <span class="summary-sig-arg">ready</span>,
+        <span class="summary-sig-arg">searched</span>)</span><br />
       helper function for getReadyTasks</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="pyflow-pysrc.html#TaskDAG._getReadyTasksFromNode">source&nbsp;code</a></span>
@@ -317,7 +322,8 @@
         <tr>
           <td><span class="summary-sig"><a name="_markCheckPointsCompleteFromNode"></a><span class="summary-sig-name">_markCheckPointsCompleteFromNode</span>(<span class="summary-sig-arg">self</span>,
         <span class="summary-sig-arg">node</span>,
-        <span class="summary-sig-arg">completed</span>)</span><br />
+        <span class="summary-sig-arg">completed</span>,
+        <span class="summary-sig-arg">searched</span>)</span><br />
       helper function for markCheckPointsComplete</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="pyflow-pysrc.html#TaskDAG._markCheckPointsCompleteFromNode">source&nbsp;code</a></span>
@@ -501,6 +507,9 @@
         <span class="sig-arg">taskInfoFile</span>,
         <span class="sig-arg">taskStateFile</span>,
         <span class="sig-arg">workflowClassName</span>,
+        <span class="sig-arg">startFromTasks</span>,
+        <span class="sig-arg">ignoreTasksAfter</span>,
+        <span class="sig-arg">resetTasks</span>,
         <span class="sig-arg">flowLog</span>)</span>
     <br /><em class="fname">(Constructor)</em>
   </h3>
@@ -609,7 +618,7 @@
     </td>
   </tr></table>
   
-  <p>all tasks with no children</p>
+  <p>all tasks with no (runnable) children</p>
   <dl class="fields">
     <dt>Decorators:</dt>
     <dd><ul class="nomargin-top">
@@ -872,7 +881,7 @@
 <table border="0" cellpadding="0" cellspacing="0" width="100%%">
   <tr>
     <td align="left" class="footer">
-    Generated by Epydoc 3.0.1 on Tue May  7 18:42:26 2013
+    Generated by Epydoc 3.0.1 on Mon Jul 15 08:58:34 2013
     </td>
     <td align="right" class="footer">
       <a target="mainFrame" href="http://epydoc.sourceforge.net"

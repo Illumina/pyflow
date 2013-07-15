@@ -65,6 +65,16 @@
 <area shape="rect" id="node36" href="pyflow.CommandTaskRunner-class.html#__init__" title="x.__init__(...) initializes x; see x.__class__.__doc__ for signature" alt="" coords="17,660,901,679"/>
 <area shape="rect" id="node36" href="pyflow.CommandTaskRunner-class.html#getExitMsg" title="Attempt to extract exit message from a failed command task, do not complain in case of any errors in task signal file for this case." alt="" coords="17,679,901,697"/>
 <area shape="rect" id="node2" href="pyflow.CommandTaskRunner-class.html" title="Parent to local and SGE TaskRunner specializations for command tasks" alt="" coords="5,614,912,703"/>
+<area shape="rect" id="node38" href="pyflow.StoppableThread-class.html#stopAll" title="quick global stop signal for threads that happen to poll stopped() very &#160;soon after event" alt="" coords="409,380,509,399"/>
+<area shape="rect" id="node38" href="pyflow.StoppableThread-class.html#stopped" title="pyflow.StoppableThread.stopped" alt="" coords="409,399,509,417"/>
+<area shape="rect" id="node3" href="pyflow.StoppableThread-class.html" title="Thread class with a stop() method." alt="" coords="397,347,520,423"/>
+<area shape="rect" id="node37" href="pyflow.BaseTaskRunner-class.html#run" title="BaseTaskRunner&#39;s run() method ensures that we can capture exceptions which &#160;might occur in this thread." alt="" coords="369,476,549,495"/>
+<area shape="rect" id="node37" href="pyflow.BaseTaskRunner-class.html#setRunstate" title="pyflow.BaseTaskRunner.setRunstate" alt="" coords="369,495,549,513"/>
+<area shape="rect" id="node37" href="pyflow.BaseTaskRunner-class.html#flowLog" title="pyflow.BaseTaskRunner.flowLog" alt="" coords="369,513,549,532"/>
+<area shape="rect" id="node37" href="pyflow.BaseTaskRunner-class.html#infoLog" title="pyflow.BaseTaskRunner.infoLog" alt="" coords="369,532,549,551"/>
+<area shape="rect" id="node37" href="pyflow.BaseTaskRunner-class.html#warningLog" title="pyflow.BaseTaskRunner.warningLog" alt="" coords="369,551,549,569"/>
+<area shape="rect" id="node37" href="pyflow.BaseTaskRunner-class.html#errorLog" title="pyflow.BaseTaskRunner.errorLog" alt="" coords="369,569,549,588"/>
+<area shape="rect" id="node4" href="pyflow.BaseTaskRunner-class.html" title="Each individual command&#45;task or sub workflow task is run on its own thread using a class inherited from BaseTaskRunner" alt="" coords="357,443,560,594"/>
 <area shape="rect" id="node39" href="javascript:void(0);" title="threading.Thread.name" alt="" coords="376,95,544,113"/>
 <area shape="rect" id="node39" href="javascript:void(0);" title="threading.Thread.ident" alt="" coords="376,113,544,132"/>
 <area shape="rect" id="node39" href="javascript:void(0);" title="threading.Thread.daemon" alt="" coords="376,132,544,151"/>
@@ -77,18 +87,8 @@
 <area shape="rect" id="node39" href="javascript:void(0);" title="threading.Thread.setDaemon" alt="" coords="376,265,544,284"/>
 <area shape="rect" id="node39" href="javascript:void(0);" title="threading.Thread.getName" alt="" coords="376,284,544,303"/>
 <area shape="rect" id="node39" href="javascript:void(0);" title="threading.Thread.setName" alt="" coords="376,303,544,321"/>
-<area shape="rect" id="node3" href="javascript:void(0);" title="threading.Thread" alt="" coords="364,70,556,327"/>
-<area shape="rect" id="node38" href="pyflow.StoppableThread-class.html#stopAll" title="quick global stop signal for threads that happen to poll stopped() very &#160;soon after event" alt="" coords="409,380,509,399"/>
-<area shape="rect" id="node38" href="pyflow.StoppableThread-class.html#stopped" title="pyflow.StoppableThread.stopped" alt="" coords="409,399,509,417"/>
-<area shape="rect" id="node4" href="pyflow.StoppableThread-class.html" title="Thread class with a stop() method." alt="" coords="397,347,520,423"/>
-<area shape="rect" id="node37" href="pyflow.BaseTaskRunner-class.html#run" title="BaseTaskRunner&#39;s run() method ensures that we can capture exceptions which &#160;might occur in this thread." alt="" coords="369,476,549,495"/>
-<area shape="rect" id="node37" href="pyflow.BaseTaskRunner-class.html#setRunstate" title="pyflow.BaseTaskRunner.setRunstate" alt="" coords="369,495,549,513"/>
-<area shape="rect" id="node37" href="pyflow.BaseTaskRunner-class.html#flowLog" title="pyflow.BaseTaskRunner.flowLog" alt="" coords="369,513,549,532"/>
-<area shape="rect" id="node37" href="pyflow.BaseTaskRunner-class.html#infoLog" title="pyflow.BaseTaskRunner.infoLog" alt="" coords="369,532,549,551"/>
-<area shape="rect" id="node37" href="pyflow.BaseTaskRunner-class.html#warningLog" title="pyflow.BaseTaskRunner.warningLog" alt="" coords="369,551,549,569"/>
-<area shape="rect" id="node37" href="pyflow.BaseTaskRunner-class.html#errorLog" title="pyflow.BaseTaskRunner.errorLog" alt="" coords="369,569,549,588"/>
-<area shape="rect" id="node6" href="pyflow.BaseTaskRunner-class.html" title="Each individual command&#45;task or sub workflow task is run on its own thread using a class inherited from BaseTaskRunner" alt="" coords="357,443,560,594"/>
-<area shape="rect" id="node5" href="javascript:void(0);" title="threading._Verbose" alt="" coords="391,6,529,50"/>
+<area shape="rect" id="node5" href="javascript:void(0);" title="threading.Thread" alt="" coords="364,70,556,327"/>
+<area shape="rect" id="node6" href="javascript:void(0);" title="threading._Verbose" alt="" coords="391,6,529,50"/>
 </map>
   <img src="uml_class_diagram_for_pyflow_s.png" alt='' usemap="#uml_class_diagram_for_pyflow_s" ismap="ismap" class="graph-without-title" />
 </center>
@@ -498,7 +498,7 @@
 <table border="0" cellpadding="0" cellspacing="0" width="100%%">
   <tr>
     <td align="left" class="footer">
-    Generated by Epydoc 3.0.1 on Tue May  7 18:42:25 2013
+    Generated by Epydoc 3.0.1 on Mon Jul 15 08:58:34 2013
     </td>
     <td align="right" class="footer">
       <a target="mainFrame" href="http://epydoc.sourceforge.net"

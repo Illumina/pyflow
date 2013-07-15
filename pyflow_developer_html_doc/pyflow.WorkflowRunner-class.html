@@ -55,21 +55,21 @@
 <h1 class="epydoc">Class WorkflowRunner</h1><p class="nomargin-top"><span class="codelink"><a href="pyflow-pysrc.html#WorkflowRunner">source&nbsp;code</a></span></p>
 <center>
 <center>  <map id="uml_class_diagram_for_pyflow_w_2" name="uml_class_diagram_for_pyflow_w_2">
-<area shape="rect" id="node59" href="pyflow.WorkflowRunner-class.html#run" title="Call this method to execute the workflow() method overridden in a child &#160;class and specify the resources available for the worfklow to run." alt="" coords="17,39,1984,57"/>
-<area shape="rect" id="node59" href="pyflow.WorkflowRunner-class.html#addTask" title="Add task to workflow, including resource requirements and specification of &#160;dependencies." alt="" coords="17,57,1984,76"/>
-<area shape="rect" id="node59" href="pyflow.WorkflowRunner-class.html#addWorkflowTask" title="Add another WorkflowRunner instance as a task to this workflow." alt="" coords="17,76,1984,95"/>
-<area shape="rect" id="node59" href="pyflow.WorkflowRunner-class.html#waitForTasks" title="Wait for a list of tasks to complete." alt="" coords="17,95,1984,113"/>
-<area shape="rect" id="node59" href="pyflow.WorkflowRunner-class.html#isTaskComplete" title="Query if a spefic task is in the workflow and completed without error." alt="" coords="17,113,1984,132"/>
-<area shape="rect" id="node59" href="pyflow.WorkflowRunner-class.html#getRunMode" title="Get the current run mode" alt="" coords="17,132,1984,151"/>
-<area shape="rect" id="node59" href="pyflow.WorkflowRunner-class.html#getNCores" title="Get the current run core limit" alt="" coords="17,151,1984,169"/>
-<area shape="rect" id="node59" href="pyflow.WorkflowRunner-class.html#limitNCores" title="Takes an task nCores argument and reduces it to the maximum value allowed &#160;for the current run." alt="" coords="17,169,1984,188"/>
-<area shape="rect" id="node59" href="pyflow.WorkflowRunner-class.html#getMemMb" title="Get the current run&#39;s total memory limit (in megabytes)" alt="" coords="17,188,1984,207"/>
-<area shape="rect" id="node59" href="pyflow.WorkflowRunner-class.html#limitMemMb" title="Takes a task memMb argument and reduces it to the maximum value allowed for the current run." alt="" coords="17,207,1984,225"/>
-<area shape="rect" id="node59" href="pyflow.WorkflowRunner-class.html#isDryRun" title="Get isDryRun flag value." alt="" coords="17,225,1984,244"/>
-<area shape="rect" id="node59" href="pyflow.WorkflowRunner-class.html#runModeDefaultCores" title="Get the default core limit for run mode (local,sge,..)" alt="" coords="17,244,1984,263"/>
-<area shape="rect" id="node59" href="pyflow.WorkflowRunner-class.html#flowLog" title="Send a message to the WorkflowRunner&#39;s log." alt="" coords="17,263,1984,281"/>
-<area shape="rect" id="node59" href="pyflow.WorkflowRunner-class.html#workflow" title="Workflow definition defined in child class" alt="" coords="17,281,1984,300"/>
-<area shape="rect" id="node1" href="pyflow.WorkflowRunner-class.html" title="This object is designed to be inherited by a class in client code." alt="" coords="5,6,1995,306"/>
+<area shape="rect" id="node59" href="pyflow.WorkflowRunner-class.html#run" title="Call this method to execute the workflow() method overridden in a child &#160;class and specify the resources available for the workflow to run." alt="" coords="17,39,2381,57"/>
+<area shape="rect" id="node59" href="pyflow.WorkflowRunner-class.html#addTask" title="Add task to workflow, including resource requirements and specification of &#160;dependencies." alt="" coords="17,57,2381,76"/>
+<area shape="rect" id="node59" href="pyflow.WorkflowRunner-class.html#addWorkflowTask" title="Add another WorkflowRunner instance as a task to this workflow." alt="" coords="17,76,2381,95"/>
+<area shape="rect" id="node59" href="pyflow.WorkflowRunner-class.html#waitForTasks" title="Wait for a list of tasks to complete." alt="" coords="17,95,2381,113"/>
+<area shape="rect" id="node59" href="pyflow.WorkflowRunner-class.html#isTaskComplete" title="Query if a spefic task is in the workflow and completed without error." alt="" coords="17,113,2381,132"/>
+<area shape="rect" id="node59" href="pyflow.WorkflowRunner-class.html#getRunMode" title="Get the current run mode" alt="" coords="17,132,2381,151"/>
+<area shape="rect" id="node59" href="pyflow.WorkflowRunner-class.html#getNCores" title="Get the current run core limit" alt="" coords="17,151,2381,169"/>
+<area shape="rect" id="node59" href="pyflow.WorkflowRunner-class.html#limitNCores" title="Takes an task nCores argument and reduces it to the maximum value allowed &#160;for the current run." alt="" coords="17,169,2381,188"/>
+<area shape="rect" id="node59" href="pyflow.WorkflowRunner-class.html#getMemMb" title="Get the current run&#39;s total memory limit (in megabytes)" alt="" coords="17,188,2381,207"/>
+<area shape="rect" id="node59" href="pyflow.WorkflowRunner-class.html#limitMemMb" title="Takes a task memMb argument and reduces it to the maximum value allowed for the current run." alt="" coords="17,207,2381,225"/>
+<area shape="rect" id="node59" href="pyflow.WorkflowRunner-class.html#isDryRun" title="Get isDryRun flag value." alt="" coords="17,225,2381,244"/>
+<area shape="rect" id="node59" href="pyflow.WorkflowRunner-class.html#runModeDefaultCores" title="Get the default core limit for run mode (local,sge,..)" alt="" coords="17,244,2381,263"/>
+<area shape="rect" id="node59" href="pyflow.WorkflowRunner-class.html#flowLog" title="Send a message to the WorkflowRunner&#39;s log." alt="" coords="17,263,2381,281"/>
+<area shape="rect" id="node59" href="pyflow.WorkflowRunner-class.html#workflow" title="Workflow definition defined in child class" alt="" coords="17,281,2381,300"/>
+<area shape="rect" id="node1" href="pyflow.WorkflowRunner-class.html" title="This object is designed to be inherited by a class in client code." alt="" coords="5,6,2392,306"/>
 </map>
   <img src="uml_class_diagram_for_pyflow_w_2.png" alt='' usemap="#uml_class_diagram_for_pyflow_w_2" ismap="ismap" class="graph-without-title" />
 </center>
@@ -150,9 +150,12 @@
         <span class="summary-sig-arg">isQuiet</span>=<span class="summary-sig-default">False</span>,
         <span class="summary-sig-arg">warningLogFile</span>=<span class="summary-sig-default">None</span>,
         <span class="summary-sig-arg">errorLogFile</span>=<span class="summary-sig-default">None</span>,
-        <span class="summary-sig-arg">successMsg</span>=<span class="summary-sig-default">None</span>)</span><br />
+        <span class="summary-sig-arg">successMsg</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">startFromTasks</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">ignoreTasksAfter</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">resetTasks</span>=<span class="summary-sig-default">None</span>)</span><br />
       Call this method to execute the workflow() method overridden in a 
-      child class and specify the resources available for the worfklow to 
+      child class and specify the resources available for the workflow to 
       run.</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="pyflow-pysrc.html#WorkflowRunner.run">source&nbsp;code</a></span>
@@ -1045,7 +1048,10 @@
         <span class="sig-arg">isQuiet</span>=<span class="sig-default">False</span>,
         <span class="sig-arg">warningLogFile</span>=<span class="sig-default">None</span>,
         <span class="sig-arg">errorLogFile</span>=<span class="sig-default">None</span>,
-        <span class="sig-arg">successMsg</span>=<span class="sig-default">None</span>)</span>
+        <span class="sig-arg">successMsg</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">startFromTasks</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">ignoreTasksAfter</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">resetTasks</span>=<span class="sig-default">None</span>)</span>
   </h3>
   </td><td align="right" valign="top"
     ><span class="codelink"><a href="pyflow-pysrc.html#WorkflowRunner.run">source&nbsp;code</a></span>&nbsp;
@@ -1053,7 +1059,7 @@
   </tr></table>
   
   <p>Call this method to execute the workflow() method overridden in a 
-  child class and specify the resources available for the worfklow to 
+  child class and specify the resources available for the workflow to 
   run.</p>
   <p>Task retry behaviour: Retry attempts will be made per the arguments 
   below for distributed workflow runs (eg. sge run mode). Note this means 
@@ -1113,13 +1119,13 @@
         <li><strong class="pname"><code>retryMode</code></strong> - Modes are 'nonlocal' and 'all'. For 'nonlocal' retries are not 
           attempted in local run mode. For 'all' retries are attemped for 
           any run mode. The default mode is 'nonolocal'.</li>
-        <li><strong class="pname"><code>mailTo</code></strong> - An email string or container of emails. Notification will be sent
-          to each email address when either (1) the run successfully 
-          completes (2) the first task error occurs or (3) an unhandled 
-          exception is raised. The intention is to send one status message 
-          per run() indicating either success or the reason for failure. 
-          This should occur for all cases except a host hardware/power 
-          failure.  Note that mail comes from 
+        <li><strong class="pname"><code>mailTo</code></strong> - An email address or container of email addresses. Notification 
+          will be sent to each email address when either (1) the run 
+          successfully completes (2) the first task error occurs or (3) an 
+          unhandled exception is raised. The intention is to send one 
+          status message per run() indicating either success or the reason 
+          for failure. This should occur for all cases except a host 
+          hardware/power failure.  Note that mail comes from 
           'pyflow-bot@workstation-centos64' (configurable), which may be 
           classified as junk-mail by your system.</li>
         <li><strong class="pname"><code>updateInterval</code></strong> - How often (in minutes) should pyflow log a status update message 
@@ -1142,6 +1148,17 @@
           prepended to pyflow's standard success notification. This message
           will appear in the log and any configured notifications (e.g. 
           email). The message may contain linebreaks.</li>
+        <li><strong class="pname"><code>startFromTasks</code></strong> (A single string, or set, tuple or list of strings) - A task label or container of task labels. Any tasks which are not
+          in this set or descendants of this set will be marked as 
+          completed.</li>
+        <li><strong class="pname"><code>ignoreTasksAfter</code></strong> (A single string, or set, tuple or list of strings) - A task label or container of task labels. All descendants of 
+          these task labels will be ignored.</li>
+        <li><strong class="pname"><code>resetTasks</code></strong> (A single string, or set, tuple or list of strings) - A task label or container of task labels. These tasks and all of 
+          their descendants will be reset to the &quot;waiting&quot; state 
+          to be re-run. Note this option will only effect a workflow which 
+          has been continued from a previous run. This will not overide any
+          nodes alterned by the startFromTasks setting in the case that 
+          both options are used together.</li>
     </ul></dd>
     <dt>Returns:</dt>
         <dd>0 if all tasks completed successfully and 1 otherwise</dd>
@@ -1210,7 +1227,7 @@
           process is used.</li>
         <li><strong class="pname"><code>nCores</code></strong> - Number of cpu threads required</li>
         <li><strong class="pname"><code>memMb</code></strong> - Amount of memory required (in megabytes)</li>
-        <li><strong class="pname"><code>dependencies</code></strong> (A single string, or set, tuple or list of strings) - A label string or container of labels specifying all dependent 
+        <li><strong class="pname"><code>dependencies</code></strong> (A single string, or set, tuple or list of strings) - A task label or container of task labels specifying all dependent
           tasks. Dependent tasks must already exist in the workflow.</li>
         <li><strong class="pname"><code>priority</code></strong> - Among all tasks which are eligible to run at the same time, 
           launch tasks with higher priority first. this value can be set 
@@ -1618,7 +1635,7 @@
 <table border="0" cellpadding="0" cellspacing="0" width="100%%">
   <tr>
     <td align="left" class="footer">
-    Generated by Epydoc 3.0.1 on Tue May  7 18:42:26 2013
+    Generated by Epydoc 3.0.1 on Mon Jul 15 08:58:35 2013
     </td>
     <td align="right" class="footer">
       <a target="mainFrame" href="http://epydoc.sourceforge.net"

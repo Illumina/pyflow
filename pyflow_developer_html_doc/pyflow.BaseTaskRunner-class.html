@@ -55,11 +55,6 @@
 <h1 class="epydoc">Class BaseTaskRunner</h1><p class="nomargin-top"><span class="codelink"><a href="pyflow-pysrc.html#BaseTaskRunner">source&nbsp;code</a></span></p>
 <center>
 <center>  <map id="uml_class_diagram_for_pyflow_b" name="uml_class_diagram_for_pyflow_b">
-<area shape="rect" id="node1" href="pyflow.WorkflowTaskRunner-class.html" title="Manages a sub&#45;workflow task" alt="" coords="24,670,187,709"/>
-<area shape="rect" id="node1" href="pyflow.StoppableThread-class.html#stop" title="thread specific stop method, may be overridden to add async thread&#45;specific kill behaviour" alt="" coords="152,380,252,399"/>
-<area shape="rect" id="node1" href="pyflow.StoppableThread-class.html#stopAll" title="quick global stop signal for threads that happen to poll stopped() very &#160;soon after event" alt="" coords="152,399,252,417"/>
-<area shape="rect" id="node1" href="pyflow.StoppableThread-class.html#stopped" title="pyflow.StoppableThread.stopped" alt="" coords="152,417,252,436"/>
-<area shape="rect" id="node2" href="pyflow.StoppableThread-class.html" title="Thread class with a stop() method." alt="" coords="140,347,263,442"/>
 <area shape="rect" id="node0" href="pyflow.BaseTaskRunner-class.html#__init__" title="x.__init__(...) initializes x; see x.__class__.__doc__ for signature" alt="" coords="17,495,388,513"/>
 <area shape="rect" id="node0" href="pyflow.BaseTaskRunner-class.html#run" title="BaseTaskRunner&#39;s run() method ensures that we can capture exceptions which &#160;might occur in this thread." alt="" coords="17,513,388,532"/>
 <area shape="rect" id="node0" href="pyflow.BaseTaskRunner-class.html#setRunstate" title="pyflow.BaseTaskRunner.setRunstate" alt="" coords="17,532,388,551"/>
@@ -68,7 +63,15 @@
 <area shape="rect" id="node0" href="pyflow.BaseTaskRunner-class.html#infoLog" title="pyflow.BaseTaskRunner.infoLog" alt="" coords="17,588,388,607"/>
 <area shape="rect" id="node0" href="pyflow.BaseTaskRunner-class.html#warningLog" title="pyflow.BaseTaskRunner.warningLog" alt="" coords="17,607,388,625"/>
 <area shape="rect" id="node0" href="pyflow.BaseTaskRunner-class.html#errorLog" title="pyflow.BaseTaskRunner.errorLog" alt="" coords="17,625,388,644"/>
-<area shape="rect" id="node5" href="pyflow.BaseTaskRunner-class.html" title="Each individual command&#45;task or sub workflow task is run on its own thread using a class inherited from BaseTaskRunner" alt="" coords="5,462,400,650"/>
+<area shape="rect" id="node1" href="pyflow.BaseTaskRunner-class.html" title="Each individual command&#45;task or sub workflow task is run on its own thread using a class inherited from BaseTaskRunner" alt="" coords="5,462,400,650"/>
+<area shape="rect" id="node4" href="pyflow.WorkflowTaskRunner-class.html" title="Manages a sub&#45;workflow task" alt="" coords="24,670,187,709"/>
+<area shape="rect" id="node8" href="pyflow.CommandTaskRunner-class.html" title="Parent to local and SGE TaskRunner specializations for command tasks" alt="" coords="216,670,384,709"/>
+<area shape="rect" id="node1" href="pyflow.StoppableThread-class.html#stop" title="thread specific stop method, may be overridden to add async thread&#45;specific kill behaviour" alt="" coords="152,380,252,399"/>
+<area shape="rect" id="node1" href="pyflow.StoppableThread-class.html#stopAll" title="quick global stop signal for threads that happen to poll stopped() very &#160;soon after event" alt="" coords="152,399,252,417"/>
+<area shape="rect" id="node1" href="pyflow.StoppableThread-class.html#stopped" title="pyflow.StoppableThread.stopped" alt="" coords="152,417,252,436"/>
+<area shape="rect" id="node2" href="pyflow.StoppableThread-class.html" title="Thread class with a stop() method." alt="" coords="140,347,263,442"/>
+<area shape="rect" id="node3" href="pyflow.LocalTaskRunner-class.html" title="pyflow.LocalTaskRunner" alt="" coords="147,729,285,767"/>
+<area shape="rect" id="node5" href="pyflow.SGETaskRunner-class.html" title="pyflow.SGETaskRunner" alt="" coords="315,729,451,767"/>
 <area shape="rect" id="node2" href="javascript:void(0);" title="threading.Thread.name" alt="" coords="119,95,287,113"/>
 <area shape="rect" id="node2" href="javascript:void(0);" title="threading.Thread.ident" alt="" coords="119,113,287,132"/>
 <area shape="rect" id="node2" href="javascript:void(0);" title="threading.Thread.daemon" alt="" coords="119,132,287,151"/>
@@ -81,11 +84,8 @@
 <area shape="rect" id="node2" href="javascript:void(0);" title="threading.Thread.setDaemon" alt="" coords="119,265,287,284"/>
 <area shape="rect" id="node2" href="javascript:void(0);" title="threading.Thread.getName" alt="" coords="119,284,287,303"/>
 <area shape="rect" id="node2" href="javascript:void(0);" title="threading.Thread.setName" alt="" coords="119,303,287,321"/>
-<area shape="rect" id="node3" href="javascript:void(0);" title="threading.Thread" alt="" coords="107,70,299,327"/>
-<area shape="rect" id="node4" href="pyflow.SGETaskRunner-class.html" title="pyflow.SGETaskRunner" alt="" coords="148,729,284,767"/>
-<area shape="rect" id="node7" href="pyflow.CommandTaskRunner-class.html" title="Parent to local and SGE TaskRunner specializations for command tasks" alt="" coords="216,670,384,709"/>
-<area shape="rect" id="node6" href="javascript:void(0);" title="threading._Verbose" alt="" coords="133,6,272,50"/>
-<area shape="rect" id="node8" href="pyflow.LocalTaskRunner-class.html" title="pyflow.LocalTaskRunner" alt="" coords="313,729,452,767"/>
+<area shape="rect" id="node6" href="javascript:void(0);" title="threading.Thread" alt="" coords="107,70,299,327"/>
+<area shape="rect" id="node7" href="javascript:void(0);" title="threading._Verbose" alt="" coords="133,6,272,50"/>
 </map>
   <img src="uml_class_diagram_for_pyflow_b.png" alt='' usemap="#uml_class_diagram_for_pyflow_b" ismap="ismap" class="graph-without-title" />
 </center>
@@ -471,7 +471,7 @@
 <table border="0" cellpadding="0" cellspacing="0" width="100%%">
   <tr>
     <td align="left" class="footer">
-    Generated by Epydoc 3.0.1 on Tue May  7 18:42:25 2013
+    Generated by Epydoc 3.0.1 on Mon Jul 15 08:58:34 2013
     </td>
     <td align="right" class="footer">
       <a target="mainFrame" href="http://epydoc.sourceforge.net"
