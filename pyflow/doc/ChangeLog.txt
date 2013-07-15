@@ -1,4 +1,4 @@
-v1.1.0
+v1.1.0 20130715
 * add new features to allow only part of workflow to be run and/or continued
 v1.0.1 20130710
 * Fix O(exp) scaling problems in DAG handling methods
