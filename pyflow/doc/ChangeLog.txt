@@ -1,3 +1,5 @@
+v1.1.1 20130716
+* fix issue with new startFromTasks feature when used with subWorkflows
 v1.1.0 20130715
 * add new features to allow only part of workflow to be run and/or continued
 v1.0.1 20130710
