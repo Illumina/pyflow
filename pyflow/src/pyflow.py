@@ -2277,6 +2277,18 @@ class TaskDAG(object) :
                     task.isAutoCompleted = False
                     break
 
+            #  in case of no-parents, also check sub-workflow node
+            if task.isAutoCompleted and (len(task.parents) == 0) and (namespace != ""):
+                wval=namespace.rsplit(namespaceSep,1)
+                if len(wval) == 2 :
+                    (workflowNamespace,workflowLabel)=wval
+                else :
+                    workflowNamespace=""
+                    workflowLabel=wval[0]
+                workflowParent = self.labelMap[(workflowNamespace, workflowLabel)]
+                if not workflowParent.isAutoCompleted :
+                    task.isAutoCompleted = False
+
         if task.isAutoCompleted :
             task.setRunstate("complete")
 

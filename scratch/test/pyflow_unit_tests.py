@@ -283,6 +283,48 @@ class TestWorkflowRunner(unittest.TestCase) :
         self.assertTrue(not os.path.exists(file))
 
 
+    def test_startFromTasksSubWflow(self) :
+        """
+        run() option to ignore all tasks before a specified task node
+        """
+        file="%s/tmp.txt" % (self.testPath)
+
+        class SubWorkflow(WorkflowRunner) :
+            def workflow(self2) :
+                self2.addTask("D","touch "+file)
+
+        class SelfWorkflow(WorkflowRunner) :
+            def workflow(self2) :
+                self2.addTask("A","sleep 1")
+                self2.addWorkflowTask("B",SubWorkflow(),dependencies="A")
+                self2.addTask("C","sleep 1",dependencies=("A","B"))
+
+        w=SelfWorkflow()
+        self.assertTrue(0==w.run("local",self.testPath,isQuiet=True,startFromTasks="B"))
+        self.assertTrue(os.path.exists(file))
+
+
+    def test_startFromTasksSubWflow2(self) :
+        """
+        run() option to ignore all tasks before a specified task node
+        """
+        file="%s/tmp.txt" % (self.testPath)
+
+        class SubWorkflow(WorkflowRunner) :
+            def workflow(self2) :
+                self2.addTask("D","touch "+file)
+
+        class SelfWorkflow(WorkflowRunner) :
+            def workflow(self2) :
+                self2.addTask("A","sleep 1")
+                self2.addWorkflowTask("B",SubWorkflow(),dependencies="A")
+                self2.addTask("C","sleep 1",dependencies=("A","B"))
+
+        w=SelfWorkflow()
+        self.assertTrue(0==w.run("local",self.testPath,isQuiet=True,startFromTasks="C"))
+        self.assertTrue(not os.path.exists(file))
+
+
     def test_ignoreTasksAfter(self) :
         """
         run() option to ignore all tasks below a specified task node
