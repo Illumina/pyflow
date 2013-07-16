@@ -236,7 +236,7 @@ class TestWorkflowRunner(unittest.TestCase) :
         This tests that pyflow does not scale poorly with highly connected subgraphs.
 
         When the error occurs, it locks the primary thread, so we put the test workflow
-        on it's own thread so that we can time it and issue an error.
+        on its own thread so that we can time it and issue an error.
 
         Issue reported by R Kelley and A Halpern
         """
