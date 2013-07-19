@@ -53,6 +53,10 @@ cat pyflow/README.txt |\
 sed "s/\${VERSION}/$gitversion/" >|\
 $pname/README.txt
 
+cat pyflow/setup.py |\
+sed "s/\${VERSION}/$gitversion/" >|\
+$pname/setup.py
+
 chmod +x $pname/src/pyflow.py
 
 cd $outdir
