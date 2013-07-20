@@ -40,8 +40,21 @@ relative priorities to be run or queued first.
 
 INSTALL:
 
-pyFlow is a python module, so it needs to be present in your python
-module search path to run workflows. For instance:
+pyFlow can be installed and used on python versions in the 2.4 to
+2.7 series
+
+The pyflow module can be installed using standard python distutils
+intallation. To do so unpack the tarball and use the setup script
+as follows:
+
+"""
+tar -xzf pyflow-X.Y.Z.tar.gz
+cd pyflow-X.Y.Z
+python setup.py build install
+"""
+
+If installation in not convenient, you can simply add the pyflow 
+src/ directory to the system search path. For instance:
 
 usepyflow.py:
 """
@@ -49,10 +62,7 @@ import sys
 sys.path.append("/path/to/pyflow/src")
 
 from pyflow import WorkflowRunner
-
 """
-
-It has been maintained to run on python versions 2.4 to 2.7 
 
 
 

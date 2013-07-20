@@ -1,9 +1,9 @@
 from distutils.core import setup
 
 setup(
-      name='PyFlow',
+      name='pyFlow',
       version='${VERSION}',
-      description='Tool for running python workflows"',
+      description='A lightweight parallel task engine',
       author='Chris Saunders',
       author_email='csaunders@illumina.com',
       packages=['pyflow'],
