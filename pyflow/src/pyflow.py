@@ -3704,7 +3704,7 @@ class WorkflowRunner(object) :
             status = self._tdag.getTaskStatus()
             isSpecComplete = (runStatus.isSpecificationComplete.isSet() and status.isAllSpecComplete)
             report = []
-            report.append("***** " + self._whoami() + " StatusUpdate *****")
+            report.append("===== " + self._whoami() + " StatusUpdate =====")
             report.append("Workflow specification is complete?: %s" % (str(isSpecComplete)))
             report.append("Task status (waiting/queued/running/complete/error): %i/%i/%i/%i/%i"
                           % (status.waiting, status.queued, status.running, status.complete, status.error))
