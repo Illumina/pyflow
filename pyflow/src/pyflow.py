@@ -2947,8 +2947,8 @@ class WorkflowRunner(object) :
 
         @param resetTasks: A task label or container of task labels. These tasks and all
                            of their descendants will be reset to the "waiting" state to be re-run.
-                           Note this option will only effect a workflow which has been continued
-                           from a previous run. This will not overide any nodes alterned by the
+                           Note this option will only affect a workflow which has been continued
+                           from a previous run. This will not overide any nodes altered by the
                            startFromTasks setting in the case that both options are used together.
         @type resetTasks: A single string, or set, tuple or list of strings
         """
