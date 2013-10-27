@@ -1,3 +1,4 @@
+v1.1.2 20131026
 * added python distutils setup.py provided by Ryan Kelley
 v1.1.1 20130716
 * fix issue with new startFromTasks feature when used with subWorkflows

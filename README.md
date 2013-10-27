@@ -5,7 +5,12 @@
 This is the root of the pyflow development repository. Note this is not
 the pyflow distribution tarball.
 
-To create a release tarball corresponding to a specific version, run:
+Recent release tarballs can be found on the github release list here:
+
+https://github.com/ctsa/pyflow/releases
+
+
+To create a release tarball corresponding to any other version version, run:
 
     git clone git://github.com/ctsa/pyflow.git pyflow
     cd pyflow
