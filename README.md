@@ -10,7 +10,7 @@ Recent release tarballs can be found on the github release list here:
 https://github.com/ctsa/pyflow/releases
 
 
-To create a release tarball corresponding to any other version version, run:
+To create a release tarball corresponding to any other version, run:
 
     git clone git://github.com/ctsa/pyflow.git pyflow
     cd pyflow

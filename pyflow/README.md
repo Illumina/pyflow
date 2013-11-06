@@ -1,12 +1,13 @@
 
 pyFlow - a lightweight parallel task engine 
-
+===========================================
 
 Chris Saunders (csaunders@illumina.com)
 Version: ${VERSION}
 
 
 SUMMARY:
+--------
 
 pyFlow manages running tasks in the context of a task dependency
 graph. It has some similarities to make. pyFlow is not a program -- it
@@ -15,6 +16,7 @@ regular python code with the pyFlow API.
 
 
 FEATURES:
+---------
 
 - Define workflows as python code
 - Run workflows on localhost or sge
@@ -39,6 +41,7 @@ relative priorities to be run or queued first.
 
 
 INSTALL:
+--------
 
 pyFlow can be installed and used on python versions in the 2.4 to
 2.7 series
@@ -47,26 +50,27 @@ The pyflow module can be installed using standard python distutils
 intallation. To do so unpack the tarball and use the setup script
 as follows:
 
-"""
+```
 tar -xzf pyflow-X.Y.Z.tar.gz
 cd pyflow-X.Y.Z
 python setup.py build install
-"""
+```
 
 If installation in not convenient, you can simply add the pyflow 
 src/ directory to the system search path. For instance:
 
 usepyflow.py:
-"""
+```
 import sys
 sys.path.append("/path/to/pyflow/src")
 
 from pyflow import WorkflowRunner
-"""
+```
 
 
 
 WRITING WORKFLOWS:
+------------------
 
 Briefly, pyFlow workflows are written by creating a new class which
 inherits from pyflow.WorkflowRunner. This class then defines its
@@ -90,12 +94,13 @@ is also available in ${pyflowDir}/demo/bclToBwaBam
 
 
 USING WORKFLOWS:
+----------------
 
 When running a pyFlow workflow, all logs and state information are
 written into a single "pyflow.data" directory. The root of this
 directory is specified in the workflow.run() call.
 
-Logging:
+### Logging:
 
 pyFlow creates a primary workflow-level log, and 2 log files to
 capture all task stdout and stderr, respectively.
@@ -126,7 +131,7 @@ multiple runs. The workflow_run id can be used to select out the
 information from a specific run if restarting/continuing a run 
 multiple times.
 
-State:
+### State:
 
 pyFlow continues jobs by marking their status in a file, *not* by
 looking for the presence of file targets. This is a major difference
@@ -139,7 +144,9 @@ task is in pyflow.data/state/pyflow_tasks_info.txt. At the beginning of
 each run any existing task files are backed up in
 pyflow.data/state/backup.
  
-Other - Email notification:
+### Other:
+
+#### Other - Email notification:
 
 When running a workflow with one or more email addresses given in the
 mailTo argument, pyflow will attempt to send a notification describing the
@@ -154,7 +161,7 @@ filter to recieve notifications. It is best to configure one of the demo
 scripts to email you on a new machine to test out any issues before starting
 a production run.
 
-Other - Graph output:
+#### Other - Graph output:
 
 pyFlow provides a script which can be used to produce a graph of the current
 task dependencies, where each node colored by the task status. The graph
@@ -166,13 +173,14 @@ pyflow.data/state/make_pyflow_task_graph.py
 This script can be run without arguments to produce the current task graph in
 dot format based on the data files in the pyflow.data/state/ directory.
 
-Other -- Site configuration:
+#### Other -- Site configuration:
 
 The file ${pyflowDir}/src/pyflowConfig.py contains any pyflow variables or
 functions which would be likely to need configuration at a new site. This
 currently incudes:
--- from: email address from pyflow
--- default memory per task
--- default memory available per thread in localhost mode
--- qsub arguments given in response to a resource request.
+
+- from: email address from pyflow
+- default memory per task
+- default memory available per thread in localhost mode
+- qsub arguments given in response to a resource request.
 

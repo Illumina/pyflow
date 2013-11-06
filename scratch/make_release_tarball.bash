@@ -49,9 +49,9 @@ cat pyflow/src/pyflow.py |\
 sed "s/pyflowAutoVersion = None/pyflowAutoVersion = \"$gitversion\"/" >|\
 $pname/src/pyflow.py
 
-cat pyflow/README.txt |\
+cat pyflow/README.md |\
 sed "s/\${VERSION}/$gitversion/" >|\
-$pname/README.txt
+$pname/README.md
 
 cat pyflow/setup.py |\
 sed "s/\${VERSION}/$gitversion/" >|\
