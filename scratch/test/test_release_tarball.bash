@@ -23,7 +23,7 @@ thisdir=$(dirname $0)
 
 cd $thisdir/..
 testname=TESTBALL
-make_release_tarball.bash $testname
+bash ./make_release_tarball.bash $testname
 tar -xzf $testname.tar.gz
 
 testdir=$(pwd)/$testname
