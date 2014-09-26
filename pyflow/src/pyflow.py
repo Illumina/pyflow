@@ -104,10 +104,29 @@ def getPyflowVersion() :
 __version__ = getPyflowVersion()
 
 
+# portability functions:
+#
+
+def isWindows() :
+    import platform
+    return (platform.system().find("Windows") > -1):
+
+
+def forceRename(src,dst) :
+    """
+    dst is only overwritten in a single atomic operation on *nix
+    on windows, we can't have atomic rename, but we can recreate the behavior otherwise
+    """
+    import os
+    if isWindows() :
+        if os.path.exists(dst) :
+            os.remove(dst)
+    os.rename(src,dst)
+
+
 
 # utility values and functions:
 #
-
 
 def ensureDir(d):
     """
@@ -2311,7 +2330,7 @@ class TaskDAG(object) :
     @lockMethod
     def writeTaskStatus(self) :
         """
-        atomic update of the runstate and errorstate for all tasks
+        (atomic on *nix) update of the runstate and errorstate for all tasks
         """
         # don't write task status during dry runs:
         if self.isDryRun : return
@@ -2324,8 +2343,8 @@ class TaskDAG(object) :
             runstateUpdateTimeStr = timeStampToTimeStr(node.runstateUpdateTimeStamp)
             tmpFp.write("%s\t%s\t%s\t%i\t%s\n" % (label, namespace, node.runstate, node.errorstate, runstateUpdateTimeStr))
         tmpFp.close()
-        # TODO atomic move is not portable to windows, will raise OSError:
-        os.rename(tmpFile, self.taskStateFile)
+
+        forceRename(tmpFile, self.taskStateFile)
 
 
     @lockMethod
@@ -2971,11 +2990,13 @@ class WorkflowRunner(object) :
             import signal
             if not inHandlers.isSet :
                 inHandlers.sigterm = signal.getsignal(signal.SIGTERM)
-                inHandlers.sighup = signal.getsignal(signal.SIGHUP)
+                if not isWindows() :
+                    inHandlers.sighup = signal.getsignal(signal.SIGHUP)
                 inHandlers.isSet = True
             try:
                 signal.signal(signal.SIGTERM, sigtermHandler)
-                signal.signal(signal.SIGHUP, sighupHandler)
+                if not isWindows() :
+                    signal.signal(signal.SIGHUP, sighupHandler)
             except ValueError:
                 if isMainThread() :
                     raise
@@ -2988,7 +3009,8 @@ class WorkflowRunner(object) :
             if not inHandlers.isSet : return
             try :
                 signal.signal(signal.SIGTERM, inHandlers.sigterm)
-                signal.signal(signal.SIGHUP, inHandlers.sighup)
+                if not isWindows() :
+                    signal.signal(signal.SIGHUP, inHandlers.sighup)
             except ValueError:
                 if isMainThread() :
                     raise
@@ -3828,7 +3850,7 @@ class WorkflowRunner(object) :
             complete.add(namespaceJoin(namespace, label))
 
         tmpfp.close()
-        os.rename(tmpFile, cdata.taskStateFile)
+        forceRename(tmpFile, cdata.taskStateFile)
         return complete
 
 
@@ -3858,7 +3880,7 @@ class WorkflowRunner(object) :
             self._tdag.addTask(namespace, label, payload, getTaskInfoDepSet(depStr), isContinued=True)
 
         tmpfp.close()
-        os.rename(tmpFile, cdata.taskInfoFile)
+        forceRename(tmpFile, cdata.taskInfoFile)
 
 
 
