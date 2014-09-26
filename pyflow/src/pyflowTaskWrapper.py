@@ -10,7 +10,7 @@
 #
 """
 This script wraps workflow tasks for execution on local or remote
-hosts.  It is responsable for adding log decorations to task's stderr
+hosts.  It is responsible for adding log decorations to task's stderr
 output (which is diverted to a file), and writing task state transition
 and error information to the wrapper's stderr, which becomes the
 task's 'signal' file from pyflow's perspective. The signal file is
