@@ -109,7 +109,7 @@ __version__ = getPyflowVersion()
 
 def isWindows() :
     import platform
-    return (platform.system().find("Windows") > -1):
+    return (platform.system().find("Windows") > -1)
 
 
 def forceRename(src,dst) :
