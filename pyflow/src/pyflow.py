@@ -70,6 +70,19 @@ except AttributeError:
     pass
 
 
+class GlobalSync :
+    """
+    Control total memory usage in non-local run modes by
+    limiting the number of simultaneous subprocess calls
+
+    Note that in practice this only controls the total number
+    of qsub/qstat calls in SGE mode
+    """
+    maxSubprocess = 2
+    subprocessControl = threading.Semaphore(maxSubprocess)
+
+
+
 def getPythonVersion() :
     python_version = sys.version_info
     return ".".join([str(i) for i in python_version])
@@ -1195,20 +1208,30 @@ class QCaller(threading.Thread) :
         # observed to block the Popen() call below when using
         # python 2.7.2:
         #
-        tmp_proc = subprocess.Popen(self.cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, shell=False)
-        self.lock.acquire()
-        try:
-            self.proc = tmp_proc
-            # handle the case where Popen was taking its good sweet time and a killProc() was sent in the meantime:
-            if self.is_kill_attempt: self.killProc()
+        # Oct 2014 - also wrapped this call with a semaphore because
+        # of the high memory usage associated with each qsub/qstat
+        # subprocess. This was causing pyflow jobs to become unstable
+        # as they would spontaniously exceed the maximum allowed master
+        # proecess memory.
+        #
+        GlobalSync.subprocessControl.acquire()
+        try :
+            tmp_proc = subprocess.Popen(self.cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, shell=False)
+            self.lock.acquire()
+            try:
+                self.proc = tmp_proc
+                # handle the case where Popen was taking its good sweet time and a killProc() was sent in the meantime:
+                if self.is_kill_attempt: self.killProc()
+            finally:
+                self.lock.release()
+
+            if self.is_kill_attempt: return
+
+            for line in self.proc.stdout :
+                self.results.outList.append(line)
+            self.results.retval = self.proc.wait()
         finally:
-            self.lock.release()
-
-        if self.is_kill_attempt: return
-
-        for line in self.proc.stdout :
-            self.results.outList.append(line)
-        self.results.retval = self.proc.wait()
+            GlobalSync.subprocessControl.release()
         self.results.isComplete = True
 
     @lockMethod
