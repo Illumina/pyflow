@@ -1,3 +1,6 @@
+v1.1.3 20141028
+* fix master node memory spike for SGE jobs identified by Lilian Janin
+* added Windows OS patches form Tobias Mann
 v1.1.2 20131026
 * added python distutils setup.py provided by Ryan Kelley
 v1.1.1 20130716
