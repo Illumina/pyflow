@@ -339,6 +339,21 @@ class TestWorkflowRunner(unittest.TestCase) :
         self.assertTrue(0==w.run("local",self.testPath,isQuiet=True,ignoreTasksAfter="B"))
         self.assertTrue(not w.isTaskComplete("C"))
 
+    def test_addTaskOutsideWorkflow(self) :
+        """
+        test that calling addTask() outside of a workflow() method
+        raises an exception
+        """
+
+        class SelfWorkflow(WorkflowRunner) :
+            def __init__(self2) :
+                self2.addTask("A","sleep 1")
+
+        try :
+            w=SelfWorkflow()
+            self.fail("Didn't raise Exception")
+        except :
+            pass
 
 if __name__ == '__main__' :
     unittest.main()

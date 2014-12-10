@@ -7,7 +7,7 @@
 #
 # You should have received a copy of the Illumina Open Source
 # Software License 1 along with this program. If not, see
-# <https://github.com/sequencing/licenses/> 
+# <https://github.com/sequencing/licenses/>
 #
 
 """
@@ -1043,7 +1043,9 @@ class WorkflowTaskRunner(BaseTaskRunner) :
         namespace = self.workflow._getNamespace()
         nsLabel = namespaceLabel(namespace)
         self.infoLog("Starting task specification for %s" % (nsLabel))
+        self.workflow._isRunning=True
         self.workflow.workflow()
+        del self.workflow._isRunning
         self.runStatus.isSpecificationComplete.set()
         self.infoLog("Finished task specification for %s, waiting for task completion" % (nsLabel))
         retval = self.workflow._waitForTasksCore(namespace, isVerbose=False)
@@ -3233,6 +3235,8 @@ class WorkflowRunner(object) :
                 the workflow retryMode value.
         """
 
+        self._requireInWorkflow()
+
         #### Canceled plans to add deferrred dependencies:
         # # deferredDependencies -- A container of labels specifying dependent
         # #                         tasks which have not yet been added to the
@@ -3337,6 +3341,8 @@ class WorkflowRunner(object) :
         @type dependencies: A single string, or set, tuple or list of strings
         """
 
+        self._requireInWorkflow()
+
         # sanity check label:
         WorkflowRunner._checkTaskLabel(label)
 
@@ -3385,6 +3391,8 @@ class WorkflowRunner(object) :
         @type labels: A single string, or set, tuple or list of strings
         """
 
+        self._requireInWorkflow()
+
         return self._waitForTasksCore(self._getNamespace(), labels)
 
 
@@ -3399,6 +3407,7 @@ class WorkflowRunner(object) :
 
         @return: Completion status of task
         """
+
         return self._isTaskCompleteCore(self._getNamespace(), taskLabel)
 
 
@@ -3413,6 +3422,9 @@ class WorkflowRunner(object) :
 
         @return: Current run mode
         """
+
+        self._requireInWorkflow()
+
         return self._cdata().param.mode
 
 
@@ -3427,6 +3439,9 @@ class WorkflowRunner(object) :
         @return: Total cores available to this workflow run
         @rtype: Integer value or 'unlimited'
         """
+
+        self._requireInWorkflow()
+
         return self._cdata().param.nCores
 
 
@@ -3439,6 +3454,9 @@ class WorkflowRunner(object) :
 
         @return: Min(nCores,Total cores available to this workflow run)
         """
+
+        self._requireInWorkflow()
+
         nCores = int(nCores)
         runNCores = self._cdata().param.nCores
         if runNCores == "unlimited" : return nCores
@@ -3452,6 +3470,9 @@ class WorkflowRunner(object) :
         @return: Memory limit in megabytes
         @rtype: Integer value or 'unlimited'
         """
+
+        self._requireInWorkflow()
+
         return self._cdata().param.memMb
 
 
@@ -3464,6 +3485,9 @@ class WorkflowRunner(object) :
 
         @return: Min(memMb,Total memory available to this workflow run)
         """
+
+        self._requireInWorkflow()
+
         memMb = int(memMb)
         runMemMb = self._cdata().param.memMb
         if runMemMb == "unlimited" : return memMb
@@ -3480,6 +3504,9 @@ class WorkflowRunner(object) :
 
         @return: DryRun status flag
         """
+
+        self._requireInWorkflow()
+
         return self._cdata().param.isDryRun
 
 
@@ -3495,6 +3522,7 @@ class WorkflowRunner(object) :
         @rtype: Either 'unlimited', or a string
                  representation of the integer limit
         """
+
         return str(RunMode.data[mode].defaultCores)
 
 
@@ -3507,6 +3535,9 @@ class WorkflowRunner(object) :
         @param logState: Message severity, defaults to INFO.
         @type logState: A value in pyflow.LogState.{INFO,WARNING,ERROR}
         """
+
+        self._requireInWorkflow()
+
         linePrefixOut = "[%s]" % (self._cdata().param.workflowClassName)
         self._cdata().flowLog(msg, linePrefix=linePrefixOut, logState=logState)
 
@@ -3991,6 +4022,20 @@ class WorkflowRunner(object) :
                     "Elapsed time for full workflow: %s sec" % (elapsed)])
         self._notify(msg,logState=LogState.INFO)
         return 0
+
+
+    def _requireInWorkflow(self) :
+        """
+        check that the calling method is being called as part of a pyflow workflow() method only
+        """
+        isFail = False
+        try:
+             isFail = (not self._isRunning)
+        except AttributeError:
+            isFail = True
+
+        if isFail:
+            raise Exception("Method must be a (call stack) decendent of WorkflowRunner workflow() method (via run() method)")
 
 
 if __name__ == "__main__" :
