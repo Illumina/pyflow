@@ -17,8 +17,10 @@ import sys
 pyflowDir = os.path.abspath(os.path.join(os.path.dirname(__file__), "../../src"))
 sys.path.append(pyflowDir)
 
-from optparse import OptionParser
+from optparse import OptionParser, SUPPRESS_HELP
 from pyflow import WorkflowRunner
+
+from pyflow import isLocalSmtp
 
 
 localDefaultCores = WorkflowRunner.runModeDefaultCores('local')
@@ -39,16 +41,25 @@ def getDemoRunOptions() :
     parser.add_option("-q", "--queue", type="string", dest="queue",
                       help="Specify sge queue name. Argument ignored if mode is not sge")
     parser.add_option("-j", "--jobs", type="string", dest="jobs",
-	              help="Number of jobs, must be an integer or 'unlimited' (default: %s for local mode, %s for sge mode)" % (localDefaultCores, sgeDefaultCores))
+	                  help="Number of jobs, must be an integer or 'unlimited' (default: %s for local mode, %s for sge mode)" % (localDefaultCores, sgeDefaultCores))
     parser.add_option("-g", "--memGb", type="string", dest="memGb",
-	              help="Gigabytes of memory available to run workflow -- only meaningful in local mode, must be an integer or 'unlimited' (default: 2*jobs for local mode, 'unlimited' for sge mode)")
-    parser.add_option("-e", "--mailTo", type="string", dest="mailTo", action="append",
-	              help="Send email notification of job completion status to this address (may be provided multiple times for more than one email address)")
+	               help="Gigabytes of memory available to run workflow -- only meaningful in local mode, must be an integer or 'unlimited' (default: 2*jobs for local mode, 'unlimited' for sge mode)")
     parser.add_option("-r", "--resume", dest="isResume", action="store_true", default=False,
                       help="Resume a workflow from the point of interuption. This flag has no effect on a new workflow run.")
 
+    isEmail = isLocalSmtp()
+    emailHelp=SUPPRESS_HELP
+    if isEmail:
+        emailHelp="Send email notification of job completion status to this address (may be provided multiple times for more than one email address)"
+
+    parser.add_option("-e", "--mailTo", type="string", dest="mailTo", action="append",
+                      help=emailHelp)
+        
 
     (options, args) = parser.parse_args()
+
+    if not isEmail :
+        options.mailTo = None
 
     if len(args) :
         parser.print_help()
