@@ -2796,14 +2796,15 @@ The associated pyflow job details are as follows:
         # down to the caller.
         #
         
+        if self.param is None : return
+        if len(self.param.mailTo) == 0 : return
+
         if not isLocalSmtp() :
             if emailErrorLog :
                 msg = ["email notification failed, no local smtp server"]
                 emailErrorLog(msg,logState=LogState.WARNING)
             return
 
-        if self.param is None : return
-        if len(self.param.mailTo) == 0 : return
         mailTo = sorted(list(self.param.mailTo))
         subject = "pyflow notification from %s run: %s" % (self.param.workflowClassName, self.getRunid())
         msg = msgListToMsg(msgList)
