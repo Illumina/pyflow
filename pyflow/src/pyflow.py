@@ -345,6 +345,18 @@ def verifyEmailAddy(x) :
     return (emailRegex.match(x) is not None)
 
 
+def isLocalSmtp() :
+    """
+    return true if a local smtp server is available
+    """
+    import smtplib
+    try :
+        s = smtplib.SMTP('localhost')
+    except :
+        return False
+    return True
+
+
 def sendEmail(mailTo, mailFrom, subject, msgList) :
     import smtplib
     # this is the way to import MIMEText in py 2.4:
@@ -2783,7 +2795,12 @@ The associated pyflow job details are as follows:
         # be handlded and logged, otherwise the exception will be re-raised
         # down to the caller.
         #
-        import smtplib
+        
+        if not isLocalSmtp() :
+            if emailErrorLog :
+                msg = ["email notification failed, no local smtp server"]
+                emailErrorLog(msg,logState=LogState.WARNING)
+            return
 
         if self.param is None : return
         if len(self.param.mailTo) == 0 : return
@@ -2796,6 +2813,7 @@ The associated pyflow job details are as follows:
                       '"""']
         fullMsgList.extend(self.getInfoMsg())
 
+        import smtplib
         try:
             sendEmail(mailTo, siteConfig.mailFrom, subject, fullMsgList)
         except smtplib.SMTPException :
@@ -2803,7 +2821,7 @@ The associated pyflow job details are as follows:
             msg = ["email notification failed"]
             eMsg = lister(getExceptionMsg())
             msg.extend(eMsg)
-            emailErrorLog(msg,logState=LogState.ERROR)
+            emailErrorLog(msg,logState=LogState.WARNING)
 
 
 
