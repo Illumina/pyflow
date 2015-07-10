@@ -1,3 +1,4 @@
+* [#5] fix in-workflow check for nested workflows
 v1.1.4 20150527
 * added check for local SMTP service before sending email notification
 * added extra check aginst workflow methods running outside of pyflow runtime
