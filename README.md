@@ -1,6 +1,6 @@
 
-## pyFlow -- a lightweight parallel task engine
-
+pyFlow - a lightweight parallel task engine
+===========================================
 
 This is the root of the pyflow development repository. Note this is not
 the pyflow distribution tarball.
@@ -18,7 +18,13 @@ To create a release tarball corresponding to any other version, run:
     ./scratch/make_release_tarball.bash
     # tarball is "./pyflow-${VERSION}.tar.gz"
 
-### Contents
+LICENSE:
+--------
+
+pyFlow source code is provided under the [BSD 2-Clause License] (pyflow/COPYRIGHT.txt).
+
+Contents:
+---------
 
 For the development repository (this directory), the sub-directories are:
 

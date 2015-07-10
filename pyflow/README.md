@@ -14,7 +14,6 @@ graph. It has some similarities to make. pyFlow is not a program -- it
 is a python module, and workflows are defined using pyFlow by writing
 regular python code with the pyFlow API.
 
-
 FEATURES:
 ---------
 
@@ -39,6 +38,10 @@ relative priorities to be run or queued first.
 - Provide ongoing task summary report at specified intervals
 - Output task graph in dot format
 
+LICENSE:
+--------
+
+pyFlow source code is provided under the [BSD 2-Clause License] (COPYRIGHT.txt).
 
 INSTALL:
 --------
