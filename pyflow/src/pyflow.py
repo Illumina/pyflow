@@ -1055,9 +1055,9 @@ class WorkflowTaskRunner(BaseTaskRunner) :
         namespace = self.workflow._getNamespace()
         nsLabel = namespaceLabel(namespace)
         self.infoLog("Starting task specification for %s" % (nsLabel))
-        self.workflow._isRunning=True
+        self.workflow._setRunning(True)
         self.workflow.workflow()
-        del self.workflow._isRunning
+        self.workflow._setRunning(False)
         self.runStatus.isSpecificationComplete.set()
         self.infoLog("Finished task specification for %s, waiting for task completion" % (nsLabel))
         retval = self.workflow._waitForTasksCore(namespace, isVerbose=False)
@@ -3378,7 +3378,7 @@ class WorkflowRunner(object) :
             if n in publicExclude : continue
             setattr(workflowCopy, n, getattr(self, n))
 
-        privateInclude = ["_cdata", "_addTaskCore", "_waitForTasksCore", "_isTaskCompleteCore"]
+        privateInclude = ["_cdata", "_addTaskCore", "_waitForTasksCore", "_isTaskCompleteCore","_setRunning","_getRunning"]
         for n in privateInclude :
             setattr(workflowCopy, n, getattr(self, n))
 
@@ -4047,14 +4047,23 @@ class WorkflowRunner(object) :
         """
         check that the calling method is being called as part of a pyflow workflow() method only
         """
-        isFail = False
-        try:
-             isFail = (not self._isRunning)
-        except AttributeError:
-            isFail = True
+        if not self._getRunning():
+            raise Exception("Method must be a (call stack) descendant of WorkflowRunner workflow() method (via run() method)")
 
-        if isFail:
-            raise Exception("Method must be a (call stack) decendent of WorkflowRunner workflow() method (via run() method)")
+
+    def _setRunning(self, isRunning) :
+        if isRunning :
+            self._isRunning = True
+        else :
+            del self._isRunning
+
+
+    def _getRunning(self) :
+        try :
+            return (self._isRunning)
+        except AttributeError :
+            return False
+
 
 
 if __name__ == "__main__" :
