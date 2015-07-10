@@ -355,6 +355,29 @@ class TestWorkflowRunner(unittest.TestCase) :
         except :
             pass
 
+    def test_runModeInSubWorkflow(self) :
+        """
+        test that calling getRunMode() in a sub-workflow() method
+        does not raise an exception (github issue #5)
+        """
+
+        class SubWorkflow(WorkflowRunner) :
+            def workflow(self2) :
+                if self2.getRunMode() == "local" :
+                    self2.addTask("D","sleep 1")
+
+        class SelfWorkflow(WorkflowRunner) :
+            def workflow(self2) :
+                self2.addTask("A","sleep 1")
+                self2.addWorkflowTask("B",SubWorkflow(),dependencies="A")
+                self2.addTask("C","sleep 1",dependencies=("A","B"))
+
+        try :
+            w=SelfWorkflow()
+            self.assertTrue(0==w.run("local",self.testPath,isQuiet=True))
+        except :
+            self.fail("Should not raise Exception")
+
 if __name__ == '__main__' :
     unittest.main()
 
