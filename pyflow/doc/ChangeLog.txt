@@ -1,3 +1,4 @@
+v1.1.5 20150710
 * Changed to BSD 2-Clause license
 * [#5] fix in-workflow check for nested workflows
 v1.1.4 20150527
