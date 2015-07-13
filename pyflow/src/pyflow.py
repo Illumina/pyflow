@@ -488,6 +488,9 @@ def lockMethod(f):
     """
 
     def wrapped(self, *args, **kw):
+        if not hasattr(self,"lock") :
+            self.lock = threading.RLock()
+
         self.lock.acquire()
         try:
             return f(self, *args, **kw)
@@ -4072,18 +4075,24 @@ class WorkflowRunner(object) :
             raise Exception("Method must be a (call stack) descendant of WorkflowRunner workflow() method (via run() method)")
 
 
-    def _setRunning(self, isRunning) :
-        if isRunning :
-            self._isRunning = True
-        else :
-            del self._isRunning
-
-
-    def _getRunning(self) :
+    def _initRunning(self):
         try :
-            return (self._isRunning)
+            assert(self._isRunning >= 0)
         except AttributeError :
-            return False
+            self._isRunning = 0
+
+    @lockMethod
+    def _setRunning(self, isRunning) :
+        self._initRunning()
+        if isRunning :
+            self._isRunning += 1
+        else :
+            self._isRunning -= 1
+
+    @lockMethod
+    def _getRunning(self) :
+        self._initRunning()
+        return (self._isRunning > 0)
 
 
 
