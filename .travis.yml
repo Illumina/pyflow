@@ -11,7 +11,7 @@ os:
   - osx
 
 script:
-  - cd scratch/test && test_release_tarball.bash -nosge 
+  - cd scratch/test && bash ./test_release_tarball.bash -nosge 
 
 branches:
   only:
