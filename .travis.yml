@@ -1,0 +1,23 @@
+language: python
+
+python:
+      - "2.4"
+      - "2.7"
+
+os:
+  - linux
+  - osx
+
+script:
+  - cd scratch/test && test_release_tarball.bash -nosge 
+
+branches:
+  only:
+    - master
+
+notifications:
+  email:
+    recipients:
+      - csaunders@illumina.com
+
+
