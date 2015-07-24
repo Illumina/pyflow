@@ -2,13 +2,35 @@ language: python
 
 sudo: required
 
-python:
-      - "2.4"
-      - "2.7"
+# Note PYVER drives hack to use python 2.4, this is
+# actually pretty ugly on travis -- process is:
+# 1) install # python2.4 from deadsnakes ppa
+# 2) shove 2.4 in /usr/bin/python
+# 3) set PATH back to /usr/bin
+#
+# This removes the system python link which is probably not
+# smart, but the test works so leaving it for now.
+# 
+matrix:
+  include:
+    - python: "2.7"
+    - python: "2.7"
+      env: PYVER="2.4"
 
 os:
   - linux
-  - osx
+
+before_install:
+  - date -u
+  - uname -a
+  - lsb_release -a
+  - if [ "$PYVER" == "2.4" ]; then sudo add-apt-repository -y ppa:fkrull/deadsnakes && sudo apt-get update -qq; fi
+
+install:
+  - if [ "$PYVER" == "2.4" ]; then sudo apt-get install python2.4 -y && python2.4 -V; fi
+  - if [ "$PYVER" == "2.4" ]; then sudo rm -f /usr/bin/python && sudo ln -s /usr/bin/python2.4 /usr/bin/python; fi
+  - if [ "$PYVER" == "2.4" ]; then export PATH=/usr/bin:$PATH; fi
+  - python -V
 
 script:
   - cd scratch/test && bash ./test_release_tarball.bash -nosge 
