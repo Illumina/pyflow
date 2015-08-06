@@ -1196,6 +1196,71 @@ class CommandTaskRunner(BaseTaskRunner) :
         return taskExitMsg
 
 
+    def getWrapFileResult(self) :
+        """
+        When the task is theoretically done, go and read the task wrapper to
+        see the actual task exit code. This is required because:
+
+        1) On SGE or similar: We have no other way to get the exit code
+
+        2) On all systems, we can distinguish between a conventional task error
+        and other problems, such as (a) linux OOM killer (b) exception in the
+        task wrapper itself (c) filesystem failures.
+        """
+
+        def checkWrapFileExit(result) :
+            """
+            return isError=True on error in file format only, missing or incomplete file
+            is not considered an error and the function should not return an error for this
+            case.
+            """
+
+            if not os.path.isfile(self.wrapFile) : return
+
+            lastLen = None
+            for line in open(self.wrapFile) :
+                w = line.strip().split()
+
+                # Only return error on the previous line word count if
+                # we know the line has been completely updated in the file.
+                # We assume this is true if another line follows it:
+                if (lastLen is not None) and (lastLen < 6) :
+                    result.isError = True
+                    return
+
+                lastLen = len(w)
+                if len(w) < 6 : return
+                if (w[4] != "[wrapperSignal]") :
+                    result.isError = True
+                    return
+                if w[5] == "taskExitCode" :
+                    if (len(w) == 7) :
+                        result.taskExitCode = int(w[6])
+                    return
+
+        trials = 3
+        retryDelaySec = 30
+
+        wrapResult = Bunch(taskExitCode=None, isError=False)
+
+        for _ in range(trials) :
+            checkWrapFileExit(wrapResult)
+            if wrapResult.isError : break
+            if wrapResult.taskExitCode is not None : break
+
+            time.sleep(retryDelaySec)
+
+        return wrapResult
+
+
+    def getWrapperErrorMsg(self) :
+        stderrList = open(self.wrapFile).readlines()
+        taskExitMsg = ["Anomolous task wrapper stderr output. Wrapper signal file: '%s'" % (self.wrapFile),
+                              "Logging %i line(s) of task wrapper log output below:" % (len(stderrList))]
+        linePrefix = "[taskWrapper-stderr]"
+        taskExitMsg.extend([linePrefix + " " + line for line in stderrList])
+        return taskExitMsg
+
 
 
 class LocalTaskRunner(CommandTaskRunner) :
@@ -1212,9 +1277,18 @@ class LocalTaskRunner(CommandTaskRunner) :
         retInfo.retval = proc.wait()
         wrapFp.close()
 
-        if retInfo.retval != 0 : retInfo.taskExitMsg = self.getExitMsg()
+        wrapResult = self.getWrapFileResult()
+
+        if (wrapResult.taskExitCode is None) or (wrapResult.taskExitCode != retInfo.retval):
+            retInfo.taskExitMsg = self.getWrapperErrorMsg()
+            retInfo.retval = 1
+            return retInfo
+        elif retInfo.retval != 0 :
+            retInfo.taskExitMsg = self.getExitMsg()
+
         retInfo.isAllowRetry = True
 
+        # success! (taskWrapper, but maybe not for the task...)
         return retInfo
 
 
@@ -1452,56 +1526,11 @@ class SGETaskRunner(CommandTaskRunner) :
         # added before this point:
         self.jobId = None
 
-
-        # 3) theoretically done -- now see if wrapper output indicates the job is done as well:
-        #
-        def checkWrapFileExit(result) :
-            """
-            return isError=True on error in file format only, missing or incomplete file
-            is not considered an error and the function should not return an error for this
-            case.
-            """
-            if not os.path.isfile(self.wrapFile) : return
-
-            lastLen = None
-            for line in open(self.wrapFile) :
-                w = line.strip().split()
-
-                # Only return error on the previous line word count if
-                # we know the line has been completely updated in the file.
-                # We assume this is true if another line follows it:
-                if (lastLen is not None) and (lastLen < 6) :
-                    result.isError = True
-                    return
-
-                lastLen = len(w)
-                if len(w) < 6 : return
-                if (w[4] != "[wrapperSignal]") :
-                    result.isError = True
-                    return
-                if w[5] == "taskExitCode" :
-                    if (len(w) == 7) :
-                        result.taskExitCode = int(w[6])
-                    return
-
-        trials = 3
-        retryDelaySec = 30
-
-        wrapResult = Bunch(taskExitCode=None, isError=False)
-
-        for _ in range(trials) :
-            checkWrapFileExit(wrapResult)
-            if wrapResult.isError : break
-            if wrapResult.taskExitCode is not None : break
-
-            time.sleep(retryDelaySec)
+        wrapResult = self.getWrapFileResult()
 
         if wrapResult.taskExitCode is None :
-            stderrList = open(self.wrapFile).readlines()
-            retInfo.taskExitMsg = ["Anomolous task wrapper stderr output. Sge job_number: '%s' Wrapper signal file: '%s'" % (lastJobId, self.wrapFile),
-                                  "Logging %i line(s) of task wrapper log output below:" % (len(stderrList))]
-            linePrefix = "[taskWrapper-stderr]"
-            retInfo.taskExitMsg.extend([linePrefix + " " + line for line in stderrList])
+            retInfo.taskExitMsg = ["Sge job_number: '%s'" % (lastJobId)]
+            retInfo.taskExitMsg.extend(self.getWrapperErrorMsg())
             retInfo.retval = 1
             return retInfo
         elif wrapResult.taskExitCode != 0 :
@@ -2819,7 +2848,7 @@ The associated pyflow job details are as follows:
         # be handlded and logged, otherwise the exception will be re-raised
         # down to the caller.
         #
-        
+
         if self.param is None : return
         if len(self.param.mailTo) == 0 : return
 
