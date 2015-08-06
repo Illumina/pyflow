@@ -75,7 +75,7 @@ def getDemoRunOptions() :
 
     parser.add_option("-e", "--mailTo", type="string", dest="mailTo", action="append",
                       help=emailHelp)
-        
+
 
     (options, args) = parser.parse_args()
 

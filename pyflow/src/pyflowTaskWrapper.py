@@ -224,8 +224,8 @@ The parameter pickle file contains all of the task parameters required by the wr
     # try multiple times to read the argument file in case of NFS delay:
     #
     retryDelaySec = 30
-    trials = 3
-    for _ in range(trials) :
+    maxTrials = 3
+    for _ in range(maxTrials) :
         if os.path.exists(picklefile) : break
         time.sleep(retryDelaySec)
 
@@ -235,7 +235,19 @@ The parameter pickle file contains all of the task parameters required by the wr
     if not os.path.isfile(picklefile) :
         badUsage("First argument is not a file: " + picklefile)
 
-    params = getParams(picklefile)
+    # add another multi-trial loop on the pickle load operation --
+    # on some filesystems the file can appear to exist but not
+    # be fully instantiated yet:
+    #
+    for t in range(maxTrials) :
+        try :
+            params = getParams(picklefile)
+        except :
+            if (t+1) == maxTrials :
+                raise
+            time.sleep(retryDelaySec)
+            continue
+        break
 
     if params.cwd == "" or params.cwd == "None" :
         params.cwd = None
