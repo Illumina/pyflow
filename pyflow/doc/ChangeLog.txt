@@ -1,3 +1,5 @@
+* [#10] If an occurs error creating the task visualization script,
+downgrade this to a warning.
 v1.1.7 20150806
 * [#9] improve robustness to filesystem delays for task
 wrapper parameter file

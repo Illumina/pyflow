@@ -747,7 +747,7 @@ def writeDotScript(taskDotScriptFile,
     """
     import inspect
 
-    dsfp = open(taskDotScriptFile, "w")
+    dsfp = os.fdopen(os.open(taskDotScriptFile, os.O_WRONLY | os.O_CREAT, 0755), 'w')
 
     dsfp.write("""#!/usr/bin/env python
 #
@@ -775,9 +775,6 @@ if __name__ == '__main__' :
     writeDotGraph(os.path.join(scriptDir,'%s'),os.path.join(scriptDir,'%s'),'%s')
 
 """ % (taskInfoFileName, taskStateFileName, workflowClassName))
-
-    dsfp.close()
-    os.chmod(taskDotScriptFile, 0755)
 
 
 
@@ -2725,8 +2722,6 @@ The associated pyflow job details are as follows:
 
         self.stackDumpLogFile = os.path.join(stackDumpLogDir, "pyflow_stack_dump.txt")
 
-
-
         # empty file:
         if not self.param.isContinue:
             fp = open(self.taskInfoFile, "w")
@@ -2736,7 +2731,14 @@ The associated pyflow job details are as follows:
         self._setCustomLogs()
 
         # finally write dot task graph creation script:
-        writeDotScript(self.taskDotScriptFile, taskInfoFileName, taskStateFileName, self.param.workflowClassName)
+        #
+        # this could fail because of script permission settings, buk it is not critical for
+        # workflow completion so we get away with a warning
+        try :
+            writeDotScript(self.taskDotScriptFile, taskInfoFileName, taskStateFileName, self.param.workflowClassName)
+        except OSError:
+            msg = ["Failed to write task graph visualization script to %s" % (self.taskDotScriptFile)]
+            self.flowLog(msg,logState=LogState.WARNING)
 
 
     def resetRun(self) :
