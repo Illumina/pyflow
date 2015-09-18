@@ -151,12 +151,18 @@ def forceRename(src,dst) :
     dst is only overwritten in a single atomic operation on *nix
     on windows, we can't have atomic rename, but we can recreate the behavior otherwise
     """
-    import os
     if isWindows() :
         if os.path.exists(dst) :
             os.remove(dst)
-    os.rename(src,dst)
 
+    maxTrials=5
+    for trial in range(maxTrials) :
+        try :
+            os.rename(src,dst)
+            return
+        except OSError :
+            if (trial+1) >= maxTrials : raise
+            time.sleep(5)
 
 
 # utility values and functions:
