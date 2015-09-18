@@ -1,7 +1,7 @@
 v1.1.8 20150918
 * Improve windows shell compatibility
-* [#10] If an occurs error creating the task visualization script,
-downgrade this to a warning.
+* [#10] If an error occurs creating the task visualization script,
+issue warning and allow workflow to continue
 v1.1.7 20150806
 * [#9] improve robustness to filesystem delays for task
 wrapper parameter file
