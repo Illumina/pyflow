@@ -41,9 +41,11 @@
 import os.path
 import sys
 
-# add module path by hand
+# add module path
 #
-sys.path.append(os.path.abspath(os.path.dirname(__file__)) + "/../../src")
+scriptDir=os.path.abspath(os.path.dirname(__file__))
+sys.path.append(os.path.abspath(os.path.join(scriptDir,os.pardir,os.pardir,"src")))
+
 from pyflow import WorkflowRunner
 
 
@@ -58,7 +60,7 @@ class HelloWorkflow(WorkflowRunner) :
         #
         # The output for this task will be written to the file helloWorld.out.txt
         #
-        self.addTask("easy_task1", "echo 'Hello World!' >| helloWorld.out.txt")
+        self.addTask("easy_task1", "echo 'Hello World!' > helloWorld.out.txt")
 
 
 

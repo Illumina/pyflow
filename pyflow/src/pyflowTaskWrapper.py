@@ -73,6 +73,9 @@ def hardFlush(ofp):
     if ofp.isatty() : return
     os.fsync(ofp.fileno())
 
+def isWindows() :
+    import platform
+    return (platform.system().find("Windows") > -1)
 
 class SimpleFifo(object) :
     """
@@ -258,11 +261,13 @@ The parameter pickle file contains all of the task parameters required by the wr
     # always keep last N lines of task stderr:
     fifo = SimpleFifo(20)
 
+    isWin=isWindows()
+
     # Present shell as arg list with Popen(shell=False), so that
     # we minimize quoting/escaping issues for 'cmd' itself:
     #
     fullcmd = []
-    if params.isShellCmd :
+    if (not isWin) and params.isShellCmd :
         # TODO shell selection should be configurable somewhere:
         shell = ["/bin/bash", "--noprofile", "-o", "pipefail"]
         fullcmd = shell + ["-c", params.cmd]
@@ -271,13 +276,15 @@ The parameter pickle file contains all of the task parameters required by the wr
 
     retval = 1
 
+    isShell=isWin
+
     try:
         startTime = time.time()
         bling.wrapperLog(pffp, "[wrapperSignal] taskStart")
         # turn off buffering so that stderr is updated correctly and its timestamps
         # are more accurate:
         # TODO: is there a way to do this for stderr only?
-        proc = subprocess.Popen(fullcmd, stdout=toutFp, stderr=subprocess.PIPE, shell=False, bufsize=1, cwd=params.cwd, env=params.env)
+        proc = subprocess.Popen(fullcmd, stdout=toutFp, stderr=subprocess.PIPE, shell=isShell, bufsize=1, cwd=params.cwd, env=params.env)
         bling.transfer(proc.stderr, terrFp, fifo.add)
         retval = proc.wait()
 
