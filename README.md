@@ -2,6 +2,8 @@ pyFlow - a lightweight parallel task engine
 ===========================================
 
 [![Build Status] [tcistatus]] [tcihome]
+[![Build status] [acistatus]] [acihome]
+
 
 pyFlow is a tool to manage tasks in the context of a task dependency
 graph. It has some similarities to make. pyFlow is not a program – it
@@ -14,6 +16,9 @@ For more information, please see the [pyFlow website] [site].
 
 [tcistatus]:https://travis-ci.org/Illumina/pyflow.svg?branch=master
 [tcihome]:https://travis-ci.org/Illumina/pyflow
+
+[acistatus]:https://ci.appveyor.com/api/projects/status/fkovw5ife59ae48t/branch/master?svg=true
+[acihome]:https://ci.appveyor.com/project/ctsa/pyflow/branch/master
 
 
 License
