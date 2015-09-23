@@ -1257,11 +1257,15 @@ class CommandTaskRunner(BaseTaskRunner) :
 
 
     def getWrapperErrorMsg(self) :
-        stderrList = open(self.wrapFile).readlines()
-        taskExitMsg = ["Anomolous task wrapper stderr output. Wrapper signal file: '%s'" % (self.wrapFile),
-                              "Logging %i line(s) of task wrapper log output below:" % (len(stderrList))]
-        linePrefix = "[taskWrapper-stderr]"
-        taskExitMsg.extend([linePrefix + " " + line for line in stderrList])
+        if os.path.isfile(self.wrapFile) :
+            stderrList = open(self.wrapFile).readlines()
+            taskExitMsg = ["Anomolous task wrapper stderr output. Wrapper signal file: '%s'" % (self.wrapFile),
+                                  "Logging %i line(s) of task wrapper log output below:" % (len(stderrList))]
+            linePrefix = "[taskWrapper-stderr]"
+            taskExitMsg.extend([linePrefix + " " + line for line in stderrList])
+        else :
+            taskExitMsg = ["Anomolous task wrapper condition: Wrapper signal file is missing: '%s'" % (self.wrapFile)]
+
         return taskExitMsg
 
 
