@@ -11,11 +11,36 @@ def pyflow_lib_dir() :
 
 try :
     # if pyflow is in PYTHONPATH already then use the specified copy:
-    from pyflow import WorkflowRunner
+    from pyflow import isWindows,WorkflowRunner
 except :
     # otherwise use the relative path within this repo:
     sys.path.append(pyflow_lib_dir())
-    from pyflow import WorkflowRunner
+    from pyflow import isWindows,WorkflowRunner
+
+
+def getRmCmd() :
+    if isWindows():
+        return ["del","/f"]
+    else:
+        return ["rm","-f"]
+
+
+def getSleepCmd() :
+    if isWindows():
+        return ["timeout"]
+    else:
+        return ["sleep"]
+
+
+def getCatCmd() :
+    if isWindows():
+        return ["type"]
+    else:
+        return ["cat"]
+
+
+def getCmdString(cmdList) :
+    return " ".join(cmdList)
 
 
 
@@ -91,7 +116,7 @@ class TestWorkflowRunner(unittest.TestCase) :
 
         class StallWorkflow(WorkflowRunner) :
             def workflow(self2) :
-                self2.addTask("sleeper","sleep 5")
+                self2.addTask("sleeper",getSleepCmd()+["5"])
 
         class runner(threading.Thread) :
             def __init__(self2) :
@@ -162,9 +187,9 @@ class TestWorkflowRunner(unittest.TestCase) :
         "make sure B waits for A"
         class TestWorkflow(WorkflowRunner) :
             def workflow(self2) :
-                file="%s/tmp.txt" % (self.testPath)
-                self2.addTask("A","touch "+file)
-                self2.addTask("B","cat %s; rm %s" % (file,file),dependencies="A")
+                filePath=os.path.join(self.testPath,"tmp.txt")
+                self2.addTask("A","echo foo > " +filePath)
+                self2.addTask("B",getCmdString(getCatCmd()) + " " + filePath + " && " + getCmdString(getRmCmd())+ " " + filePath,dependencies="A")
 
         w=TestWorkflow()
         self.assertTrue((0==w.run("local",self.testPath,isQuiet=True)))
@@ -174,11 +199,12 @@ class TestWorkflowRunner(unittest.TestCase) :
         "make sure waitForTasks waits for A on the workflow thread"
         class TestWorkflow(WorkflowRunner) :
             def workflow(self2) :
-                file="%s/tmp.txt" % (self.testPath)
-                self2.addTask("A","rm %s; sleep 5; touch %s" % (file,file))
+                filePath=os.path.join(self.testPath,"tmp.txt")
+                if os.path.isfile(filePath) : os.remove(filePath)
+                self2.addTask("A",getCmdString(getSleepCmd()) + " 5 && echo foo > %s" % (filePath))
                 self2.waitForTasks("A")
-                assert(os.path.isfile(file))
-                self2.addTask("B","cat %s; rm %s" % (file,file))
+                assert(os.path.isfile(filePath))
+                self2.addTask("B",getCmdString(getCatCmd()) + " " + filePath +" && " + getCmdString(getRmCmd())+ " " + filePath)
 
         w=TestWorkflow()
         self.assertTrue(0==w.run("local",self.testPath,isQuiet=True))
@@ -203,14 +229,14 @@ class TestWorkflowRunner(unittest.TestCase) :
         class SubWorkflow1(WorkflowRunner) :
             "this one fails"
             def workflow(self2) :
-                self2.addTask("A","sleep 5")
+                self2.addTask("A",getSleepCmd()+["5"])
                 self2.addTask("B","boogyman!",dependencies="A")
                 
         class SubWorkflow2(WorkflowRunner) :
             "this one doesn't fail"
             def workflow(self2) :
-                self2.addTask("A","sleep 5")
-                self2.addTask("B","sleep 5",dependencies="A")
+                self2.addTask("A",getSleepCmd()+["5"])
+                self2.addTask("B",getSleepCmd()+["5"],dependencies="A")
 
         class MasterWorkflow(WorkflowRunner) :
             def workflow(self2) :
@@ -228,7 +254,7 @@ class TestWorkflowRunner(unittest.TestCase) :
         """
         class SelfWorkflow(WorkflowRunner) :
             def workflow(self2) :
-                self2.addTask("A","sleep 5",dependencies="A")
+                self2.addTask("A",getSleepCmd()+["5"],dependencies="A")
                 
         w=SelfWorkflow()
         self.assertTrue(1==w.run("local",self.testPath,isQuiet=True))
@@ -273,59 +299,59 @@ class TestWorkflowRunner(unittest.TestCase) :
         """
         run() option to ignore all tasks before a specified task node
         """
-        file="%s/tmp.txt" % (self.testPath)
+        filePath=os.path.join(self.testPath,"tmp.txt")
 
         class SelfWorkflow(WorkflowRunner) :
             def workflow(self2) :
-                self2.addTask("A","touch "+file)
-                self2.addTask("B","sleep 1",dependencies="A")
-                self2.addTask("C","sleep 1",dependencies=("A","B"))
+                self2.addTask("A","echo foo > "+filePath)
+                self2.addTask("B",getSleepCmd()+["1"],dependencies="A")
+                self2.addTask("C",getSleepCmd()+["1"],dependencies=("A","B"))
  
         w=SelfWorkflow()
         self.assertTrue(0==w.run("local",self.testPath,isQuiet=True,startFromTasks="B"))
-        self.assertTrue(not os.path.exists(file))
+        self.assertTrue(not os.path.exists(filePath))
 
 
     def test_startFromTasksSubWflow(self) :
         """
         run() option to ignore all tasks before a specified task node
         """
-        file="%s/tmp.txt" % (self.testPath)
+        filePath=os.path.join(self.testPath,"tmp.txt")
 
         class SubWorkflow(WorkflowRunner) :
             def workflow(self2) :
-                self2.addTask("D","touch "+file)
+                self2.addTask("D","echo foo > "+filePath)
 
         class SelfWorkflow(WorkflowRunner) :
             def workflow(self2) :
-                self2.addTask("A","sleep 1")
+                self2.addTask("A",getSleepCmd()+["1"])
                 self2.addWorkflowTask("B",SubWorkflow(),dependencies="A")
-                self2.addTask("C","sleep 1",dependencies=("A","B"))
+                self2.addTask("C",getSleepCmd()+["1"],dependencies=("A","B"))
 
         w=SelfWorkflow()
         self.assertTrue(0==w.run("local",self.testPath,isQuiet=True,startFromTasks="B"))
-        self.assertTrue(os.path.exists(file))
+        self.assertTrue(os.path.exists(filePath))
 
 
     def test_startFromTasksSubWflow2(self) :
         """
         run() option to ignore all tasks before a specified task node
         """
-        file="%s/tmp.txt" % (self.testPath)
+        filePath=os.path.join(self.testPath,"tmp.txt")
 
         class SubWorkflow(WorkflowRunner) :
             def workflow(self2) :
-                self2.addTask("D","touch "+file)
+                self2.addTask("D","echo foo > "+filePath)
 
         class SelfWorkflow(WorkflowRunner) :
             def workflow(self2) :
-                self2.addTask("A","sleep 1")
+                self2.addTask("A",getSleepCmd()+["1"])
                 self2.addWorkflowTask("B",SubWorkflow(),dependencies="A")
-                self2.addTask("C","sleep 1",dependencies=("A","B"))
+                self2.addTask("C",getSleepCmd()+["1"],dependencies=("A","B"))
 
         w=SelfWorkflow()
         self.assertTrue(0==w.run("local",self.testPath,isQuiet=True,startFromTasks="C"))
-        self.assertTrue(not os.path.exists(file))
+        self.assertTrue(not os.path.exists(filePath))
 
 
     def test_ignoreTasksAfter(self) :
@@ -334,9 +360,9 @@ class TestWorkflowRunner(unittest.TestCase) :
         """
         class SelfWorkflow(WorkflowRunner) :
             def workflow(self2) :
-                self2.addTask("A","sleep 1")
-                self2.addTask("B","sleep 1",dependencies="A")
-                self2.addTask("C","sleep 1",dependencies=("A","B"))
+                self2.addTask("A",getSleepCmd()+["1"])
+                self2.addTask("B",getSleepCmd()+["1"],dependencies="A")
+                self2.addTask("C",getSleepCmd()+["1"],dependencies=("A","B"))
  
         w=SelfWorkflow()
         self.assertTrue(0==w.run("local",self.testPath,isQuiet=True,ignoreTasksAfter="B"))
@@ -350,7 +376,7 @@ class TestWorkflowRunner(unittest.TestCase) :
 
         class SelfWorkflow(WorkflowRunner) :
             def __init__(self2) :
-                self2.addTask("A","sleep 1")
+                self2.addTask("A",getSleepCmd()+["1"])
 
         try :
             w=SelfWorkflow()
@@ -367,13 +393,13 @@ class TestWorkflowRunner(unittest.TestCase) :
         class SubWorkflow(WorkflowRunner) :
             def workflow(self2) :
                 if self2.getRunMode() == "local" :
-                    self2.addTask("D","sleep 1")
+                    self2.addTask("D",getSleepCmd()+["1"])
 
         class SelfWorkflow(WorkflowRunner) :
             def workflow(self2) :
-                self2.addTask("A","sleep 1")
+                self2.addTask("A",getSleepCmd()+["1"])
                 self2.addWorkflowTask("B",SubWorkflow(),dependencies="A")
-                self2.addTask("C","sleep 1",dependencies=("A","B"))
+                self2.addTask("C",getSleepCmd()+["1"],dependencies=("A","B"))
 
         try :
             w=SelfWorkflow()
