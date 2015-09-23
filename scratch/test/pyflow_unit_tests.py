@@ -1,18 +1,21 @@
 #!/usr/bin/env python
 
 import unittest
-import os.path
+import os
 import sys
 
-# setup PYTHONPATH instead of setting here:
+scriptDir=os.path.abspath(os.path.dirname(__file__))
 
-#def lib_dir() :
-#    return os.path.join(os.path.abspath(os.path.dirname(__file__)),"..","pyflow","src")
+def pyflow_lib_dir() :
+    return os.path.abspath(os.path.join(scriptDir,os.pardir,os.pardir,"pyflow","src"))
 
-#sys.path.append(lib_dir())
-
-
-from pyflow import WorkflowRunner
+try :
+    # if pyflow is in PYTHONPATH already then use the specified copy:
+    from pyflow import WorkflowRunner
+except :
+    # otherwise use the relative path within this repo:
+    sys.path.append(pyflow_lib_dir())
+    from pyflow import WorkflowRunner
 
 
 
