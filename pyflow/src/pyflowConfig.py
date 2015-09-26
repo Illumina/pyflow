@@ -176,46 +176,10 @@ def getEnvVar(key) :
 
 
 
-#
-# this is site specific configuration information, although it won't be triggered
-# for your site, it provides an example of how SGE mode can be customized:
-#
-
-class ChukSiteConfig(DefaultSiteConfig) :
+class hvmemSGEConfig(DefaultSiteConfig) :
     """
-    Chuk environment specializations..
-    """
+    This config assumes 'h_vmem' is defined on the SGE instance
 
-    sgeRoot = getEnvVar('SGE_ROOT')
-
-    @classmethod
-    def _qsubResourceArgConfig(cls, nCores, memMb) :
-
-        if cls.sgeRoot is None :
-            raise Exception("Can't find expected environment variable: 'SGE_ROOT'")
-
-        retval = []
-
-        # this stack size setting is required for multi-core jobs,
-        # and a good idea just in case for other jobs:
-        retval.extend(["-l", "s_stack=10240k"])
-
-        # in the uk we can specify our memory requirements:
-        memGb = 1 + ((memMb - 1) / 1024)
-        reqMemFile = "%s/req/mem%iG" % (cls.sgeRoot, memGb)
-        assert os.path.isfile(reqMemFile)
-        retval.extend(["-@", reqMemFile])
-
-        if nCores > 1 :
-            retval.extend(["-pe", "threaded", str(nCores)])
-
-        return retval
-
-
-
-class Ilmn2012Config(DefaultSiteConfig) :
-    """
-    The new standard cluster configuration at ilmn
     """
 
     @classmethod
@@ -240,19 +204,8 @@ class Ilmn2012Config(DefaultSiteConfig) :
 #
 
 def siteConfigFactory() :
-    isChukConfig = (DefaultSiteConfig.getDomainName() == "chuk.illumina.com")
-    isIlmn2012Config = False
-    if DefaultSiteConfig.getHostName().startswith("uscp-prd-ln") :
-        isIlmn2012Config = True
-#    if DefaultSiteConfig.getHostName().startswith("ussd-prd-ln") :
-#        isIlmn2012Config=True
-
-    if isChukConfig :
-        return ChukSiteConfig
-    elif isIlmn2012Config :
-        return Ilmn2012Config
-    else :
-        return DefaultSiteConfig
+    # TODO: add an import time test to determine if h_vmem is valid
+    return  hvmemSGEConfig
 
 
 siteConfig = siteConfigFactory()
