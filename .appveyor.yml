@@ -8,3 +8,8 @@ build: false  # Not a C# project
 test_script:
   # Build the compiled extension and run the project tests
   - "python.exe scratch/test/test_pyflow.py"
+
+notifications:
+  - provider: Email
+    to:
+      - csaunders@illumina.com
