@@ -63,7 +63,7 @@ if pyver[0] != 2 or (pyver[0] == 2 and pyver[1] < 4) :
 
 # problem python versions:
 #
-# Internal interpretor deadlock issue in python 2.7.2:
+# Internal interpreter deadlock issue in python 2.7.2:
 # http://bugs.python.org/issue13817
 # ..is so bad that pyflow can partially, but not completely, work around it -- so issue a warning for this case.
 if pyver[0] == 2 and pyver[1] == 7 and pyver[2] == 2 :
@@ -81,7 +81,7 @@ subprocess._cleanup = lambda: None
 
 # In python 2.5 or greater, we can lower the per-thread stack size to
 # improve memory consumption when a very large number of jobs are
-# run. Below it is lowered to 256Kb (compare to linux defualt of
+# run. Below it is lowered to 256Kb (compare to linux default of
 # 8Mb).
 #
 try:
@@ -797,7 +797,7 @@ class Command(object) :
     """
 
     def __init__(self, cmd, cwd, env=None) :
-        # 1: sanitiize/error-check cmd
+        # 1: sanitize/error-check cmd
         if ((cmd is None)  or
             (cmd == "") or
             (isIterable(cmd) and len(cmd) == 0)) :
@@ -815,14 +815,14 @@ class Command(object) :
                 self.cmd.append(Command.cleanStr(s))
             self.type = "list"
         else :
-            raise Exception("Invalid task commmand: '%s'" % (str(cmd)))
+            raise Exception("Invalid task command: '%s'" % (str(cmd)))
 
         # 2: sanitize cwd
         self.cwd = ""
         if cwd is not None and cwd != "" :
             self.cwd = os.path.abspath(cwd)
             if os.path.exists(self.cwd) and not os.path.isdir(self.cwd) :
-                raise Exception("Cwd argument is not a directry: '%s', provided for command '%s'" % (cwd, str(cmd)))
+                raise Exception("Cwd argument is not a directory: '%s', provided for command '%s'" % (cwd, str(cmd)))
 
         # copy env:
         self.env = env
@@ -857,7 +857,7 @@ class StoppableThread(threading.Thread):
         self._stop = threading.Event()
 
     def stop(self):
-        "thread specific stop method, may be overridden to add async thread-specific kill behaviour"
+        "thread specific stop method, may be overridden to add async thread-specific kill behavior"
         self._stop.set()
 
     @staticmethod
@@ -924,7 +924,7 @@ class RetryParam(object) :
 
     def _finalize(self) :
         """
-        decide wether to turn retry off based on retry and run modes:
+        decide whether to turn retry off based on retry and run modes:
         """
         if (self._retry_mode == "nonlocal") and \
                 (not RunMode.data[self._run_mode].defaultIsRetry) :
@@ -981,7 +981,7 @@ class RunningTaskStatus(object) :
         #
         # Sub-workflows use this to convey whether they have
         # failed (1) because of failures of their own tasks or (2)
-        # because of an excpetion in the sub-workflow code, in which
+        # because of an exception in the sub-workflow code, in which
         # case the exception message and stacktrace are provided.
         #
         # command tasks use this to report the stderr tail of a failing
@@ -1259,12 +1259,12 @@ class CommandTaskRunner(BaseTaskRunner) :
     def getWrapperErrorMsg(self) :
         if os.path.isfile(self.wrapFile) :
             stderrList = open(self.wrapFile).readlines()
-            taskExitMsg = ["Anomolous task wrapper stderr output. Wrapper signal file: '%s'" % (self.wrapFile),
+            taskExitMsg = ["Anomalous task wrapper stderr output. Wrapper signal file: '%s'" % (self.wrapFile),
                                   "Logging %i line(s) of task wrapper log output below:" % (len(stderrList))]
             linePrefix = "[taskWrapper-stderr]"
             taskExitMsg.extend([linePrefix + " " + line for line in stderrList])
         else :
-            taskExitMsg = ["Anomolous task wrapper condition: Wrapper signal file is missing: '%s'" % (self.wrapFile)]
+            taskExitMsg = ["Anomalous task wrapper condition: Wrapper signal file is missing: '%s'" % (self.wrapFile)]
 
         return taskExitMsg
 
@@ -1330,8 +1330,8 @@ class QCaller(threading.Thread) :
         # Oct 2014 - also wrapped this call with a semaphore because
         # of the high memory usage associated with each qsub/qstat
         # subprocess. This was causing pyflow jobs to become unstable
-        # as they would spontaniously exceed the maximum allowed master
-        # proecess memory.
+        # as they would spontaneously exceed the maximum allowed master
+        # process memory.
         #
         GlobalSync.subprocessControl.acquire()
         try :
@@ -1511,10 +1511,10 @@ class SGETaskRunner(CommandTaskRunner) :
                     retInfo.taskExitMsg = ["Unexpected qstat output or task has entered sge error state. Sge job_number: %i" % (self.jobId)]
                     retInfo.taskExitMsg.extend(["Logging %i line(s) of qstat output below:" % (len(results.outList)) ])
                     retInfo.taskExitMsg.extend([ "[qstat-out] " + line for line in results.outList ])
-                    # self._killJob() # leave the job there so the user can better diagnose whetever unexpected pattern has occured
+                    # self._killJob() # leave the job there so the user can better diagnose whetever unexpected pattern has occurred
                 return retInfo
 
-            # also check to see if job has tansitioned from queued to running state:
+            # also check to see if job has transitioned from queued to running state:
             if queueStatus.isQueued :
                 checkWrapFileRunStart(queueStatus)
                 if not queueStatus.isQueued :
@@ -1553,7 +1553,7 @@ class SGETaskRunner(CommandTaskRunner) :
     @lockMethod
     def _killJob(self) :
         """
-        (possibly) asyncronous job kill
+        (possibly) asynchronous job kill
         """
         try                  : isKilled = self.isKilled
         except AttributeError: isKilled = False
@@ -1879,7 +1879,7 @@ class TaskManager(StoppableThread) :
                 if self._areTasksDead() : return True
                 time.sleep(1)
 
-        # check for "regular" terminatino conditions:
+        # check for "regular" termination conditions:
         if (not self._cdata.isTaskSubmissionActive()) :
             return (len(self.runningTasks) == 0)
         else :
@@ -1977,7 +1977,7 @@ class TaskNode(object) :
         # if true, set the ignore state for all children of this task to true
         self.isIgnoreChildren = False
 
-        # if true, this task and its dependents will be automatically mareked as completed (until
+        # if true, this task and its dependents will be automatically marked as completed (until
         # a startFromTasks node is found)
         self.isAutoCompleted = False
 
@@ -2013,7 +2013,7 @@ class TaskNode(object) :
 
     @lockMethod
     def isError(self) :
-        "true if an error occured in this node"
+        "true if an error occurred in this node"
         return ((self.errorstate != 0) or (self.runstate == "error"))
 
     @lockMethod
@@ -2526,7 +2526,7 @@ class TaskDAG(object) :
 #
 
 
-# special excpetion used for the case where pyflow data dir is already in use:
+# special exception used for the case where pyflow data dir is already in use:
 #
 class DataDirException(Exception) :
     def __init__(self, msg) :
@@ -2552,7 +2552,7 @@ class WorkflowRunnerThreadSharedData(object) :
 
         # we potentially have to log before the logfile is setup (eg
         # an exception is thrown reading run parameters), so provide
-        # an explicit noification that there's no log file:
+        # an explicit notification that there's no log file:
         self.flowLogFp = None
 
         self.warningLogFp = None
@@ -2560,7 +2560,7 @@ class WorkflowRunnerThreadSharedData(object) :
 
         self.resetRun()
 
-        # two elements required to implement a nohup-like behaviour:
+        # two elements required to implement a nohup-like behavior:
         self.isHangUp = threading.Event()
         self._isStderrAlive = True
 
@@ -2685,7 +2685,7 @@ class WorkflowRunnerThreadSharedData(object) :
             self.param.isQuiet = False
             msg = [ "Can't initialize pyflow run because the data directory appears to be in use by another process.",
                     "\tData directory: '%s'" % (self.param.dataDir),
-                    "\tIt is possible that a previous process was abruptly interupted and did not clean up properly. To determine if this is",
+                    "\tIt is possible that a previous process was abruptly interrupted and did not clean up properly. To determine if this is",
                     "\tthe case, please refer to the file '%s'" % (self.markFile),
                     "\tIf this file refers to a non-running process, delete the file and relaunch pyflow,",
                     "\totherwise, specify a new data directory. At the API-level this can be done with the dataDirRoot option." ]
@@ -2698,7 +2698,7 @@ This file provides details of the pyflow instance currently using this data dire
 During normal pyflow run termination (due to job completion, error, SIGINT, etc...),
 this file should be deleted. If this file is present it should mean either:
 (1) the data directory is still in use by a running workflow
-(2) a sudden job failure occured that prevented normal run termination
+(2) a sudden job failure occurred that prevented normal run termination
 
 The associated pyflow job details are as follows:
 """
@@ -2789,8 +2789,8 @@ The associated pyflow job details are as follows:
 
     def isTaskSubmissionActive(self) :
         """
-        wait() pollers need to knoow if task submission has been
-        shutdown to implement sane behaviour.
+        wait() pollers need to know if task submission has been
+        shutdown to implement sane behavior.
         """
         return (not self.isTaskError())
 
@@ -2857,7 +2857,7 @@ The associated pyflow job details are as follows:
         # email addy might not be setup yet:
         #
         # if errorLog is specified, then an email send exception will
-        # be handlded and logged, otherwise the exception will be re-raised
+        # be handled and logged, otherwise the exception will be re-raised
         # down to the caller.
         #
 
@@ -2939,18 +2939,18 @@ class WorkflowRunner(object) :
         in a child class and specify the resources available for the
         workflow to run.
 
-        Task retry behaviour: Retry attempts will be made per the
+        Task retry behavior: Retry attempts will be made per the
         arguments below for distributed workflow runs (eg. sge run
         mode). Note this means that retries will be attempted for
         tasks with an 'isForceLocal' setting during distributed runs.
 
-        Task error behaviour: When a task error occurs the task
+        Task error behavior: When a task error occurs the task
         manager stops submitting new tasks and allows all currently
         running tasks to complete. Note that in this case 'task error'
         means that the task could not be completed after exhausting
         attempted retries.
 
-        Workflow exception behaviour: Any exceptions thrown from the
+        Workflow exception behavior: Any exceptions thrown from the
         python code of classes derived from WorkflowRunner will be
         logged and trigger notification (e.g. email). The exception
         will not come down to the client's stack. In sub-workflows the
@@ -3020,7 +3020,7 @@ class WorkflowRunner(object) :
 
         @param retryMode: Modes are 'nonlocal' and 'all'. For 'nonlocal'
                 retries are not attempted in local run mode. For 'all'
-                retries are attemped for any run mode. The default mode
+                retries are attempted for any run mode. The default mode
                 is 'nonolocal'.
 
         @param mailTo: An email address or container of email addresses. Notification
@@ -3051,7 +3051,7 @@ class WorkflowRunner(object) :
         @param warningLogFile: Replicate all warning messages to the specified file. Warning
                             messages will still appear in the standard logs, this
                             file will contain a subset of the log messages pertaining to
-                            warings only.
+                            warnings only.
 
         @param errorLogFile: Replicate all error messages to the specified file. Error
                             messages will still appear in the standard logs, this
@@ -3076,7 +3076,7 @@ class WorkflowRunner(object) :
         @param resetTasks: A task label or container of task labels. These tasks and all
                            of their descendants will be reset to the "waiting" state to be re-run.
                            Note this option will only affect a workflow which has been continued
-                           from a previous run. This will not overide any nodes altered by the
+                           from a previous run. This will not override any nodes altered by the
                            startFromTasks setting in the case that both options are used together.
         @type resetTasks: A single string, or set, tuple or list of strings
         """
@@ -3262,7 +3262,7 @@ class WorkflowRunner(object) :
                  sge). All jobs with the same priority are already
                  submitted in order from highest to lowest nCores
                  requested, so there is no need to set priorities to
-                 replicate this behaviour. The taskManager can start
+                 replicate this behavior. The taskManager can start
                  executing tasks as soon as each addTask() method is
                  called, so lower-priority tasks may be launched first
                  if they are specified first in the workflow.
@@ -3308,20 +3308,20 @@ class WorkflowRunner(object) :
                  retryWait value.
 
         @param retryWindow: The number of seconds after job submission in
-                 which retries will be attemped for non-make jobs. A value of
+                 which retries will be attempted for non-make jobs. A value of
                  zero or less causes retries to be attempted anytime after
                  job submission. If defined, this overrides the workflow
                  retryWindow value.
 
         @param retryMode: Modes are 'nonlocal' and 'all'. For 'nonlocal'
                 retries are not attempted in local run mode. For 'all'
-                retries are attemped for any run mode. If defined, this overrides
+                retries are attempted for any run mode. If defined, this overrides
                 the workflow retryMode value.
         """
 
         self._requireInWorkflow()
 
-        #### Canceled plans to add deferrred dependencies:
+        #### Canceled plans to add deferred dependencies:
         # # deferredDependencies -- A container of labels specifying dependent
         # #                         tasks which have not yet been added to the
         # #                         workflow. In this case the added task will
@@ -3398,7 +3398,7 @@ class WorkflowRunner(object) :
         enclosing workflow.
 
         This task will be marked complete once the submitted workflow's
-        workflow() method has finished, and any tasks it initated have
+        workflow() method has finished, and any tasks it initiated have
         completed.
 
         Note that all workflow tasks will have their own tasks namespaced
@@ -3482,10 +3482,10 @@ class WorkflowRunner(object) :
 
     def isTaskComplete(self, taskLabel) :
         """
-        Query if a spefic task is in the workflow and completed without error.
+        Query if a specific task is in the workflow and completed without error.
 
         This can assist workflows with providing
-        stable interrupt/resume behaviour.
+        stable interrupt/resume behavior.
 
         @param taskLabel: A task string
 
@@ -3501,7 +3501,7 @@ class WorkflowRunner(object) :
 
         This can be used to access the current run mode from
         within the workflow function. Although the runmode should
-        be transparent to client code, this is occassionally needed
+        be transparent to client code, this is occasionally needed
         to hack workarounds.
 
         @return: Current run mode
@@ -3565,7 +3565,7 @@ class WorkflowRunner(object) :
         Takes a task memMb argument and reduces it to
         the maximum value allowed for the current run.
 
-        @param memMb: Proposed task memory requiremnt in megabytes
+        @param memMb: Proposed task memory requirement in megabytes
 
         @return: Min(memMb,Total memory available to this workflow run)
         """
@@ -3583,7 +3583,7 @@ class WorkflowRunner(object) :
         Get isDryRun flag value.
 
         When the dryrun flag is set, no commands are actually run. Querying
-        this flag allows dynamic workflows to correct for dry run behaviours,
+        this flag allows dynamic workflows to correct for dry run behaviors,
         such as tasks which do no produce expected files.
 
         @return: DryRun status flag
@@ -3632,7 +3632,7 @@ class WorkflowRunner(object) :
         """
         Workflow definition defined in child class
 
-        This method should be overriden in the class derived from
+        This method should be overridden in the class derived from
         L{WorkflowRunner} to specify the actual workflow logic. Client
         code should not call this method directly.
         """
@@ -3696,8 +3696,8 @@ class WorkflowRunner(object) :
 
     @staticmethod
     def _isWorkflowStopped() :
-        # check wether a global signal has been give to stop all workflow submission
-        # this should only be true when a ctrl-C or similar event has occured.
+        # check whether a global signal has been give to stop all workflow submission
+        # this should only be true when a ctrl-C or similar event has occurred.
         return WorkflowRunner._allStop.isSet()
 
     def _addTaskCore(self, namespace, label, payload, dependencies) :
@@ -4062,7 +4062,7 @@ class WorkflowRunner(object) :
                 self._tman.harvestTasks()
 
         if not self._cdata().isTaskError() : return []
-        # this case has already been emailed in the TaskManager @ first error occurence:
+        # this case has already been emailed in the TaskManager @ first error occurrence:
         msg = ["Worklow terminated due to the following task errors:"]
         for task in self._cdata().taskErrors :
             msg.extend(task.getTaskErrorMsg())
