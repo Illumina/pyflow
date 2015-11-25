@@ -1220,19 +1220,15 @@ class CommandTaskRunner(BaseTaskRunner) :
 
             if not os.path.isfile(self.wrapFile) : return
 
-            lastLen = None
             for line in open(self.wrapFile) :
+                # an incomplete line indicates that the file is still being written:
+                if len(line) == 0 or line[-1] != '\n' : return
+
                 w = line.strip().split()
 
-                # Only return error on the previous line word count if
-                # we know the line has been completely updated in the file.
-                # We assume this is true if another line follows it:
-                if (lastLen is not None) and (lastLen < 6) :
+                if len(w) < 6 :
                     result.isError = True
                     return
-
-                lastLen = len(w)
-                if len(w) < 6 : return
                 if (w[4] != "[wrapperSignal]") :
                     result.isError = True
                     return
@@ -1241,17 +1237,20 @@ class CommandTaskRunner(BaseTaskRunner) :
                         result.taskExitCode = int(w[6])
                     return
 
-        trials = 3
+        trials = 4
         retryDelaySec = 30
 
         wrapResult = Bunch(taskExitCode=None, isError=False)
 
-        for _ in range(trials) :
+        for trialIndex in range(trials) :
+            if trialIndex != 0 :
+                msg = "No complete signal file found, retrying after delay. File: '%s'" % (self.wrapFile)
+                self.flowLog(msg, logState=LogState.WARNING)
+                time.sleep(retryDelaySec)
+
             checkWrapFileExit(wrapResult)
             if wrapResult.isError : break
             if wrapResult.taskExitCode is not None : break
-
-            time.sleep(retryDelaySec)
 
         return wrapResult
 
