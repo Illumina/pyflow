@@ -1261,16 +1261,23 @@ class CommandTaskRunner(BaseTaskRunner) :
                         result.taskExitCode = int(w[6])
                     return
 
-        trials = 4
+        retryCount = 8
         retryDelaySec = 30
 
         wrapResult = Bunch(taskExitCode=None, isError=False)
 
-        for trialIndex in range(trials) :
-            if trialIndex != 0 :
-                msg = "No complete signal file found, retrying after delay. File: '%s'" % (self.wrapFile)
+        totalDelaySec = 0
+        for trialIndex in range(retryCount) :
+            # if the problem occurs at 0 seconds don't bother with a warning, but
+            # if we've gone through a full retry cycle, then the filesystem delay is
+            # getting unusual and should be a warning:
+            if trialIndex > 1 :
+                msg = "No complete signal file found after %i seconds, retrying after delay. Signal file path: '%s'" % (totalDelaySec,self.wrapFile)
                 self.flowLog(msg, logState=LogState.WARNING)
+
+            if trialIndex != 0 :
                 time.sleep(retryDelaySec)
+                totalDelaySec += retryDelaySec
 
             checkWrapFileExit(wrapResult)
             if wrapResult.isError : break
