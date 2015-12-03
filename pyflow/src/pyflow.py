@@ -141,9 +141,18 @@ __version__ = getPyflowVersion()
 # portability functions:
 #
 
-def isWindows() :
+def _isWindows() :
     import platform
     return (platform.system().find("Windows") > -1)
+
+class GlobalConstants :
+    isWindows=_isWindows()
+
+
+def isWindows() :
+    return GlobalConstants.isWindows
+
+
 
 
 def forceRename(src,dst) :
@@ -163,6 +172,21 @@ def forceRename(src,dst) :
         except OSError :
             if (trial+1) >= maxTrials : raise
             time.sleep(5)
+
+
+
+def cleanEnv() :
+    """
+    clear bash functions out of the env
+
+    without this change the shellshock security update causes pyflow SGE jobs to
+    fail with the behavior of current (201512) versions of SGE qsub
+    """
+
+    ekeys = os.environ.keys()
+    for key in ekeys :
+        if key.endswith("()") :
+            del os.environ[key]
 
 
 # utility values and functions:
@@ -1619,6 +1643,7 @@ class TaskManager(StoppableThread) :
         """
 
         try:
+            cleanEnv()
             while not self._isTerm() :
                 # update status of running jobs
                 self.tdag.isFinishedEvent.clear()

@@ -1,3 +1,5 @@
+* [#14] Filter environment variables to remove bash functions. This
+eliminates complications between shellshock bash update and SGE.
 v1.1.11 20151125
 * Improve SGE robustness
 v1.1.10 20150927
