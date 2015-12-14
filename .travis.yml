@@ -34,9 +34,9 @@ install:
 script:
   - cd scratch/test && bash ./test_release_tarball.bash -nosge 
 
-branches:		
-  only:		
-    - master		
+branches:
+  only:
+    - master
 
 notifications:
   email:
