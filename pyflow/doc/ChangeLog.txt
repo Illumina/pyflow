@@ -1,3 +1,6 @@
+v1.1.13 20160414
+* fix rare issue with sets of dependent checkpoint tasks
+* fix for travis CI script from Dominic Jodoin
 v1.1.12 20151203
 * lengthen signal file delay tolerance to 4 mins
 * [#14] Filter environment variables to remove bash functions. This
