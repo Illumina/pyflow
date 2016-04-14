@@ -2303,26 +2303,28 @@ class TaskDAG(object) :
         if node in searched : return
         searched.add(node)
 
+        if node.isComplete() : return
+
+        for c in node.parents :
+            self._markCheckPointsCompleteFromNode(c, completed, searched)
+
         if (node.payload.type() == "command") and (node.payload.cmd.cmd is None) and (node.isReady()) :
             node.setRunstate("complete")
             completed.add(node)
-
-        if node.isComplete() :
-            for c in node.children :
-                self._markCheckPointsCompleteFromNode(c, completed, searched)
 
 
     @lockMethod
     def markCheckPointsComplete(self) :
         """
-        traverse from head nodes down, marking any checkpoints
-        (task.cmd=None) jobs that are ready as complete:
+        traverse from tail nodes up, marking any checkpoint tasks
+        (task.cmd=None) jobs that are ready as complete, return set
+        of newly completed tasks:
         """
         completed = set()
         # searched is used to restrict the complexity of this
         # operation on large graphs:
         searched = set()
-        for node in self.getHeadNodes() :
+        for node in self.getTailNodes() :
             self._markCheckPointsCompleteFromNode(node, completed, searched)
         return completed
 

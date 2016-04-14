@@ -407,6 +407,24 @@ class TestWorkflowRunner(unittest.TestCase) :
         except :
             self.fail("Should not raise Exception")
 
+    def test_CheckpointChain(self) :
+        """
+        Test that checkout points are handled correctly even
+        when multiple checkpoints have a parent-child relationship
+        """
+
+        class SelfWorkflow(WorkflowRunner) :
+            def workflow(self2) :
+                self2.addTask("A")
+                self2.addTask("B")
+                self2.addTask("C",dependencies=["A","B"])
+
+        try :
+            w=SelfWorkflow()
+            self.assertTrue(0==w.run("local",self.testPath,isQuiet=True))
+        except :
+            self.fail("Should not raise Exception")
+
 if __name__ == '__main__' :
     unittest.main()
 
