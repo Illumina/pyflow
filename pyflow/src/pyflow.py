@@ -1675,7 +1675,7 @@ class TaskManager(StoppableThread) :
         payload = task.payload
         param = self._cdata.param
 
-        if payload.cmd is None :
+        if payload.cmd.cmd is None :
             # Note these should have been marked off by the TaskManager already:
             raise Exception("Attempting to launch checkpoint task: %s" % (task.fullLabel()))
 

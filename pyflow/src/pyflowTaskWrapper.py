@@ -252,6 +252,9 @@ The parameter pickle file contains all of the task parameters required by the wr
             continue
         break
 
+    if params.cmd is None :
+        badUsage("Invalid TaskWrapper input: task command set to NONE")
+
     if params.cwd == "" or params.cwd == "None" :
         params.cwd = None
 
