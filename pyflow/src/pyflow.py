@@ -1617,6 +1617,39 @@ class SGETaskRunner(CommandTaskRunner) :
 
 
 
+class TaskFileWriter(StoppableThread) :
+    """
+    This class runs on a separate thread and is
+    responsible for updating the state and info task
+    files
+    """
+
+    def __init__(self, writeFunc) :
+        StoppableThread.__init__(self)
+        # parameter copy:
+        self.writeFunc = writeFunc
+        # thread settings:
+        self.setDaemon(True)
+        self.setName("TaskFileWriter-Thread")
+
+        self.isWrite = threading.Event()
+
+    def run(self) :
+        while not self.stopped() :
+            self._writeIfSet()
+            time.sleep(5)
+            self.isWrite.wait()
+
+    def flush(self):
+        self._writeIfSet()
+
+    def _writeIfSet(self) :
+        if self.isWrite.isSet() :
+            self.isWrite.clear()
+            self.writeFunc()
+
+
+
 class TaskManager(StoppableThread) :
     """
     This class runs on a separate thread from workflowRunner,
@@ -2000,14 +2033,14 @@ class TaskNode(object) :
     Represents an individual task in the task graph
     """
 
-    def __init__(self, tdag, lock, init_id, namespace, label, payload, isContinued, isFinishedEvent) :
-        self.tdag = tdag
+    def __init__(self, lock, init_id, namespace, label, payload, isContinued, isFinishedEvent, isWriteTaskStatus) :
         self.lock = lock
         self.id = init_id
         self.namespace = namespace
         self.label = label
         self.payload = payload
         self.isContinued = isContinued
+        self.isWriteTaskStatus = isWriteTaskStatus
 
         # if true, do not execute this task or honor it as a dependency for child tasks
         self.isIgnoreThis = False
@@ -2114,7 +2147,7 @@ class TaskNode(object) :
         else :
             self.runstateUpdateTimeStamp = updateTimeStamp
         self.runstate = runstate
-        self.tdag.writeTaskStatus()
+        self.isWriteTaskStatus.set()
 
     #def getParents(self) :
     #    return self.parents
@@ -2183,6 +2216,10 @@ class TaskDAG(object) :
         # unique id for each task in each run -- not persistent across continued runs:
         self.taskId = 0
 
+        # as tasks are added, occasionally spool task info to disk, and record the last
+        # task index written + 1
+        self.lastTaskIdWritten = 0
+
         # it will be easier for people to read the task status file if
         # the tasks are in approximately the same order as they were
         # added by the workflow:
@@ -2197,6 +2234,9 @@ class TaskDAG(object) :
         # (ie. local mode but not sge), if this isn't set the normal polling
         # cycle applies
         self.isFinishedEvent = threading.Event()
+
+        self.isWriteTaskInfo = None
+        self.isWriteTaskStatus = None
 
     @lockMethod
     def isTaskPresent(self, namespace, label) :
@@ -2375,7 +2415,7 @@ class TaskDAG(object) :
             else:
                 raise Exception("Task: '%s' is already in TaskDAG" % (fullLabel))
 
-        task = TaskNode(self, self.lock, self.taskId, namespace, label, payload, isContinued, self.isFinishedEvent)
+        task = TaskNode(self.lock, self.taskId, namespace, label, payload, isContinued, self.isFinishedEvent, self.isWriteTaskStatus)
 
         self.taskId += 1
 
@@ -2406,8 +2446,8 @@ class TaskDAG(object) :
                 task.isReset=True
 
         if not isContinued:
-            self.writeTaskInfo(task)
-            self.writeTaskStatus()
+            self.isWriteTaskInfo.set()
+            self.isWriteTaskStatus.set()
 
         # determine if this is an ignoreTasksAfter node
         if label in self.ignoreTasksAfter :
@@ -2525,9 +2565,8 @@ class TaskDAG(object) :
 
         return val
 
-
     @lockMethod
-    def writeTaskInfo(self, task) :
+    def writeTaskInfoOld(self, task) :
         """
         appends a description of new tasks to the taskInfo file
         """
@@ -2558,6 +2597,57 @@ class TaskDAG(object) :
                             isForceLocal, depstring, cwdstring, cmdstring))
         fp = open(self.taskInfoFile, "a")
         fp.write(taskline + "\n")
+        fp.close()
+
+    @lockMethod
+    def writeTaskInfo(self) :
+        """
+        appends a description of all new tasks to the taskInfo file
+        """
+
+        def getTaskLineFromTask(task) :
+            """
+            translate a task into its single-line summary format in the taskInfo file
+            """
+            depstring = ""
+            if len(task.parents) :
+                depstring = ",".join([p.label for p in task.parents])
+
+            cmdstring = ""
+            nCores = "0"
+            memMb = "0"
+            priority = "0"
+            isForceLocal = "0"
+            payload = task.payload
+            cwdstring = ""
+            if   payload.type() == "command" :
+                cmdstring = str(payload.cmd)
+                nCores = str(payload.nCores)
+                memMb = str(payload.memMb)
+                priority = str(payload.priority)
+                isForceLocal = boolToStr(payload.isForceLocal)
+                cwdstring = payload.cmd.cwd
+            elif payload.type() == "workflow" :
+                cmdstring = payload.name()
+            else :
+                assert 0
+            return "\t".join((task.label, task.namespace, payload.type(),
+                              nCores, memMb, priority,
+                              isForceLocal, depstring, cwdstring, cmdstring))
+
+        assert (self.lastTaskIdWritten <= self.taskId)
+
+        if self.lastTaskIdWritten == self.taskId : return
+
+        newTaskLines = []
+        while self.lastTaskIdWritten < self.taskId :
+            task = self.labelMap[self.addOrder[self.lastTaskIdWritten]]
+            newTaskLines.append(getTaskLineFromTask(task))
+            self.lastTaskIdWritten += 1
+
+        fp = open(self.taskInfoFile, "a")
+        for taskLine in newTaskLines :
+            fp.write(taskLine + "\n")
         fp.close()
 
 
@@ -3932,7 +4022,6 @@ class WorkflowRunner(object) :
             stackDumpFp.close()
 
 
-
     def _runWorkflow(self, param) :
         #
         # Primary workflow logic when nothing goes wrong:
@@ -3971,6 +4060,9 @@ class WorkflowRunner(object) :
             runStatus.errorCode = 1
             runStatus.errorMessage = "Thread: '%s', has stopped without a traceable cause" % (trun.getName())
 
+        self._taskInfoWriter.flush()
+        self._taskStatusWriter.flush()
+
         return self._evalWorkflow(runStatus)
 
 
@@ -4005,6 +4097,15 @@ class WorkflowRunner(object) :
 
         if cdata.param.isContinue :
             self._setupContinuedWorkflow()
+
+        self._taskInfoWriter = TaskFileWriter(self._tdag.writeTaskInfo)
+        self._taskStatusWriter = TaskFileWriter(self._tdag.writeTaskStatus)
+
+        self._tdag.isWriteTaskInfo = self._taskInfoWriter.isWrite
+        self._tdag.isWriteTaskStatus = self._taskStatusWriter.isWrite
+
+        self._taskInfoWriter.start()
+        self._taskStatusWriter.start()
 
 
 
