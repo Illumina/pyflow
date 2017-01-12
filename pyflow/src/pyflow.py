@@ -1132,8 +1132,6 @@ class CommandTaskRunner(BaseTaskRunner) :
         @param tmpDir: location to write files containing output from
                   the task wrapper script (and not the wrapped task)
         """
-        import pickle
-
         BaseTaskRunner.__init__(self, runStatus, taskStr, sharedFlowLog, setRunstate)
 
         self.cmd = cmd
@@ -1145,29 +1143,38 @@ class CommandTaskRunner(BaseTaskRunner) :
         self.errFile = errFile
         self.tmpDir = tmpDir
         self.schedulerArgList = schedulerArgList
+        self.runid = runid
+        self.taskStr = taskStr
         if not os.path.isfile(self.taskWrapper) :
             raise Exception("Can't find task wrapper script: %s" % self.taskWrapper)
+
+
+    def initFileSystemItems(self):
+        import pickle
 
         ensureDir(self.tmpDir)
         self.wrapFile = os.path.join(self.tmpDir, "pyflowTaskWrapper.signal.txt")
 
         # setup all the data to be passed to the taskWrapper and put this in argFile:
-        taskInfo = { 'nCores' : nCores,
-                   'outFile' : outFile, 'errFile' : errFile,
-                   'cwd' : cmd.cwd, 'env' : cmd.env,
-                   'cmd' : cmd.cmd, 'isShellCmd' : (cmd.type == "str") }
+        taskInfo = { 'nCores' : self.nCores,
+                     'outFile' : self.outFile, 'errFile' : self.errFile,
+                     'cwd' : self.cmd.cwd, 'env' : self.cmd.env,
+                     'cmd' : self.cmd.cmd, 'isShellCmd' : (self.cmd.type == "str") }
 
         argFile = os.path.join(self.tmpDir, "taskWrapperParameters.pickle")
         pickle.dump(taskInfo, open(argFile, "w"))
 
-        self.wrapperCmd = [self.taskWrapper, runid, taskStr, argFile]
-
+        self.wrapperCmd = [self.taskWrapper, self.runid, self.taskStr, argFile]
 
 
     def _run(self) :
         """
         Outer loop of _run() handles task retry behavior:
         """
+
+        # these initialization steps only need to happen once:
+        self.initFileSystemItems()
+
         startTime = time.time()
         retries = 0
         retInfo = Bunch(retval=1, taskExitMsg="", isAllowRetry=False)
