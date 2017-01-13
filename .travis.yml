@@ -37,6 +37,8 @@ script:
 branches:
   only:
     - master
+    - travis
+    - /v\d\.\d\.\d/
 
 notifications:
   email:
