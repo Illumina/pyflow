@@ -41,7 +41,7 @@ relative priorities to be run or queued first.
 LICENSE:
 --------
 
-pyFlow source code is provided under the [BSD 2-Clause License] (COPYRIGHT.txt).
+pyFlow source code is provided under the [BSD 2-Clause License](COPYRIGHT.txt).
 
 INSTALL:
 --------
@@ -53,7 +53,7 @@ The pyflow module can be installed using standard python distutils
 intallation. To do so unpack the tarball and use the setup script
 as follows:
 
-```
+```bash
 tar -xzf pyflow-X.Y.Z.tar.gz
 cd pyflow-X.Y.Z
 python setup.py build install
@@ -63,7 +63,7 @@ If installation in not convenient, you can simply add the pyflow
 src/ directory to the system search path. For instance:
 
 usepyflow.py:
-```
+```python
 import sys
 sys.path.append("/path/to/pyflow/src")
 
@@ -142,8 +142,8 @@ from make and must be kept in mind when restarting interrupted
 workflows.
 
 The runstate of each task is in
-pyflow.data/state/pyflow_tasks_runstate.txt, the description of each
-task is in pyflow.data/state/pyflow_tasks_info.txt. At the beginning of
+`pyflow.data/state/pyflow_tasks_runstate.txt`, the description of each
+task is in `pyflow.data/state/pyflow_tasks_info.txt`. At the beginning of
 each run any existing task files are backed up in
 pyflow.data/state/backup.
  
@@ -171,14 +171,14 @@ task dependencies, where each node colored by the task status. The graph
 generation script is automatically created for each run in the pyflow state
 directory here:
 
-pyflow.data/state/make_pyflow_task_graph.py
+    pyflow.data/state/make_pyflow_task_graph.py
 
 This script can be run without arguments to produce the current task graph in
-dot format based on the data files in the pyflow.data/state/ directory.
+dot format based on the data files in the `pyflow.data/state/` directory.
 
 #### Site configuration:
 
-The file ${pyflowDir}/src/pyflowConfig.py contains any pyflow variables or
+The file `${pyflowDir}/src/pyflowConfig.py` contains any pyflow variables or
 functions which would be likely to need configuration at a new site. This
 currently incudes:
 
