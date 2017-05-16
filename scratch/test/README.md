@@ -19,7 +19,7 @@ travis until windows support is complete.
 
 ### Component test scripts
 
-* pyflow_unit_tests.py - all pyflow unit tests 
+* pyflow_unit_tests.py - all pyflow unit tests
 
 * pyflow_basic_feature_runner.py - runs a number of pyflow operations for
   local or sge modes

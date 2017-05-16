@@ -1,8 +1,8 @@
 
-pyFlow - a lightweight parallel task engine 
+pyFlow - a lightweight parallel task engine
 ===========================================
 
-Chris Saunders (csaunders@illumina.com)  
+Chris Saunders (csaunders@illumina.com)
 Version: ${VERSION}
 
 
@@ -25,14 +25,14 @@ FEATURES:
 - Recursive workflow specification: take any existing pyFlow object and
   use it as a task in another pyFlow.
 - Dynamic workflow specification: define a wait on task specification rather
-  than just tasks, so that tasks can be defined based on the results of 
+  than just tasks, so that tasks can be defined based on the results of
   upstream tasks (note: recursive workflows are an even better way to do this)
 - Detects and reports all failed tasks with consistent workflow-level logging.
 - Task-level logging: All task stderr is logged and decorated,
   eg. [time][host][workflow_run][taskid]
 - Task timing: Task wrapper function provides wall time for every task
 - Task priority: Tasks which are simultanously eligible to run can be assigned
-relative priorities to be run or queued first. 
+relative priorities to be run or queued first.
 - Task mutex sets: define sets of tasks which access an exclusive resource
 - Email notification on job completion/error/exception
 - Provide ongoing task summary report at specified intervals
@@ -59,7 +59,7 @@ cd pyflow-X.Y.Z
 python setup.py build install
 ```
 
-If installation in not convenient, you can simply add the pyflow 
+If installation in not convenient, you can simply add the pyflow
 src/ directory to the system search path. For instance:
 
 usepyflow.py:
@@ -113,12 +113,12 @@ pyflow.data/logs/pyflow_log.txt.  All workflow log messages are
 prefixed with "[time] [hosname] [workflow_run] [component] ". Where:
 
 - 'time' is UTC in ISO 8601 format.
-- 'workflow_run' is an id that's weakly unique for each run of the workflow. It 
+- 'workflow_run' is an id that's weakly unique for each run of the workflow. It
 is composed of (1) the run() PID and (2) the number of times run() has been called on
 the workflow by the same process. These two values are joined by an underscore
 - 'component' - the name of the pyflow thread, the primary threads are
   'WorkflowManager' which runs the worklow() method, and 'TaskManager' which
-  polls the task graph and launches jobs. 
+  polls the task graph and launches jobs.
 
 In the task logs, only the stderr stream is decorated. The prefix in
 this case is: "[time] [hostname] [workflow_run] [taskname] ". The
@@ -130,8 +130,8 @@ itself) will use an extended taskname:
 writes to the log is to report the total runtime for its task.
 
 All logging is append only -- pyFlow does not overwrite logs even over
-multiple runs. The workflow_run id can be used to select out the 
-information from a specific run if restarting/continuing a run 
+multiple runs. The workflow_run id can be used to select out the
+information from a specific run if restarting/continuing a run
 multiple times.
 
 ### State:
@@ -146,7 +146,7 @@ The runstate of each task is in
 task is in `pyflow.data/state/pyflow_tasks_info.txt`. At the beginning of
 each run any existing task files are backed up in
 pyflow.data/state/backup.
- 
+
 ### Other:
 
 #### Email notification:
@@ -157,7 +157,7 @@ outcome of the run under any circumstance short of host hardware failure.
 The email should result from 1 of 3 outcomes: (1) successful run completion
 (2) the first unrecoverable task failure, with a description of the error
 (3) an unhandled software exception. Mail comes by default from
-"pyflow-bot@YOURDOMAIN" (configurable). Note that (1) you may 
+"pyflow-bot@YOURDOMAIN" (configurable). Note that (1) you may
 have to change the email address from the automatically detected domain to
 to recieve emails, and (2) you may need to check your junk-mail
 filter to recieve notifications. It is best to configure one of the demo

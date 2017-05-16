@@ -12,7 +12,7 @@ v1.1.11 20151125
 v1.1.10 20150927
 * Remove old custom cluster SGE logic and standardize on h_vmem
 v1.1.9 20150923
-* Add windows CI script to run cross-platform tests on master 
+* Add windows CI script to run cross-platform tests on master
 * Add new cross-platform test script and adjust all unit tests
 to run on windows
 * Improve error reporting for missing signal file case
@@ -115,9 +115,9 @@ v0.6.10 20120419
 interval.
 v0.6.9
 * Improve robustness against NFS update delay for task wrapper file
-* Include more sge error details in Notification email 
+* Include more sge error details in Notification email
 v0.6.8 20120319
-* Better handling on terminal hang-up: capture and ignore SIGHUP and 
+* Better handling on terminal hang-up: capture and ignore SIGHUP and
 handle failed writes to stderr. You should still use nohup where needed,
 but if you don't, then proper logging and notification will continue.
 * flush log writes
@@ -143,10 +143,10 @@ for queueing or running timeout on tasks.
 v0.6.2
 * allow commands to be submitted as argument lists (in addition to shell
 strings, as before). Argument lists allow longer commands and obviate a
-variety of quoting issues. 
+variety of quoting issues.
 * Change site configuration to an object scheme which simplifies site
 customization.
-* change qmake tasks from parallel env to dynamic allocation mode 
+* change qmake tasks from parallel env to dynamic allocation mode
 * allow qmake jobs to retry without an expiration window
 * improved reporting of failed make jobs
 * fixed minor issue with make path cleanup
@@ -163,14 +163,14 @@ v0.5.5 20120224
 * fix runner.bash demo failures on some machines
 * fix pyflowTaskWrapper stderr caching
 v0.5.4 20120224
-* fix configuration for non-sge hosts 
+* fix configuration for non-sge hosts
 v0.5.2 20120222
 * chuk pthread fix for pyflow tasks
 v0.5.1 20120221
 * Added autmatic chuk sge configuration to allow bagPipes to complete
 in the uk.
-* Various fixes from uk testing: (1) full hostname is correctly found in 
-the uk now (2) default configuration for email is it now comes form 
+* Various fixes from uk testing: (1) full hostname is correctly found in
+the uk now (2) default configuration for email is it now comes form
 "pyflow-bot@"YOUR_DOMAIN_NAME now. This is required to correctly
 get mail sent from a uk box.
 v0.5 20120220

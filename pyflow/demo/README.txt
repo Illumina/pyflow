@@ -11,7 +11,7 @@ This workflow demonstrates a number of commonly used pyflow features
 by setting up a number of tasks and showing different ways to specify
 task resource requirements and dependencies.
 
-3. subWorkflow 
+3. subWorkflow
 This workflow demonstrates the more advanced workflow recursion feature.
 
 4. runOptionsDemo
