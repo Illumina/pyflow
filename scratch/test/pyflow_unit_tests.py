@@ -150,14 +150,14 @@ class TestWorkflowRunner(unittest.TestCase) :
 
         w=TestWorkflow()
         retval=w.run("local",self.testPath,isQuiet=True)
-        self.assertTrue(retval==0)
+        self.assertEqual(retval, 0)
         retval=w.run("local",self.testPath,isContinue=True,isQuiet=True)
-        self.assertTrue(retval==0)
+        self.assertEqual(retval, 0)
         w.setColor("green")
         retval=w.run("local",self.testPath,isContinue=True,isQuiet=True)
-        self.assertTrue(retval==1)
+        self.assertEqual(retval, 1)
         retval=w.run("local",self.testPath,isContinue=True,isForceContinue=True,isQuiet=True)
-        self.assertTrue(retval==0)
+        self.assertEqual(retval, 0)
 
 
     def test_badContinue(self) :
@@ -192,7 +192,7 @@ class TestWorkflowRunner(unittest.TestCase) :
                 self2.addTask("B",getCmdString(getCatCmd()) + " " + filePath + " && " + getCmdString(getRmCmd())+ " " + filePath,dependencies="A")
 
         w=TestWorkflow()
-        self.assertTrue((0==w.run("local",self.testPath,isQuiet=True)))
+        self.assertEqual(w.run("local",self.testPath,isQuiet=True), 0)
 
 
     def test_waitDependency(self) :
@@ -207,7 +207,7 @@ class TestWorkflowRunner(unittest.TestCase) :
                 self2.addTask("B",getCmdString(getCatCmd()) + " " + filePath +" && " + getCmdString(getRmCmd())+ " " + filePath)
 
         w=TestWorkflow()
-        self.assertTrue(0==w.run("local",self.testPath,isQuiet=True))
+        self.assertTrue(0==w.run("local", self.testPath, isQuiet=True))
 
 
     def test_flowLog(self) :
@@ -227,13 +227,13 @@ class TestWorkflowRunner(unittest.TestCase) :
         This test is an early library error case.
         """
         class SubWorkflow1(WorkflowRunner) :
-            "this one fails"
+            "This workflow should fail."
             def workflow(self2) :
                 self2.addTask("A",getSleepCmd()+["5"])
                 self2.addTask("B","boogyman!",dependencies="A")
                 
         class SubWorkflow2(WorkflowRunner) :
-            "this one doesn't fail"
+            "This workflow should not fail."
             def workflow(self2) :
                 self2.addTask("A",getSleepCmd()+["5"])
                 self2.addTask("B",getSleepCmd()+["5"],dependencies="A")
@@ -257,7 +257,7 @@ class TestWorkflowRunner(unittest.TestCase) :
                 self2.addTask("A",getSleepCmd()+["5"],dependencies="A")
                 
         w=SelfWorkflow()
-        self.assertTrue(1==w.run("local",self.testPath,isQuiet=True))
+        self.assertEqual(w.run("local",self.testPath,isQuiet=True), 1)
 
 
     def test_expGraphScaling(self) :
@@ -308,8 +308,8 @@ class TestWorkflowRunner(unittest.TestCase) :
                 self2.addTask("C",getSleepCmd()+["1"],dependencies=("A","B"))
  
         w=SelfWorkflow()
-        self.assertTrue(0==w.run("local",self.testPath,isQuiet=True,startFromTasks="B"))
-        self.assertTrue(not os.path.exists(filePath))
+        self.assertEqual(w.run("local",self.testPath,isQuiet=True,startFromTasks="B"), 0)
+        self.assertFalse(os.path.exists(filePath))
 
 
     def test_startFromTasksSubWflow(self) :
@@ -329,7 +329,7 @@ class TestWorkflowRunner(unittest.TestCase) :
                 self2.addTask("C",getSleepCmd()+["1"],dependencies=("A","B"))
 
         w=SelfWorkflow()
-        self.assertTrue(0==w.run("local",self.testPath,isQuiet=True,startFromTasks="B"))
+        self.assertEqual(w.run("local",self.testPath,isQuiet=True,startFromTasks="B"), 0)
         self.assertTrue(os.path.exists(filePath))
 
 
@@ -350,8 +350,8 @@ class TestWorkflowRunner(unittest.TestCase) :
                 self2.addTask("C",getSleepCmd()+["1"],dependencies=("A","B"))
 
         w=SelfWorkflow()
-        self.assertTrue(0==w.run("local",self.testPath,isQuiet=True,startFromTasks="C"))
-        self.assertTrue(not os.path.exists(filePath))
+        self.assertEqual(w.run("local",self.testPath,isQuiet=True,startFromTasks="C"), 0)
+        self.assertFalse(os.path.exists(filePath))
 
 
     def test_ignoreTasksAfter(self) :
@@ -365,8 +365,8 @@ class TestWorkflowRunner(unittest.TestCase) :
                 self2.addTask("C",getSleepCmd()+["1"],dependencies=("A","B"))
  
         w=SelfWorkflow()
-        self.assertTrue(0==w.run("local",self.testPath,isQuiet=True,ignoreTasksAfter="B"))
-        self.assertTrue(not w.isTaskComplete("C"))
+        self.assertEqual(w.run("local",self.testPath,isQuiet=True,ignoreTasksAfter="B"), 0)
+        self.assertFalse(w.isTaskComplete("C"))
 
     def test_addTaskOutsideWorkflow(self) :
         """
@@ -403,11 +403,11 @@ class TestWorkflowRunner(unittest.TestCase) :
 
         try :
             w=SelfWorkflow()
-            self.assertTrue(0==w.run("local",self.testPath,isQuiet=True))
+            self.assertEqual(w.run("local",self.testPath,isQuiet=True), 0)
         except :
             self.fail("Should not raise Exception")
 
-    def test_CheckpointChain(self) :
+    def test_checkpointChain(self) :
         """
         Test that checkout points are handled correctly even
         when multiple checkpoints have a parent-child relationship
@@ -421,10 +421,68 @@ class TestWorkflowRunner(unittest.TestCase) :
 
         try :
             w=SelfWorkflow()
-            self.assertTrue(0==w.run("local",self.testPath,isQuiet=True))
+            self.assertEqual(w.run("local",self.testPath,isQuiet=True), 0)
         except :
             self.fail("Should not raise Exception")
 
+    def test_cancelTaskTree(self) :
+        """
+        Test that tasks can be canceled.
+        """
+
+        class SelfWorkflow(WorkflowRunner) :
+            def workflow(self2) :
+                self2.addTask("A", getSleepCmd()+["3"])
+                self2.addTask("B", getSleepCmd()+["30"], dependencies="A")
+                self2.addTask("C", getSleepCmd()+["30"], dependencies="B")
+                import time
+                time.sleep(1)
+                self2.cancelTaskTree("B")
+
+        try :
+            w=SelfWorkflow()
+            self.assertEqual(w.run("local",self.testPath,isQuiet=True), 0)
+            self.assertTrue(w.isTaskComplete("A"))
+            self.assertFalse(w.isTaskComplete("B"))
+            self.assertFalse(w.isTaskComplete("C"))
+        except :
+            self.fail("Should not raise Exception")
+
+    def test_isTaskDone(self) :
+        """
+        Test new isTaskDone() method
+        """
+
+        class SelfWorkflow(WorkflowRunner) :
+            def workflow(self2) :
+                self2.addTask("A",getSleepCmd()+["1"])
+                self2.addTask("B","boogyman!",dependencies="A")
+
+        try :
+            w=SelfWorkflow()
+            self.assertEqual(w.run("local", self.testPath, isQuiet=True), 1)
+            self.assertEqual(w.isTaskDone("A"), (True, False))
+            self.assertEqual(w.isTaskDone("B"), (True, True))
+        except :
+            self.fail("Should not raise Exception")
+
+    def test_queryMissingTask(self) :
+        """
+        Test query on an undefined task name
+        """
+
+        class SelfWorkflow(WorkflowRunner) :
+            def workflow(self2) :
+                self2.addTask("A",getSleepCmd()+["1"])
+
+        try :
+            w=SelfWorkflow()
+            self.assertEqual(w.run("local", self.testPath, isQuiet=True), 0)
+            self.assertEqual(w.isTaskComplete("B"), False)
+        except :
+            self.fail("Should not raise Exception")
+
+
+
 if __name__ == '__main__' :
     unittest.main()
-
