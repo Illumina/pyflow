@@ -24,9 +24,9 @@ FEATURES:
   required for each task.
 - Recursive workflow specification: take any existing pyFlow object and
   use it as a task in another pyFlow.
-- Dynamic workflow specification: define a wait on task specification rather
-  than just tasks, so that tasks can be defined based on the results of
-  upstream tasks (note: recursive workflows are an even better way to do this)
+- Dynamic workflow specification:
+  - Define a wait on task specification rather than just tasks, so that tasks can be defined based on the results of upstream tasks (note: recursive workflows are an even better way to do this)
+  - Tasks/Task-trees can be canceled during the workflow based on the results of other tasks
 - Detects and reports all failed tasks with consistent workflow-level logging.
 - Task-level logging: All task stderr is logged and decorated,
   eg. [time][host][workflow_run][taskid]
