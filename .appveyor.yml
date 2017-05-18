@@ -9,6 +9,12 @@ test_script:
   # Build the compiled extension and run the project tests
   - "python.exe scratch/test/test_pyflow.py"
 
+branches:
+  only:
+    - master
+    - travis
+    - /v\d\.\d\.\d/
+
 notifications:
   - provider: Email
     to:
