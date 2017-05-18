@@ -1859,6 +1859,31 @@ class TaskManager(StoppableThread) :
             self._launchTask(task)
 
 
+    def _removeTaskFromRunningSet(self, task) :
+        """
+        Given a running task which is already shown to be finished running, remove it from the running set, and
+        recover allocated resources.
+        """
+        assert(task in self.runningTasks)
+
+        # shortcut:
+        param = self._cdata.param
+
+        # recover core and memory allocations:
+        if task.payload.type() == "command" :
+            isForcedLocal = ((param.mode != "local") and (task.payload.isForceLocal))
+            if not isForcedLocal :
+                if self.freeCores != "unlimited" :
+                    self.freeCores += task.payload.nCores
+                if self.freeMemMb != "unlimited" :
+                    self.freeMemMb += task.payload.memMb
+
+            if task.payload.mutex is not None :
+                self.taskMutexState[task.payload.mutex] = False
+
+        del self.runningTasks[task]
+
+
 
     @lockMethod
     def harvestTasks(self) :
@@ -1908,24 +1933,36 @@ class TaskManager(StoppableThread) :
                 # the first error:
                 self._cdata.setTaskError(task)
 
-        # shortcut:
-        param = self._cdata.param
-
         # recover task resources:
         for task in notrunning :
-            if task.payload.type() == "command" :
-                isForcedLocal = ((param.mode != "local") and (task.payload.isForceLocal))
-                if not isForcedLocal :
-                    if self.freeCores != "unlimited" :
-                        self.freeCores += task.payload.nCores
-                    if self.freeMemMb != "unlimited" :
-                        self.freeMemMb += task.payload.memMb
+            self._removeTaskFromRunningSet(task)
 
-                if task.payload.mutex is not None :
-                    self.taskMutexState[task.payload.mutex] = False
+    @lockMethod
+    def cancelTaskTree(self, task) :
+        """
+        Cancel a task and all of its children, without labeling the canceled tasks as errors
 
-        for task in notrunning:
-            del self.runningTasks[task]
+        A canceled task will be stopped if it is running, or unqueued if it is waiting, and will be put into the
+        waiting/ignored state unless it has already completed.
+        """
+
+        # Recursively cancel child tasks:
+        for child in task.children :
+            self.cancelTaskTree(child)
+
+        self._infoLog("Canceling %s '%s' from %s" % (task.payload.desc(), task.fullLabel(), namespaceLabel(task.namespace)))
+
+        # Stop the task if it is running:
+        if task in self.runningTasks :
+            taskRunner = self.runningTasks[task]
+            taskRunner.stop()
+            self._removeTaskFromRunningSet(task)
+
+        # Reset the task to be ignored unless it is already done:
+        if not task.isDone() :
+            task.runstate = "waiting"
+            task.isIgnoreThis = True
+
 
 
     @lockMethod
@@ -2149,12 +2186,6 @@ class TaskNode(object) :
             self.runstateUpdateTimeStamp = updateTimeStamp
         self.runstate = runstate
         self.isWriteTaskStatus.set()
-
-    #def getParents(self) :
-    #    return self.parents
-
-    #def getChildren(self) :
-    #    return self.children
 
     @lockMethod
     def getTaskErrorMsg(self) :
@@ -2504,7 +2535,6 @@ class TaskDAG(object) :
                 raise Exception("Task: '%s' has invalid continuation state. Task dependencies are incomplete")
 
 
-
     @lockMethod
     def writeTaskStatus(self) :
         """
@@ -2566,39 +2596,6 @@ class TaskDAG(object) :
 
         return val
 
-    @lockMethod
-    def writeTaskInfoOld(self, task) :
-        """
-        appends a description of new tasks to the taskInfo file
-        """
-        depstring = ""
-        if len(task.parents) :
-            depstring = ",".join([p.label for p in task.parents])
-
-        cmdstring = ""
-        nCores = "0"
-        memMb = "0"
-        priority = "0"
-        isForceLocal = "0"
-        payload = task.payload
-        cwdstring = ""
-        if   payload.type() == "command" :
-            cmdstring = str(payload.cmd)
-            nCores = str(payload.nCores)
-            memMb = str(payload.memMb)
-            priority = str(payload.priority)
-            isForceLocal = boolToStr(payload.isForceLocal)
-            cwdstring = payload.cmd.cwd
-        elif payload.type() == "workflow" :
-            cmdstring = payload.name()
-        else :
-            assert 0
-        taskline = "\t".join((task.label, task.namespace, payload.type(),
-                            nCores, memMb, priority,
-                            isForceLocal, depstring, cwdstring, cmdstring))
-        fp = open(self.taskInfoFile, "a")
-        fp.write(taskline + "\n")
-        fp.close()
 
     @lockMethod
     def writeTaskInfo(self) :
@@ -3623,8 +3620,32 @@ class WorkflowRunner(object) :
         @return: Completion status of task
         """
 
+        result = self._isTaskCompleteCore(self._getNamespace(), taskLabel)
+
+        # Complete = (Done and not Error)
+        return (result[0] and not result[1])
+
+    def isTaskDone(self, taskLabel) :
+        """
+        Query if a specific task is in the workflow and is done, with or without error
+
+        This can assist workflows with providing
+        stable interrupt/resume behavior.
+
+        @param taskLabel: A task string
+
+        @return: A boolean tuple specifying (task is done, task finished with error)
+        """
+
         return self._isTaskCompleteCore(self._getNamespace(), taskLabel)
 
+    def cancelTaskTree(self, taskLabel) :
+        """
+        Cancel the given task and all of its dependencies. Canceling means that any running jobs will be stopped and
+        any waiting job will be unqueued. Canceled tasks will not be treated as errors. Canceled tasks that are not
+        already complete will be put into the waiting/ignored state.
+        """
+        self._cancelTaskTreeCore(self._getNamespace(), taskLabel)
 
     def getRunMode(self) :
         """
@@ -3915,12 +3936,20 @@ class WorkflowRunner(object) :
 
 
     def _isTaskCompleteCore(self, namespace, taskLabel) :
+        """
+        @return: A boolean tuple specifying (task is done, task finished with error)
+        """
 
         if not self._tdag.isTaskPresent(namespace, taskLabel) :
-            return False
+            return (False, False)
         task = self._tdag.getTask(namespace, taskLabel)
-        return task.isComplete()
+        return ( task.isDone(), task.isError() )
 
+    def _cancelTaskTreeCore(self, namespace, taskLabel) :
+        if not self._tdag.isTaskPresent(namespace, taskLabel) :
+            return
+        task = self._tdag.getTask(namespace, taskLabel)
+        self._tman.cancelTaskTree(task)
 
     @staticmethod
     def _checkTaskLabel(label) :
