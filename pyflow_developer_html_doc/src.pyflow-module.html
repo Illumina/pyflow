@@ -1,0 +1,1297 @@
+<?xml version="1.0" encoding="ascii"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>src.pyflow</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css" />
+  <script type="text/javascript" src="epydoc.js"></script>
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="src-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+      <th class="navbar" width="100%"></th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <span class="breadcrumbs">
+        <a href="src-module.html">Package&nbsp;src</a> ::
+        Module&nbsp;pyflow
+      </span>
+    </td>
+    <td>
+      <table cellpadding="0" cellspacing="0">
+        <!-- hide/show private -->
+        <tr><td align="right"><span class="options">[<a href="javascript:void(0);" class="privatelink"
+    onclick="toggle_private();">hide&nbsp;private</a>]</span></td></tr>
+        <tr><td align="right"><span class="options"
+            >[<a href="frames.html" target="_top">frames</a
+            >]&nbsp;|&nbsp;<a href="src.pyflow-module.html"
+            target="_top">no&nbsp;frames</a>]</span></td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<!-- ==================== MODULE DESCRIPTION ==================== -->
+<h1 class="epydoc">Module pyflow</h1><p class="nomargin-top"><span class="codelink"><a href="src.pyflow-pysrc.html">source&nbsp;code</a></span></p>
+<p>pyflow -- a lightweight parallel task engine</p>
+
+<hr />
+<div class="fields">      <p><strong>Version:</strong>
+        v1.1.15
+      </p>
+      <p><strong>Author:</strong>
+        Christopher Saunders
+      </p>
+</div><!-- ==================== CLASSES ==================== -->
+<a name="section-Classes"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Classes</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-Classes"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="src.pyflow.GlobalSync-class.html" class="summary-name">GlobalSync</a><br />
+      Control total memory usage in non-local run modes by limiting the 
+        number of simultaneous subprocess calls
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="src.pyflow.GlobalConstants-class.html" class="summary-name">GlobalConstants</a>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="src.pyflow.LogState-class.html" class="summary-name">LogState</a><br />
+      A simple logging enum
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="src.pyflow.LogGlobals-class.html" class="summary-name">LogGlobals</a>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="src.pyflow.StrFileObject-class.html" class="summary-name">StrFileObject</a><br />
+      fakes a filehandle for library functions which write to a stream, 
+        and captures output in a string
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="src.pyflow.ExpWaiter-class.html" class="summary-name">ExpWaiter</a><br />
+      Convenience object to setup exponentially increasing wait/polling 
+        times
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="src.pyflow.Bunch-class.html" class="summary-name">Bunch</a><br />
+      generic struct with named argument constructor
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="src.pyflow.TaskNodeConstants-class.html" class="summary-name">TaskNodeConstants</a>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="src.pyflow.DotConfig-class.html" class="summary-name">DotConfig</a><br />
+      A static container of configuration data for dot graph output
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="src.pyflow.Command-class.html" class="summary-name">Command</a><br />
+      Commands can be presented as strings or argument lists (or none)
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="src.pyflow.StoppableThread-class.html" class="summary-name">StoppableThread</a><br />
+      Thread class with a stop() method.
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="src.pyflow.ModeInfo-class.html" class="summary-name">ModeInfo</a><br />
+      Stores default values associated with each runmode: local,sge,...
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="src.pyflow.RunMode-class.html" class="summary-name">RunMode</a>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="src.pyflow.RetryParam-class.html" class="summary-name">RetryParam</a><br />
+      parameters pertaining to task retry behavior
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="src.pyflow.RunningTaskStatus-class.html" class="summary-name">RunningTaskStatus</a><br />
+      simple object allowing remote task threads to communicate their 
+        status back to the TaskManager
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="src.pyflow.BaseTaskRunner-class.html" class="summary-name">BaseTaskRunner</a><br />
+      Each individual command-task or sub workflow task is run on its own
+        thread using a class inherited from BaseTaskRunner
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="src.pyflow.WorkflowTaskRunner-class.html" class="summary-name">WorkflowTaskRunner</a><br />
+      Manages a sub-workflow task
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="src.pyflow.CommandTaskRunner-class.html" class="summary-name">CommandTaskRunner</a><br />
+      Parent to local and SGE TaskRunner specializations for command 
+        tasks
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="src.pyflow.LocalTaskRunner-class.html" class="summary-name">LocalTaskRunner</a>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="src.pyflow.QCaller-class.html" class="summary-name">QCaller</a><br />
+      Calls to both qsub and qstat go through this run() method so that 
+        we can time them out:
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="src.pyflow.SGETaskRunner-class.html" class="summary-name">SGETaskRunner</a>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="src.pyflow.TaskFileWriter-class.html" class="summary-name">TaskFileWriter</a><br />
+      This class runs on a separate thread and is responsible for 
+        updating the state and info task files
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="src.pyflow.TaskManager-class.html" class="summary-name">TaskManager</a><br />
+      This class runs on a separate thread from workflowRunner, launching
+        jobs based on the current state of the TaskDAG
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="src.pyflow.CmdPayload-class.html" class="summary-name">CmdPayload</a>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="src.pyflow.WorkflowPayload-class.html" class="summary-name">WorkflowPayload</a>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="src.pyflow.TaskNode-class.html" class="summary-name">TaskNode</a><br />
+      Represents an individual task in the task graph
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="src.pyflow.TaskDAG-class.html" class="summary-name">TaskDAG</a><br />
+      Holds all tasks and their dependencies.
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="src.pyflow.DataDirException-class.html" class="summary-name">DataDirException</a>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="src.pyflow.WorkflowRunnerThreadSharedData-class.html" class="summary-name">WorkflowRunnerThreadSharedData</a><br />
+      All data used by the WorkflowRunner which will be constant over the
+        lifetime of a TaskManager instance.
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="src.pyflow.WorkflowRunner-class.html" class="summary-name">WorkflowRunner</a><br />
+      This object is designed to be inherited by a class in client code.
+    </td>
+  </tr>
+</table>
+<!-- ==================== FUNCTIONS ==================== -->
+<a name="section-Functions"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Functions</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-Functions"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="getPythonVersion"></a><span class="summary-sig-name">getPythonVersion</span>()</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="src.pyflow-pysrc.html#getPythonVersion">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="getPyflowVersion"></a><span class="summary-sig-name">getPyflowVersion</span>()</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="src.pyflow-pysrc.html#getPyflowVersion">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="_isWindows"></a><span class="summary-sig-name">_isWindows</span>()</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="src.pyflow-pysrc.html#_isWindows">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="isWindows"></a><span class="summary-sig-name">isWindows</span>()</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="src.pyflow-pysrc.html#isWindows">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="forceRename"></a><span class="summary-sig-name">forceRename</span>(<span class="summary-sig-arg">src</span>,
+        <span class="summary-sig-arg">dst</span>)</span><br />
+      dst is only overwritten in a single atomic operation on *nix on 
+      windows, we can't have atomic rename, but we can recreate the 
+      behavior otherwise</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="src.pyflow-pysrc.html#forceRename">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="src.pyflow-module.html#cleanEnv" class="summary-sig-name">cleanEnv</a>()</span><br />
+      clear bash functions out of the env</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="src.pyflow-pysrc.html#cleanEnv">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="ensureDir"></a><span class="summary-sig-name">ensureDir</span>(<span class="summary-sig-arg">d</span>)</span><br />
+      make directory if it doesn't already exist, raise exception if 
+      something else is in the way:</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="src.pyflow-pysrc.html#ensureDir">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="timeStampToTimeStr"></a><span class="summary-sig-name">timeStampToTimeStr</span>(<span class="summary-sig-arg">ts</span>)</span><br />
+      converts time.time() output to timenow() string</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="src.pyflow-pysrc.html#timeStampToTimeStr">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="timeStrNow"></a><span class="summary-sig-name">timeStrNow</span>()</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="src.pyflow-pysrc.html#timeStrNow">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="timeStrToTimeStamp"></a><span class="summary-sig-name">timeStrToTimeStamp</span>(<span class="summary-sig-arg">ts</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="src.pyflow-pysrc.html#timeStrToTimeStamp">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="isInt"></a><span class="summary-sig-name">isInt</span>(<span class="summary-sig-arg">x</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="src.pyflow-pysrc.html#isInt">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="isString"></a><span class="summary-sig-name">isString</span>(<span class="summary-sig-arg">x</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="src.pyflow-pysrc.html#isString">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="isIterable"></a><span class="summary-sig-name">isIterable</span>(<span class="summary-sig-arg">x</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="src.pyflow-pysrc.html#isIterable">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="src.pyflow-module.html#lister" class="summary-sig-name">lister</a>(<span class="summary-sig-arg">x</span>)</span><br />
+      Convert input into a list, whether it's already iterable or not.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="src.pyflow-pysrc.html#lister">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="setzer"></a><span class="summary-sig-name">setzer</span>(<span class="summary-sig-arg">x</span>)</span><br />
+      convert user input into a set, handling the pathological case that 
+      you have been handed a single string, and you don't want a set of 
+      letters:</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="src.pyflow-pysrc.html#setzer">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="hardFlush"></a><span class="summary-sig-name">hardFlush</span>(<span class="summary-sig-arg">ofp</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="src.pyflow-pysrc.html#hardFlush">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="src.pyflow-module.html#log" class="summary-sig-name">log</a>(<span class="summary-sig-arg">ofpList</span>,
+        <span class="summary-sig-arg">msgList</span>,
+        <span class="summary-sig-arg">linePrefix</span>=<span class="summary-sig-default">None</span>)</span><br />
+      General logging function.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="src.pyflow-pysrc.html#log">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="getThreadName"></a><span class="summary-sig-name">getThreadName</span>()</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="src.pyflow-pysrc.html#getThreadName">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="isMainThread"></a><span class="summary-sig-name">isMainThread</span>()</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="src.pyflow-pysrc.html#isMainThread">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="getTracebackStr"></a><span class="summary-sig-name">getTracebackStr</span>()</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="src.pyflow-pysrc.html#getTracebackStr">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="getExceptionMsg"></a><span class="summary-sig-name">getExceptionMsg</span>()</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="src.pyflow-pysrc.html#getExceptionMsg">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="cmdline"></a><span class="summary-sig-name">cmdline</span>()</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="src.pyflow-pysrc.html#cmdline">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="msgListToMsg"></a><span class="summary-sig-name">msgListToMsg</span>(<span class="summary-sig-arg">msgList</span>)</span><br />
+      convert string or list of strings into a single string message</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="src.pyflow-pysrc.html#msgListToMsg">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="verifyEmailAddy"></a><span class="summary-sig-name">verifyEmailAddy</span>(<span class="summary-sig-arg">x</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="src.pyflow-pysrc.html#verifyEmailAddy">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="isLocalSmtp"></a><span class="summary-sig-name">isLocalSmtp</span>()</span><br />
+      return true if a local smtp server is available</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="src.pyflow-pysrc.html#isLocalSmtp">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="sendEmail"></a><span class="summary-sig-name">sendEmail</span>(<span class="summary-sig-arg">mailTo</span>,
+        <span class="summary-sig-arg">mailFrom</span>,
+        <span class="summary-sig-arg">subject</span>,
+        <span class="summary-sig-arg">msgList</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="src.pyflow-pysrc.html#sendEmail">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="boolToStr"></a><span class="summary-sig-name">boolToStr</span>(<span class="summary-sig-arg">b</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="src.pyflow-pysrc.html#boolToStr">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="argToBool"></a><span class="summary-sig-name">argToBool</span>(<span class="summary-sig-arg">x</span>)</span><br />
+      convert argument of unknown type to a bool:</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="src.pyflow-pysrc.html#argToBool">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="hashObjectValue"></a><span class="summary-sig-name">hashObjectValue</span>(<span class="summary-sig-arg">obj</span>)</span><br />
+      This function hashes objects values -- the hash will be the same for 
+      two objects containing the same methods and data, so it corresponds 
+      to 'A==B' and *not* 'A is B'.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="src.pyflow-pysrc.html#hashObjectValue">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="namespaceJoin"></a><span class="summary-sig-name">namespaceJoin</span>(<span class="summary-sig-arg">a</span>,
+        <span class="summary-sig-arg">b</span>)</span><br />
+      join two strings with a separator only if a exists</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="src.pyflow-pysrc.html#namespaceJoin">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="namespaceLabel"></a><span class="summary-sig-name">namespaceLabel</span>(<span class="summary-sig-arg">namespace</span>)</span><br />
+      provide a consistent naming scheme to users for embedded workflows</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="src.pyflow-pysrc.html#namespaceLabel">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="lockMethod"></a><span class="summary-sig-name">lockMethod</span>(<span class="summary-sig-arg">f</span>)</span><br />
+      method decorator acquires/releases object's lock</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="src.pyflow-pysrc.html#lockMethod">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="stackDump"></a><span class="summary-sig-name">stackDump</span>(<span class="summary-sig-arg">dumpfp</span>)</span><br />
+      adapted from haridsv @ stackoverflow:</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="src.pyflow-pysrc.html#stackDump">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="taskStateHeader"></a><span class="summary-sig-name">taskStateHeader</span>()</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="src.pyflow-pysrc.html#taskStateHeader">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="taskStateParser"></a><span class="summary-sig-name">taskStateParser</span>(<span class="summary-sig-arg">stateFile</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="src.pyflow-pysrc.html#taskStateParser">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="taskInfoHeader"></a><span class="summary-sig-name">taskInfoHeader</span>()</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="src.pyflow-pysrc.html#taskInfoHeader">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="taskInfoParser"></a><span class="summary-sig-name">taskInfoParser</span>(<span class="summary-sig-arg">infoFile</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="src.pyflow-pysrc.html#taskInfoParser">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="getTaskInfoDepSet"></a><span class="summary-sig-name">getTaskInfoDepSet</span>(<span class="summary-sig-arg">s</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="src.pyflow-pysrc.html#getTaskInfoDepSet">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="writeDotGraph"></a><span class="summary-sig-name">writeDotGraph</span>(<span class="summary-sig-arg">taskInfoFile</span>,
+        <span class="summary-sig-arg">taskStateFile</span>,
+        <span class="summary-sig-arg">workflowClassName</span>)</span><br />
+      write out the current graph state in dot format</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="src.pyflow-pysrc.html#writeDotGraph">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="writeDotScript"></a><span class="summary-sig-name">writeDotScript</span>(<span class="summary-sig-arg">taskDotScriptFile</span>,
+        <span class="summary-sig-arg">taskInfoFileName</span>,
+        <span class="summary-sig-arg">taskStateFileName</span>,
+        <span class="summary-sig-arg">workflowClassName</span>)</span><br />
+      write dot task graph creation script</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="src.pyflow-pysrc.html#writeDotScript">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="getSGEJobsDefault"></a><span class="summary-sig-name">getSGEJobsDefault</span>()</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="src.pyflow-pysrc.html#getSGEJobsDefault">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+</table>
+<!-- ==================== VARIABLES ==================== -->
+<a name="section-Variables"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Variables</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-Variables"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="moduleDir"></a><span class="summary-name">moduleDir</span> = <code title="'/home/csaunders/devel/pyflow/pyflow/src'"><code class="variable-quote">'</code><code class="variable-string">/home/csaunders/devel/pyflow/pyflow/src</code><code class="variable-quote">'</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="src.pyflow-module.html#pyver" class="summary-name">pyver</a> = <code title="sys.version_info(major=2, minor=7, micro=12, releaselevel='final', ser\
+ial=0)">sys.version_info(major=2, minor=7, micro=12, releasele<code class="variable-ellipsis">...</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="pythonVersion"></a><span class="summary-name">pythonVersion</span> = <code title="'2.7.12.final.0'"><code class="variable-quote">'</code><code class="variable-string">2.7.12.final.0</code><code class="variable-quote">'</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="src.pyflow-module.html#emailRegex" class="summary-name">emailRegex</a> = <code title="re.compile(r'(?i)(?:^|\s)[-a-z0-9_\.]+@(?:[-a-z0-9]+\.)+[a-z]{2,6}(?:\\
+s|$)')">re.compile(r'<code class="re-flags">(?i)</code><code class="re-group">(?:</code>^<code class="re-op">|</code>\s<code class="re-group">)</code><code class="re-group">[</code>-a<code class="re-op">-</code>z0<code class="re-op">-</code>9_\.<code class="re-group">]</code><code class="re-op">+</code>@<code class="re-group">(?:</code><code class="re-group">[</code>-a<code class="re-op">-</code>z0<code class="re-op">-</code><code class="variable-ellipsis">...</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="namespaceSep"></a><span class="summary-name">namespaceSep</span> = <code title="'+'"><code class="variable-quote">'</code><code class="variable-string">+</code><code class="variable-quote">'</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="__package__"></a><span class="summary-name">__package__</span> = <code title="'src'"><code class="variable-quote">'</code><code class="variable-string">src</code><code class="variable-quote">'</code></code>
+    </td>
+  </tr>
+</table>
+<!-- ==================== FUNCTION DETAILS ==================== -->
+<a name="section-FunctionDetails"></a>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Function Details</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-FunctionDetails"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+</table>
+<a name="cleanEnv"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">cleanEnv</span>()</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="src.pyflow-pysrc.html#cleanEnv">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>clear bash functions out of the env</p>
+  <p>without this change the shellshock security update causes pyflow SGE 
+  jobs to fail with the behavior of current (201512) versions of SGE 
+  qsub</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="lister"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">lister</span>(<span class="sig-arg">x</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="src.pyflow-pysrc.html#lister">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Convert input into a list, whether it's already iterable or not. Make 
+  an exception for individual strings to be returned as a list of one 
+  string, instead of being chopped into letters Also, convert None type to 
+  empty list:</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="log"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">log</span>(<span class="sig-arg">ofpList</span>,
+        <span class="sig-arg">msgList</span>,
+        <span class="sig-arg">linePrefix</span>=<span class="sig-default">None</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="src.pyflow-pysrc.html#log">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>General logging function.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>ofpList</code></strong> - A container of file objects to write to</li>
+        <li><strong class="pname"><code>msgList</code></strong> - A container of (or a single) multi-line log message string. Final
+          newlines are not required</li>
+        <li><strong class="pname"><code>linePrefix</code></strong> - A prefix to add before every line. This will come *after* the log
+          function's own '[time] [hostname]' prefix.</li>
+    </ul></dd>
+    <dt>Returns:</dt>
+        <dd>Returns a boolean tuple of size ofpList indicating the success of
+          writing to each file object</dd>
+  </dl>
+</td></tr></table>
+</div>
+<br />
+<!-- ==================== VARIABLES DETAILS ==================== -->
+<a name="section-VariablesDetails"></a>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Variables Details</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-VariablesDetails"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+</table>
+<a name="pyver"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">pyver</h3>
+  
+  <dl class="fields">
+  </dl>
+  <dl class="fields">
+    <dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+sys.version_info(major=2, minor=7, micro=12, releaselevel='final', ser<span class="variable-linewrap"><img src="crarr.png" alt="\" /></span>
+ial=0)
+</pre></td></tr></table>
+</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="emailRegex"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">emailRegex</h3>
+  
+  <dl class="fields">
+  </dl>
+  <dl class="fields">
+    <dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+re.compile(r'<code class="re-flags">(?i)</code><code class="re-group">(?:</code>^<code class="re-op">|</code>\s<code class="re-group">)</code><code class="re-group">[</code>-a<code class="re-op">-</code>z0<code class="re-op">-</code>9_\.<code class="re-group">]</code><code class="re-op">+</code>@<code class="re-group">(?:</code><code class="re-group">[</code>-a<code class="re-op">-</code>z0<code class="re-op">-</code>9<code class="re-group">]</code><code class="re-op">+</code>\.<code class="re-group">)</code><code class="re-op">+</code><code class="re-group">[</code>a<code class="re-op">-</code>z<code class="re-group">]</code><code class="re-op">{2,6}</code><code class="re-group">(?:</code>\<span class="variable-linewrap"><img src="crarr.png" alt="\" /></span>
+s<code class="re-op">|</code>$<code class="re-group">)</code>')
+</pre></td></tr></table>
+</dd>
+  </dl>
+</td></tr></table>
+</div>
+<br />
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="src-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+      <th class="navbar" width="100%"></th>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%%">
+  <tr>
+    <td align="left" class="footer">
+    Generated by Epydoc 3.0.1
+    on Fri May 19 16:44:20 2017
+    </td>
+    <td align="right" class="footer">
+      <a target="mainFrame" href="http://epydoc.sourceforge.net"
+        >http://epydoc.sourceforge.net</a>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  <!--
+  // Private objects are initially displayed (because if
+  // javascript is turned off then we want them to be
+  // visible); but by default, we want to hide them.  So hide
+  // them unless we have a cookie that says to show them.
+  checkCookie();
+  // -->
+</script>
+</body>
+</html>

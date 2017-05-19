@@ -1,0 +1,437 @@
+<?xml version="1.0" encoding="ascii"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>src.pyflowConfig.DefaultSiteConfig</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css" />
+  <script type="text/javascript" src="epydoc.js"></script>
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="src-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+      <th class="navbar" width="100%"></th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <span class="breadcrumbs">
+        <a href="src-module.html">Package&nbsp;src</a> ::
+        <a href="src.pyflowConfig-module.html">Module&nbsp;pyflowConfig</a> ::
+        Class&nbsp;DefaultSiteConfig
+      </span>
+    </td>
+    <td>
+      <table cellpadding="0" cellspacing="0">
+        <!-- hide/show private -->
+        <tr><td align="right"><span class="options">[<a href="javascript:void(0);" class="privatelink"
+    onclick="toggle_private();">hide&nbsp;private</a>]</span></td></tr>
+        <tr><td align="right"><span class="options"
+            >[<a href="frames.html" target="_top">frames</a
+            >]&nbsp;|&nbsp;<a href="src.pyflowConfig.DefaultSiteConfig-class.html"
+            target="_top">no&nbsp;frames</a>]</span></td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<!-- ==================== CLASS DESCRIPTION ==================== -->
+<h1 class="epydoc">Class DefaultSiteConfig</h1><p class="nomargin-top"><span class="codelink"><a href="src.pyflowConfig-pysrc.html#DefaultSiteConfig">source&nbsp;code</a></span></p>
+<center>
+<center>  <map id="uml_class_diagram_for_src_pyfl_27" name="uml_class_diagram_for_src_pyfl_27">
+<area shape="rect" id="node1_8" href="src.pyflowConfig.DefaultSiteConfig-class.html#mailFrom" title="src.pyflowConfig.DefaultSiteConfig.mailFrom" alt="" coords="18,30,366,50"/>
+<area shape="rect" id="node1_9" href="src.pyflowConfig.DefaultSiteConfig-class.html#defaultTaskMemMb" title="src.pyflowConfig.DefaultSiteConfig.defaultTaskMemMb" alt="" coords="18,50,366,70"/>
+<area shape="rect" id="node1_10" href="src.pyflowConfig.DefaultSiteConfig-class.html#defaultHostMemMbPerCore" title="src.pyflowConfig.DefaultSiteConfig.defaultHostMemMbPerCore" alt="" coords="18,70,366,90"/>
+<area shape="rect" id="node1_11" href="src.pyflowConfig.DefaultSiteConfig-class.html#maxSGEJobs" title="src.pyflowConfig.DefaultSiteConfig.maxSGEJobs" alt="" coords="18,90,366,110"/>
+<area shape="rect" id="node1_12" href="src.pyflowConfig.DefaultSiteConfig-class.html#getHostName" title="src.pyflowConfig.DefaultSiteConfig.getHostName" alt="" coords="18,113,366,133"/>
+<area shape="rect" id="node1_13" href="src.pyflowConfig.DefaultSiteConfig-class.html#getDomainName" title="src.pyflowConfig.DefaultSiteConfig.getDomainName" alt="" coords="18,133,366,153"/>
+<area shape="rect" id="node1_14" href="src.pyflowConfig.DefaultSiteConfig-class.html#qsubResourceArg" title="When a task is launched using qsub in sge mode, it will call this function &#160;to specify the requested number of threads and megabytes of memory." alt="" coords="18,153,366,173"/>
+<area shape="rect" id="node1_15" href="src.pyflowConfig.DefaultSiteConfig-class.html#getSgeMakePrefix" title="This prefix will be added to &#39; &#45;C directory&#39;, and run from a local process &#160;to handle sge make jobs." alt="" coords="18,173,366,193"/>
+<area shape="rect" id="node1" href="src.pyflowConfig.DefaultSiteConfig-class.html" title="Default configuration settings are designed to work with as many sites as technically feasible" alt="" coords="5,5,377,199"/>
+<area shape="rect" id="node2" href="src.pyflowConfig.hvmemSGEConfig-class.html" title="This config assumes &#39;h_vmem&#39; is defined on the SGE instance" alt="" coords="121,217,265,256"/>
+</map>
+  <img src="uml_class_diagram_for_src_pyfl_27.gif" alt='' usemap="#uml_class_diagram_for_src_pyfl_27" ismap="ismap" class="graph-without-title" />
+</center>
+</center>
+<hr />
+<p>Default configuration settings are designed to work with as many sites
+  as technically feasible</p>
+
+<!-- ==================== INSTANCE METHODS ==================== -->
+<a name="section-InstanceMethods"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Instance Methods</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-InstanceMethods"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+  <tr>
+    <td colspan="2" class="summary">
+    <p class="indent-wrapped-lines"><b>Inherited from <code>object</code></b>:
+      <code>__delattr__</code>,
+      <code>__format__</code>,
+      <code>__getattribute__</code>,
+      <code>__hash__</code>,
+      <code>__init__</code>,
+      <code>__new__</code>,
+      <code>__reduce__</code>,
+      <code>__reduce_ex__</code>,
+      <code>__repr__</code>,
+      <code>__setattr__</code>,
+      <code>__sizeof__</code>,
+      <code>__str__</code>,
+      <code>__subclasshook__</code>
+      </p>
+    </td>
+  </tr>
+</table>
+<!-- ==================== CLASS METHODS ==================== -->
+<a name="section-ClassMethods"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Class Methods</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-ClassMethods"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="src.pyflowConfig.DefaultSiteConfig-class.html#qsubResourceArg" class="summary-sig-name">qsubResourceArg</a>(<span class="summary-sig-arg">cls</span>,
+        <span class="summary-sig-arg">nCores</span>,
+        <span class="summary-sig-arg">memMb</span>)</span><br />
+      When a task is launched using qsub in sge mode, it will call this 
+      function to specify the requested number of threads and megabytes of 
+      memory.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="src.pyflowConfig-pysrc.html#DefaultSiteConfig.qsubResourceArg">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="_qsubResourceArgConfig"></a><span class="summary-sig-name">_qsubResourceArgConfig</span>(<span class="summary-sig-arg">cls</span>,
+        <span class="summary-sig-arg">nCores</span>,
+        <span class="summary-sig-arg">memMb</span>)</span><br />
+      The default function is designed for maximum portability  -- it just 
+      provides more memory via more threads.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="src.pyflowConfig-pysrc.html#DefaultSiteConfig._qsubResourceArgConfig">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="src.pyflowConfig.DefaultSiteConfig-class.html#getSgeMakePrefix" class="summary-sig-name">getSgeMakePrefix</a>(<span class="summary-sig-arg">cls</span>,
+        <span class="summary-sig-arg">nCores</span>,
+        <span class="summary-sig-arg">memMb</span>,
+        <span class="summary-sig-arg">schedulerArgList</span>)</span><br />
+      This prefix will be added to ' -C directory', and run from a local 
+      process to handle sge make jobs.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="src.pyflowConfig-pysrc.html#DefaultSiteConfig.getSgeMakePrefix">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+</table>
+<!-- ==================== STATIC METHODS ==================== -->
+<a name="section-StaticMethods"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Static Methods</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-StaticMethods"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="getHostName"></a><span class="summary-sig-name">getHostName</span>()</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="src.pyflowConfig-pysrc.html#DefaultSiteConfig.getHostName">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="getDomainName"></a><span class="summary-sig-name">getDomainName</span>()</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="src.pyflowConfig-pysrc.html#DefaultSiteConfig.getDomainName">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+</table>
+<!-- ==================== CLASS VARIABLES ==================== -->
+<a name="section-ClassVariables"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Class Variables</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-ClassVariables"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="mailFrom"></a><span class="summary-name">mailFrom</span> = <code title="'pyflow-bot@csaunders-ubuntu64'"><code class="variable-quote">'</code><code class="variable-string">pyflow-bot@csaunders-ubuntu64</code><code class="variable-quote">'</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="defaultTaskMemMb"></a><span class="summary-name">defaultTaskMemMb</span> = <code title="2048">2048</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="defaultHostMemMbPerCore"></a><span class="summary-name">defaultHostMemMbPerCore</span> = <code title="2048">2048</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="maxSGEJobs"></a><span class="summary-name">maxSGEJobs</span> = <code title="128">128</code>
+    </td>
+  </tr>
+</table>
+<!-- ==================== PROPERTIES ==================== -->
+<a name="section-Properties"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Properties</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-Properties"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+  <tr>
+    <td colspan="2" class="summary">
+    <p class="indent-wrapped-lines"><b>Inherited from <code>object</code></b>:
+      <code>__class__</code>
+      </p>
+    </td>
+  </tr>
+</table>
+<!-- ==================== METHOD DETAILS ==================== -->
+<a name="section-MethodDetails"></a>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Method Details</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-MethodDetails"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+</table>
+<a name="qsubResourceArg"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">qsubResourceArg</span>(<span class="sig-arg">cls</span>,
+        <span class="sig-arg">nCores</span>,
+        <span class="sig-arg">memMb</span>)</span>
+    <br /><em class="fname">Class Method</em>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="src.pyflowConfig-pysrc.html#DefaultSiteConfig.qsubResourceArg">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>When a task is launched using qsub in sge mode, it will call this 
+  function to specify the requested number of threads and megabytes of 
+  memory. The returned argument list will be appended to the qsub 
+  arguments.</p>
+  <p>nCores -- number of threads requested memMb -- memory requested (in 
+  megabytes)</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="getSgeMakePrefix"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getSgeMakePrefix</span>(<span class="sig-arg">cls</span>,
+        <span class="sig-arg">nCores</span>,
+        <span class="sig-arg">memMb</span>,
+        <span class="sig-arg">schedulerArgList</span>)</span>
+    <br /><em class="fname">Class Method</em>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="src.pyflowConfig-pysrc.html#DefaultSiteConfig.getSgeMakePrefix">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>This prefix will be added to ' -C directory', and run from a local 
+  process to handle sge make jobs.</p>
+  <p>Note that memMb hasn't been well defined for make jobs yet, is it the 
+  per task memory limit? The first application to accually make use of this
+  will have to setup the convention, it is ignored right now...</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<br />
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="src-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+      <th class="navbar" width="100%"></th>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%%">
+  <tr>
+    <td align="left" class="footer">
+    Generated by Epydoc 3.0.1
+    on Fri May 19 16:44:20 2017
+    </td>
+    <td align="right" class="footer">
+      <a target="mainFrame" href="http://epydoc.sourceforge.net"
+        >http://epydoc.sourceforge.net</a>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  <!--
+  // Private objects are initially displayed (because if
+  // javascript is turned off then we want them to be
+  // visible); but by default, we want to hide them.  So hide
+  // them unless we have a cookie that says to show them.
+  checkCookie();
+  // -->
+</script>
+</body>
+</html>

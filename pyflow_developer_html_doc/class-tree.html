@@ -14,6 +14,9 @@
 <table class="navbar" border="0" width="100%" cellpadding="0"
        bgcolor="#a0c0ff" cellspacing="0">
   <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="src-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
 
   <!-- Tree link -->
       <th bgcolor="#70b0f0" class="navbar-select"
@@ -52,12 +55,18 @@
 </b></center><br />
 <h1 class="epydoc">Class Hierarchy</h1>
 <ul class="nomargin-top">
-    <li> <strong class="uidlink"><a href="pyflow.Bunch-class.html">pyflow.Bunch</a></strong>:
+    <li> <strong class="uidlink"><a href="src.pyflow.Bunch-class.html">src.pyflow.Bunch</a></strong>:
       <em class="summary">generic struct with named argument constructor</em>
     </li>
-    <li> <strong class="uidlink"><a href="pyflow.LogGlobals-class.html">pyflow.LogGlobals</a></strong>
+    <li> <strong class="uidlink"><a href="src.pyflow.GlobalConstants-class.html">src.pyflow.GlobalConstants</a></strong>
     </li>
-    <li> <strong class="uidlink"><a href="pyflow.LogState-class.html">pyflow.LogState</a></strong>:
+    <li> <strong class="uidlink"><a href="src.pyflow.GlobalSync-class.html">src.pyflow.GlobalSync</a></strong>:
+      <em class="summary">Control total memory usage in non-local run modes by limiting the 
+        number of simultaneous subprocess calls</em>
+    </li>
+    <li> <strong class="uidlink"><a href="src.pyflow.LogGlobals-class.html">src.pyflow.LogGlobals</a></strong>
+    </li>
+    <li> <strong class="uidlink"><a href="src.pyflow.LogState-class.html">src.pyflow.LogState</a></strong>:
       <em class="summary">A simple logging enum</em>
     </li>
     <li> <strong class="uidlink">object</strong>:
@@ -69,107 +78,109 @@
     <li> <strong class="uidlink">exceptions.Exception</strong>:
       <em class="summary">Common base class for all non-exit exceptions.</em>
     <ul>
-    <li> <strong class="uidlink"><a href="pyflow.DataDirException-class.html">pyflow.DataDirException</a></strong>
+    <li> <strong class="uidlink"><a href="src.pyflow.DataDirException-class.html">src.pyflow.DataDirException</a></strong>
     </li>
-    <li> <strong class="uidlink"><a href="pyflow.WorkflowRunner._AbortWorkflowException-class.html" onclick="show_private();">pyflow.WorkflowRunner._AbortWorkflowException</a></strong>
-    </li>
-    </ul>
+    <li> <strong class="uidlink"><a href="src.pyflow.WorkflowRunner._AbortWorkflowException-class.html" onclick="show_private();">src.pyflow.WorkflowRunner._AbortWorkflowException</a></strong>
     </li>
     </ul>
     </li>
-    <li> <strong class="uidlink"><a href="pyflow.CmdPayload-class.html">pyflow.CmdPayload</a></strong>
+    </ul>
     </li>
-    <li> <strong class="uidlink"><a href="pyflow.Command-class.html">pyflow.Command</a></strong>:
+    <li> <strong class="uidlink"><a href="src.pyflow.CmdPayload-class.html">src.pyflow.CmdPayload</a></strong>
+    </li>
+    <li> <strong class="uidlink"><a href="src.pyflow.Command-class.html">src.pyflow.Command</a></strong>:
       <em class="summary">Commands can be presented as strings or argument lists (or none)</em>
     </li>
-    <li> <strong class="uidlink"><a href="pyflowConfig.DefaultSiteConfig-class.html">pyflowConfig.DefaultSiteConfig</a></strong>:
+    <li> <strong class="uidlink"><a href="src.pyflowConfig.DefaultSiteConfig-class.html">src.pyflowConfig.DefaultSiteConfig</a></strong>:
       <em class="summary">Default configuration settings are designed to work with as many 
         sites as technically feasible</em>
     <ul>
-    <li> <strong class="uidlink"><a href="pyflowConfig.ChukSiteConfig-class.html">pyflowConfig.ChukSiteConfig</a></strong>:
-      <em class="summary">Chuk environment specializations..</em>
-    </li>
-    <li> <strong class="uidlink"><a href="pyflowConfig.Ilmn2012Config-class.html">pyflowConfig.Ilmn2012Config</a></strong>:
-      <em class="summary">The new standard cluster configuration at ilmn</em>
+    <li> <strong class="uidlink"><a href="src.pyflowConfig.hvmemSGEConfig-class.html">src.pyflowConfig.hvmemSGEConfig</a></strong>:
+      <em class="summary">This config assumes 'h_vmem' is defined on the SGE instance</em>
     </li>
     </ul>
     </li>
-    <li> <strong class="uidlink"><a href="pyflow.DotConfig-class.html">pyflow.DotConfig</a></strong>:
+    <li> <strong class="uidlink"><a href="src.pyflow.DotConfig-class.html">src.pyflow.DotConfig</a></strong>:
       <em class="summary">A static container of configuration data for dot graph output</em>
     </li>
-    <li> <strong class="uidlink"><a href="pyflow.ExpWaiter-class.html">pyflow.ExpWaiter</a></strong>:
+    <li> <strong class="uidlink"><a href="src.pyflow.ExpWaiter-class.html">src.pyflow.ExpWaiter</a></strong>:
       <em class="summary">Convenience object to setup exponentially increasing wait/polling 
         times</em>
     </li>
-    <li> <strong class="uidlink"><a href="pyflow.ModeInfo-class.html">pyflow.ModeInfo</a></strong>:
+    <li> <strong class="uidlink"><a href="src.pyflow.ModeInfo-class.html">src.pyflow.ModeInfo</a></strong>:
       <em class="summary">Stores default values associated with each runmode: local,sge,...</em>
     </li>
-    <li> <strong class="uidlink"><a href="pyflow.RetryParam-class.html">pyflow.RetryParam</a></strong>:
+    <li> <strong class="uidlink"><a href="src.pyflow.RetryParam-class.html">src.pyflow.RetryParam</a></strong>:
       <em class="summary">parameters pertaining to task retry behavior</em>
     </li>
-    <li> <strong class="uidlink"><a href="pyflow.RunMode-class.html">pyflow.RunMode</a></strong>
+    <li> <strong class="uidlink"><a href="src.pyflow.RunMode-class.html">src.pyflow.RunMode</a></strong>
     </li>
-    <li> <strong class="uidlink"><a href="pyflow.RunningTaskStatus-class.html">pyflow.RunningTaskStatus</a></strong>:
+    <li> <strong class="uidlink"><a href="src.pyflow.RunningTaskStatus-class.html">src.pyflow.RunningTaskStatus</a></strong>:
       <em class="summary">simple object allowing remote task threads to communicate their 
         status back to the TaskManager</em>
     </li>
-    <li> <strong class="uidlink"><a href="pyflowTaskWrapper.SimpleFifo-class.html">pyflowTaskWrapper.SimpleFifo</a></strong>:
+    <li> <strong class="uidlink"><a href="src.pyflowTaskWrapper.SimpleFifo-class.html">src.pyflowTaskWrapper.SimpleFifo</a></strong>:
       <em class="summary">Store up to last N objects, not thread safe.</em>
     </li>
-    <li> <strong class="uidlink"><a href="pyflow.StrFileObject-class.html">pyflow.StrFileObject</a></strong>:
+    <li> <strong class="uidlink"><a href="src.pyflow.StrFileObject-class.html">src.pyflow.StrFileObject</a></strong>:
       <em class="summary">fakes a filehandle for library functions which write to a stream, 
         and captures output in a string</em>
     </li>
-    <li> <strong class="uidlink"><a href="pyflowTaskWrapper.StringBling-class.html">pyflowTaskWrapper.StringBling</a></strong>
+    <li> <strong class="uidlink"><a href="src.pyflowTaskWrapper.StringBling-class.html">src.pyflowTaskWrapper.StringBling</a></strong>
     </li>
-    <li> <strong class="uidlink"><a href="pyflow.TaskDAG-class.html">pyflow.TaskDAG</a></strong>:
+    <li> <strong class="uidlink"><a href="src.pyflow.TaskDAG-class.html">src.pyflow.TaskDAG</a></strong>:
       <em class="summary">Holds all tasks and their dependencies.</em>
     </li>
-    <li> <strong class="uidlink"><a href="pyflow.TaskNode-class.html">pyflow.TaskNode</a></strong>:
+    <li> <strong class="uidlink"><a href="src.pyflow.TaskNode-class.html">src.pyflow.TaskNode</a></strong>:
       <em class="summary">Represents an individual task in the task graph</em>
     </li>
-    <li> <strong class="uidlink"><a href="pyflow.TaskNodeConstants-class.html">pyflow.TaskNodeConstants</a></strong>
+    <li> <strong class="uidlink"><a href="src.pyflow.TaskNodeConstants-class.html">src.pyflow.TaskNodeConstants</a></strong>
     </li>
-    <li> <strong class="uidlink"><a href="pyflow.WorkflowPayload-class.html">pyflow.WorkflowPayload</a></strong>
+    <li> <strong class="uidlink"><a href="src.pyflow.WorkflowPayload-class.html">src.pyflow.WorkflowPayload</a></strong>
     </li>
-    <li> <strong class="uidlink"><a href="pyflow.WorkflowRunner-class.html">pyflow.WorkflowRunner</a></strong>:
+    <li> <strong class="uidlink"><a href="src.pyflow.WorkflowRunner-class.html">src.pyflow.WorkflowRunner</a></strong>:
       <em class="summary">This object is designed to be inherited by a class in client code.</em>
     </li>
-    <li> <strong class="uidlink"><a href="pyflow.WorkflowRunnerThreadSharedData-class.html">pyflow.WorkflowRunnerThreadSharedData</a></strong>:
+    <li> <strong class="uidlink"><a href="src.pyflow.WorkflowRunnerThreadSharedData-class.html">src.pyflow.WorkflowRunnerThreadSharedData</a></strong>:
       <em class="summary">All data used by the WorkflowRunner which will be constant over the
         lifetime of a TaskManager instance.</em>
     </li>
     <li> <strong class="uidlink">threading._Verbose</strong>
     <ul>
-    <li> <strong class="uidlink">threading.Thread</strong>
+    <li> <strong class="uidlink">threading.Thread</strong>:
+      <em class="summary">A class that represents a thread of control.</em>
     <ul>
-    <li> <strong class="uidlink"><a href="pyflow.QCaller-class.html">pyflow.QCaller</a></strong>:
+    <li> <strong class="uidlink"><a href="src.pyflow.QCaller-class.html">src.pyflow.QCaller</a></strong>:
       <em class="summary">Calls to both qsub and qstat go through this run() method so that 
         we can time them out:</em>
     </li>
-    <li> <strong class="uidlink"><a href="pyflow.StoppableThread-class.html">pyflow.StoppableThread</a></strong>:
+    <li> <strong class="uidlink"><a href="src.pyflow.StoppableThread-class.html">src.pyflow.StoppableThread</a></strong>:
       <em class="summary">Thread class with a stop() method.</em>
     <ul>
-    <li> <strong class="uidlink"><a href="pyflow.BaseTaskRunner-class.html">pyflow.BaseTaskRunner</a></strong>:
+    <li> <strong class="uidlink"><a href="src.pyflow.BaseTaskRunner-class.html">src.pyflow.BaseTaskRunner</a></strong>:
       <em class="summary">Each individual command-task or sub workflow task is run on its own
         thread using a class inherited from BaseTaskRunner</em>
     <ul>
-    <li> <strong class="uidlink"><a href="pyflow.CommandTaskRunner-class.html">pyflow.CommandTaskRunner</a></strong>:
+    <li> <strong class="uidlink"><a href="src.pyflow.CommandTaskRunner-class.html">src.pyflow.CommandTaskRunner</a></strong>:
       <em class="summary">Parent to local and SGE TaskRunner specializations for command 
         tasks</em>
     <ul>
-    <li> <strong class="uidlink"><a href="pyflow.LocalTaskRunner-class.html">pyflow.LocalTaskRunner</a></strong>
+    <li> <strong class="uidlink"><a href="src.pyflow.LocalTaskRunner-class.html">src.pyflow.LocalTaskRunner</a></strong>
     </li>
-    <li> <strong class="uidlink"><a href="pyflow.SGETaskRunner-class.html">pyflow.SGETaskRunner</a></strong>
+    <li> <strong class="uidlink"><a href="src.pyflow.SGETaskRunner-class.html">src.pyflow.SGETaskRunner</a></strong>
     </li>
     </ul>
     </li>
-    <li> <strong class="uidlink"><a href="pyflow.WorkflowTaskRunner-class.html">pyflow.WorkflowTaskRunner</a></strong>:
+    <li> <strong class="uidlink"><a href="src.pyflow.WorkflowTaskRunner-class.html">src.pyflow.WorkflowTaskRunner</a></strong>:
       <em class="summary">Manages a sub-workflow task</em>
     </li>
     </ul>
     </li>
-    <li> <strong class="uidlink"><a href="pyflow.TaskManager-class.html">pyflow.TaskManager</a></strong>:
+    <li> <strong class="uidlink"><a href="src.pyflow.TaskFileWriter-class.html">src.pyflow.TaskFileWriter</a></strong>:
+      <em class="summary">This class runs on a separate thread and is responsible for 
+        updating the state and info task files</em>
+    </li>
+    <li> <strong class="uidlink"><a href="src.pyflow.TaskManager-class.html">src.pyflow.TaskManager</a></strong>:
       <em class="summary">This class runs on a separate thread from workflowRunner, launching
         jobs based on the current state of the TaskDAG</em>
     </li>
@@ -186,6 +197,9 @@
 <table class="navbar" border="0" width="100%" cellpadding="0"
        bgcolor="#a0c0ff" cellspacing="0">
   <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="src-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
 
   <!-- Tree link -->
       <th bgcolor="#70b0f0" class="navbar-select"
@@ -205,7 +219,8 @@
 <table border="0" cellpadding="0" cellspacing="0" width="100%%">
   <tr>
     <td align="left" class="footer">
-    Generated by Epydoc 3.0.1 on Mon Jul 15 08:58:33 2013
+    Generated by Epydoc 3.0.1
+    on Fri May 19 16:44:20 2017
     </td>
     <td align="right" class="footer">
       <a target="mainFrame" href="http://epydoc.sourceforge.net"

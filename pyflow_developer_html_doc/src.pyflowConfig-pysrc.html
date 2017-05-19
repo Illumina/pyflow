@@ -1,0 +1,331 @@
+<?xml version="1.0" encoding="ascii"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>src.pyflowConfig</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css" />
+  <script type="text/javascript" src="epydoc.js"></script>
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="src-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+      <th class="navbar" width="100%"></th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <span class="breadcrumbs">
+        <a href="src-module.html">Package&nbsp;src</a> ::
+        Module&nbsp;pyflowConfig
+      </span>
+    </td>
+    <td>
+      <table cellpadding="0" cellspacing="0">
+        <!-- hide/show private -->
+        <tr><td align="right"><span class="options">[<a href="javascript:void(0);" class="privatelink"
+    onclick="toggle_private();">hide&nbsp;private</a>]</span></td></tr>
+        <tr><td align="right"><span class="options"
+            >[<a href="frames.html" target="_top">frames</a
+            >]&nbsp;|&nbsp;<a href="src.pyflowConfig-pysrc.html"
+            target="_top">no&nbsp;frames</a>]</span></td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<h1 class="epydoc">Source Code for <a href="src.pyflowConfig-module.html">Module src.pyflowConfig</a></h1>
+<pre class="py-src">
+<a name="L1"></a><tt class="py-lineno">  1</tt>  <tt class="py-line"><tt class="py-comment">#</tt> </tt>
+<a name="L2"></a><tt class="py-lineno">  2</tt>  <tt class="py-line"><tt class="py-comment"># pyFlow - a lightweight parallel task engine</tt> </tt>
+<a name="L3"></a><tt class="py-lineno">  3</tt>  <tt class="py-line"><tt class="py-comment">#</tt> </tt>
+<a name="L4"></a><tt class="py-lineno">  4</tt>  <tt class="py-line"><tt class="py-comment"># Copyright (c) 2012-2017 Illumina, Inc.</tt> </tt>
+<a name="L5"></a><tt class="py-lineno">  5</tt>  <tt class="py-line"><tt class="py-comment"># All rights reserved.</tt> </tt>
+<a name="L6"></a><tt class="py-lineno">  6</tt>  <tt class="py-line"><tt class="py-comment">#</tt> </tt>
+<a name="L7"></a><tt class="py-lineno">  7</tt>  <tt class="py-line"><tt class="py-comment"># Redistribution and use in source and binary forms, with or without</tt> </tt>
+<a name="L8"></a><tt class="py-lineno">  8</tt>  <tt class="py-line"><tt class="py-comment"># modification, are permitted provided that the following conditions</tt> </tt>
+<a name="L9"></a><tt class="py-lineno">  9</tt>  <tt class="py-line"><tt class="py-comment"># are met:</tt> </tt>
+<a name="L10"></a><tt class="py-lineno"> 10</tt>  <tt class="py-line"><tt class="py-comment">#</tt> </tt>
+<a name="L11"></a><tt class="py-lineno"> 11</tt>  <tt class="py-line"><tt class="py-comment"># 1. Redistributions of source code must retain the above copyright</tt> </tt>
+<a name="L12"></a><tt class="py-lineno"> 12</tt>  <tt class="py-line"><tt class="py-comment">#    notice, this list of conditions and the following disclaimer.</tt> </tt>
+<a name="L13"></a><tt class="py-lineno"> 13</tt>  <tt class="py-line"><tt class="py-comment">#</tt> </tt>
+<a name="L14"></a><tt class="py-lineno"> 14</tt>  <tt class="py-line"><tt class="py-comment"># 2. Redistributions in binary form must reproduce the above copyright</tt> </tt>
+<a name="L15"></a><tt class="py-lineno"> 15</tt>  <tt class="py-line"><tt class="py-comment">#    notice, this list of conditions and the following disclaimer in</tt> </tt>
+<a name="L16"></a><tt class="py-lineno"> 16</tt>  <tt class="py-line"><tt class="py-comment">#    the documentation and/or other materials provided with the</tt> </tt>
+<a name="L17"></a><tt class="py-lineno"> 17</tt>  <tt class="py-line"><tt class="py-comment">#    distribution.</tt> </tt>
+<a name="L18"></a><tt class="py-lineno"> 18</tt>  <tt class="py-line"><tt class="py-comment">#</tt> </tt>
+<a name="L19"></a><tt class="py-lineno"> 19</tt>  <tt class="py-line"><tt class="py-comment"># THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS</tt> </tt>
+<a name="L20"></a><tt class="py-lineno"> 20</tt>  <tt class="py-line"><tt class="py-comment"># "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT</tt> </tt>
+<a name="L21"></a><tt class="py-lineno"> 21</tt>  <tt class="py-line"><tt class="py-comment"># LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS</tt> </tt>
+<a name="L22"></a><tt class="py-lineno"> 22</tt>  <tt class="py-line"><tt class="py-comment"># FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE</tt> </tt>
+<a name="L23"></a><tt class="py-lineno"> 23</tt>  <tt class="py-line"><tt class="py-comment"># COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,</tt> </tt>
+<a name="L24"></a><tt class="py-lineno"> 24</tt>  <tt class="py-line"><tt class="py-comment"># INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,</tt> </tt>
+<a name="L25"></a><tt class="py-lineno"> 25</tt>  <tt class="py-line"><tt class="py-comment"># BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;</tt> </tt>
+<a name="L26"></a><tt class="py-lineno"> 26</tt>  <tt class="py-line"><tt class="py-comment"># LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER</tt> </tt>
+<a name="L27"></a><tt class="py-lineno"> 27</tt>  <tt class="py-line"><tt class="py-comment"># CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT</tt> </tt>
+<a name="L28"></a><tt class="py-lineno"> 28</tt>  <tt class="py-line"><tt class="py-comment"># LIABILITY, OR TORT INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY</tt> </tt>
+<a name="L29"></a><tt class="py-lineno"> 29</tt>  <tt class="py-line"><tt class="py-comment"># WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE</tt> </tt>
+<a name="L30"></a><tt class="py-lineno"> 30</tt>  <tt class="py-line"><tt class="py-comment"># POSSIBILITY OF SUCH DAMAGE.</tt> </tt>
+<a name="L31"></a><tt class="py-lineno"> 31</tt>  <tt class="py-line"><tt class="py-comment">#</tt> </tt>
+<a name="L32"></a><tt class="py-lineno"> 32</tt>  <tt class="py-line"><tt class="py-comment">#</tt> </tt>
+<a name="L33"></a><tt class="py-lineno"> 33</tt>  <tt class="py-line"> </tt>
+<a name="L34"></a><tt class="py-lineno"> 34</tt>  <tt class="py-line"><tt class="py-docstring">"""</tt> </tt>
+<a name="L35"></a><tt class="py-lineno"> 35</tt>  <tt class="py-line"><tt class="py-docstring">pyflowConfig</tt> </tt>
+<a name="L36"></a><tt class="py-lineno"> 36</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L37"></a><tt class="py-lineno"> 37</tt>  <tt class="py-line"><tt class="py-docstring">This file defines a class instance 'siteConfig' containing pyflow components</tt> </tt>
+<a name="L38"></a><tt class="py-lineno"> 38</tt>  <tt class="py-line"><tt class="py-docstring">which are the most likely to need site-specific configuration.</tt> </tt>
+<a name="L39"></a><tt class="py-lineno"> 39</tt>  <tt class="py-line"><tt class="py-docstring">"""</tt> </tt>
+<a name="L40"></a><tt class="py-lineno"> 40</tt>  <tt class="py-line"> </tt>
+<a name="L41"></a><tt class="py-lineno"> 41</tt>  <tt class="py-line"><tt class="py-keyword">import</tt> <tt class="py-name">os</tt> </tt>
+<a name="L42"></a><tt class="py-lineno"> 42</tt>  <tt class="py-line"> </tt>
+<a name="L43"></a><tt class="py-lineno"> 43</tt>  <tt class="py-line"> </tt>
+<a name="L44"></a><tt class="py-lineno"> 44</tt>  <tt class="py-line"><tt class="py-comment"># this is the only object pyflow needs to import, it</tt> </tt>
+<a name="L45"></a><tt class="py-lineno"> 45</tt>  <tt class="py-line"><tt class="py-comment"># is defined at the end of this module:</tt> </tt>
+<a name="L46"></a><tt class="py-lineno"> 46</tt>  <tt class="py-line"><tt class="py-comment">#</tt> </tt>
+<a name="L47"></a><tt class="py-lineno"> 47</tt>  <tt class="py-line"><tt class="py-name">siteConfig</tt> <tt class="py-op">=</tt> <tt class="py-name">None</tt> </tt>
+<a name="_getHostName"></a><div id="_getHostName-def"><a name="L48"></a><tt class="py-lineno"> 48</tt>  <tt class="py-line"> </tt>
+<a name="L49"></a><tt class="py-lineno"> 49</tt>  <tt class="py-line"> </tt>
+<a name="L50"></a><tt class="py-lineno"> 50</tt>  <tt class="py-line"><tt class="py-comment"># depending on network setup getfqdn() can be slow, so cache calls to this function here:</tt> </tt>
+<a name="L51"></a><tt class="py-lineno"> 51</tt>  <tt class="py-line"><tt class="py-comment">#</tt> </tt>
+<a name="L52"></a><tt class="py-lineno"> 52</tt> <a class="py-toggle" href="#" id="_getHostName-toggle" onclick="return toggle('_getHostName');">-</a><tt class="py-line"><tt class="py-keyword">def</tt> <a class="py-def-name" href="src.pyflowConfig-module.html#_getHostName">_getHostName</a><tt class="py-op">(</tt><tt class="py-op">)</tt> <tt class="py-op">:</tt> </tt>
+</div><div id="_getHostName-collapsed" style="display:none;" pad="+++" indent="++++"></div><div id="_getHostName-expanded"><a name="L53"></a><tt class="py-lineno"> 53</tt>  <tt class="py-line">    <tt class="py-keyword">import</tt> <tt class="py-name">socket</tt> </tt>
+<a name="L54"></a><tt class="py-lineno"> 54</tt>  <tt class="py-line">    <tt class="py-keyword">return</tt> <tt class="py-name">socket</tt><tt class="py-op">.</tt><tt class="py-name">getfqdn</tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+</div><a name="L55"></a><tt class="py-lineno"> 55</tt>  <tt class="py-line"> </tt>
+<a name="L56"></a><tt class="py-lineno"> 56</tt>  <tt class="py-line"><tt id="link-0" class="py-name" targets="Variable src.pyflowConfig.cachedHostName=src.pyflowConfig-module.html#cachedHostName"><a title="src.pyflowConfig.cachedHostName" class="py-name" href="#" onclick="return doclink('link-0', 'cachedHostName', 'link-0');">cachedHostName</a></tt> <tt class="py-op">=</tt> <tt class="py-name">None</tt> </tt>
+<a name="getHostName"></a><div id="getHostName-def"><a name="L57"></a><tt class="py-lineno"> 57</tt>  <tt class="py-line"> </tt>
+<a name="L58"></a><tt class="py-lineno"> 58</tt>  <tt class="py-line"> </tt>
+<a name="L59"></a><tt class="py-lineno"> 59</tt> <a class="py-toggle" href="#" id="getHostName-toggle" onclick="return toggle('getHostName');">-</a><tt class="py-line"><tt class="py-keyword">def</tt> <a class="py-def-name" href="src.pyflowConfig-module.html#getHostName">getHostName</a><tt class="py-op">(</tt><tt class="py-op">)</tt> <tt class="py-op">:</tt> </tt>
+</div><div id="getHostName-collapsed" style="display:none;" pad="+++" indent="++++"></div><div id="getHostName-expanded"><a name="L60"></a><tt class="py-lineno"> 60</tt>  <tt class="py-line">    <tt class="py-keyword">global</tt> <tt id="link-1" class="py-name"><a title="src.pyflowConfig.cachedHostName" class="py-name" href="#" onclick="return doclink('link-1', 'cachedHostName', 'link-0');">cachedHostName</a></tt> </tt>
+<a name="L61"></a><tt class="py-lineno"> 61</tt>  <tt class="py-line">    <tt class="py-keyword">if</tt> <tt id="link-2" class="py-name"><a title="src.pyflowConfig.cachedHostName" class="py-name" href="#" onclick="return doclink('link-2', 'cachedHostName', 'link-0');">cachedHostName</a></tt> <tt class="py-keyword">is</tt> <tt class="py-name">None</tt> <tt class="py-op">:</tt> </tt>
+<a name="L62"></a><tt class="py-lineno"> 62</tt>  <tt class="py-line">        <tt id="link-3" class="py-name"><a title="src.pyflowConfig.cachedHostName" class="py-name" href="#" onclick="return doclink('link-3', 'cachedHostName', 'link-0');">cachedHostName</a></tt> <tt class="py-op">=</tt> <tt id="link-4" class="py-name" targets="Function src.pyflowConfig._getHostName()=src.pyflowConfig-module.html#_getHostName"><a title="src.pyflowConfig._getHostName" class="py-name" href="#" onclick="return doclink('link-4', '_getHostName', 'link-4');">_getHostName</a></tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+<a name="L63"></a><tt class="py-lineno"> 63</tt>  <tt class="py-line">    <tt class="py-keyword">return</tt> <tt id="link-5" class="py-name"><a title="src.pyflowConfig.cachedHostName" class="py-name" href="#" onclick="return doclink('link-5', 'cachedHostName', 'link-0');">cachedHostName</a></tt> </tt>
+</div><a name="L64"></a><tt class="py-lineno"> 64</tt>  <tt class="py-line"> </tt>
+<a name="getDomainName"></a><div id="getDomainName-def"><a name="L65"></a><tt class="py-lineno"> 65</tt>  <tt class="py-line"> </tt>
+<a name="L66"></a><tt class="py-lineno"> 66</tt> <a class="py-toggle" href="#" id="getDomainName-toggle" onclick="return toggle('getDomainName');">-</a><tt class="py-line"><tt class="py-keyword">def</tt> <a class="py-def-name" href="src.pyflowConfig-module.html#getDomainName">getDomainName</a><tt class="py-op">(</tt><tt class="py-op">)</tt> <tt class="py-op">:</tt> </tt>
+</div><div id="getDomainName-collapsed" style="display:none;" pad="+++" indent="++++"></div><div id="getDomainName-expanded"><a name="L67"></a><tt class="py-lineno"> 67</tt>  <tt class="py-line">    <tt class="py-name">hn</tt> <tt class="py-op">=</tt> <tt id="link-6" class="py-name" targets="Static Method src.pyflowConfig.DefaultSiteConfig.getHostName()=src.pyflowConfig.DefaultSiteConfig-class.html#getHostName,Function src.pyflowConfig.getHostName()=src.pyflowConfig-module.html#getHostName"><a title="src.pyflowConfig.DefaultSiteConfig.getHostName
+src.pyflowConfig.getHostName" class="py-name" href="#" onclick="return doclink('link-6', 'getHostName', 'link-6');">getHostName</a></tt><tt class="py-op">(</tt><tt class="py-op">)</tt><tt class="py-op">.</tt><tt class="py-name">split</tt><tt class="py-op">(</tt><tt class="py-string">"."</tt><tt class="py-op">)</tt> </tt>
+<a name="L68"></a><tt class="py-lineno"> 68</tt>  <tt class="py-line">    <tt class="py-keyword">if</tt> <tt class="py-name">len</tt><tt class="py-op">(</tt><tt class="py-name">hn</tt><tt class="py-op">)</tt> <tt class="py-op">&gt;</tt> <tt class="py-number">1</tt> <tt class="py-op">:</tt> <tt class="py-name">hn</tt> <tt class="py-op">=</tt> <tt class="py-name">hn</tt><tt class="py-op">[</tt><tt class="py-number">1</tt><tt class="py-op">:</tt><tt class="py-op">]</tt> </tt>
+<a name="L69"></a><tt class="py-lineno"> 69</tt>  <tt class="py-line">    <tt class="py-keyword">return</tt> <tt class="py-string">"."</tt><tt class="py-op">.</tt><tt class="py-name">join</tt><tt class="py-op">(</tt><tt class="py-name">hn</tt><tt class="py-op">)</tt> </tt>
+</div><a name="L70"></a><tt class="py-lineno"> 70</tt>  <tt class="py-line"> </tt>
+<a name="DefaultSiteConfig"></a><div id="DefaultSiteConfig-def"><a name="L71"></a><tt class="py-lineno"> 71</tt>  <tt class="py-line"> </tt>
+<a name="L72"></a><tt class="py-lineno"> 72</tt>  <tt class="py-line"> </tt>
+<a name="L73"></a><tt class="py-lineno"> 73</tt> <a class="py-toggle" href="#" id="DefaultSiteConfig-toggle" onclick="return toggle('DefaultSiteConfig');">-</a><tt class="py-line"><tt class="py-keyword">class</tt> <a class="py-def-name" href="src.pyflowConfig.DefaultSiteConfig-class.html">DefaultSiteConfig</a><tt class="py-op">(</tt><tt class="py-base-class">object</tt><tt class="py-op">)</tt> <tt class="py-op">:</tt> </tt>
+</div><div id="DefaultSiteConfig-collapsed" style="display:none;" pad="+++" indent="++++"></div><div id="DefaultSiteConfig-expanded"><a name="L74"></a><tt class="py-lineno"> 74</tt>  <tt class="py-line">    <tt class="py-docstring">"""</tt> </tt>
+<a name="L75"></a><tt class="py-lineno"> 75</tt>  <tt class="py-line"><tt class="py-docstring">    Default configuration settings are designed to work with as</tt> </tt>
+<a name="L76"></a><tt class="py-lineno"> 76</tt>  <tt class="py-line"><tt class="py-docstring">    many sites as technically feasible</tt> </tt>
+<a name="L77"></a><tt class="py-lineno"> 77</tt>  <tt class="py-line"><tt class="py-docstring">    """</tt> </tt>
+<a name="L78"></a><tt class="py-lineno"> 78</tt>  <tt class="py-line"> </tt>
+<a name="L79"></a><tt class="py-lineno"> 79</tt>  <tt class="py-line">    <tt class="py-comment"># All email notifications come from the following e-mail address</tt> </tt>
+<a name="L80"></a><tt class="py-lineno"> 80</tt>  <tt class="py-line">    <tt class="py-comment">#</tt> </tt>
+<a name="L81"></a><tt class="py-lineno"> 81</tt>  <tt class="py-line">    <tt id="link-7" class="py-name" targets="Variable src.pyflowConfig.DefaultSiteConfig.mailFrom=src.pyflowConfig.DefaultSiteConfig-class.html#mailFrom"><a title="src.pyflowConfig.DefaultSiteConfig.mailFrom" class="py-name" href="#" onclick="return doclink('link-7', 'mailFrom', 'link-7');">mailFrom</a></tt> <tt class="py-op">=</tt> <tt class="py-string">"pyflow-bot@"</tt> <tt class="py-op">+</tt> <tt id="link-8" class="py-name" targets="Static Method src.pyflowConfig.DefaultSiteConfig.getDomainName()=src.pyflowConfig.DefaultSiteConfig-class.html#getDomainName,Function src.pyflowConfig.getDomainName()=src.pyflowConfig-module.html#getDomainName"><a title="src.pyflowConfig.DefaultSiteConfig.getDomainName
+src.pyflowConfig.getDomainName" class="py-name" href="#" onclick="return doclink('link-8', 'getDomainName', 'link-8');">getDomainName</a></tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+<a name="L82"></a><tt class="py-lineno"> 82</tt>  <tt class="py-line"> </tt>
+<a name="L83"></a><tt class="py-lineno"> 83</tt>  <tt class="py-line">    <tt class="py-comment"># Default memory (in megabytes) requested by each command task:</tt> </tt>
+<a name="L84"></a><tt class="py-lineno"> 84</tt>  <tt class="py-line">    <tt class="py-comment">#</tt> </tt>
+<a name="L85"></a><tt class="py-lineno"> 85</tt>  <tt class="py-line">    <tt id="link-9" class="py-name" targets="Variable src.pyflowConfig.DefaultSiteConfig.defaultTaskMemMb=src.pyflowConfig.DefaultSiteConfig-class.html#defaultTaskMemMb"><a title="src.pyflowConfig.DefaultSiteConfig.defaultTaskMemMb" class="py-name" href="#" onclick="return doclink('link-9', 'defaultTaskMemMb', 'link-9');">defaultTaskMemMb</a></tt> <tt class="py-op">=</tt> <tt class="py-number">2048</tt> </tt>
+<a name="L86"></a><tt class="py-lineno"> 86</tt>  <tt class="py-line"> </tt>
+<a name="L87"></a><tt class="py-lineno"> 87</tt>  <tt class="py-line">    <tt class="py-comment"># In local run mode, this is the defalt memory per thread that we</tt> </tt>
+<a name="L88"></a><tt class="py-lineno"> 88</tt>  <tt class="py-line">    <tt class="py-comment"># assume is available:</tt> </tt>
+<a name="L89"></a><tt class="py-lineno"> 89</tt>  <tt class="py-line">    <tt class="py-comment">#</tt> </tt>
+<a name="L90"></a><tt class="py-lineno"> 90</tt>  <tt class="py-line">    <tt id="link-10" class="py-name" targets="Variable src.pyflowConfig.DefaultSiteConfig.defaultHostMemMbPerCore=src.pyflowConfig.DefaultSiteConfig-class.html#defaultHostMemMbPerCore"><a title="src.pyflowConfig.DefaultSiteConfig.defaultHostMemMbPerCore" class="py-name" href="#" onclick="return doclink('link-10', 'defaultHostMemMbPerCore', 'link-10');">defaultHostMemMbPerCore</a></tt> <tt class="py-op">=</tt> <tt class="py-number">2048</tt> </tt>
+<a name="L91"></a><tt class="py-lineno"> 91</tt>  <tt class="py-line"> </tt>
+<a name="L92"></a><tt class="py-lineno"> 92</tt>  <tt class="py-line">    <tt class="py-comment"># maximum number of jobs which can be submitted to sge at once:</tt> </tt>
+<a name="L93"></a><tt class="py-lineno"> 93</tt>  <tt class="py-line">    <tt class="py-comment">#</tt> </tt>
+<a name="L94"></a><tt class="py-lineno"> 94</tt>  <tt class="py-line">    <tt class="py-comment"># allowed values are "unlimited" or None for unlimited jobs, or</tt> </tt>
+<a name="L95"></a><tt class="py-lineno"> 95</tt>  <tt class="py-line">    <tt class="py-comment"># a positive integer describing the max number of jobs</tt> </tt>
+<a name="L96"></a><tt class="py-lineno"> 96</tt>  <tt class="py-line">    <tt class="py-comment">#</tt> </tt>
+<a name="L97"></a><tt class="py-lineno"> 97</tt>  <tt class="py-line">    <tt id="link-11" class="py-name" targets="Variable src.pyflowConfig.DefaultSiteConfig.maxSGEJobs=src.pyflowConfig.DefaultSiteConfig-class.html#maxSGEJobs"><a title="src.pyflowConfig.DefaultSiteConfig.maxSGEJobs" class="py-name" href="#" onclick="return doclink('link-11', 'maxSGEJobs', 'link-11');">maxSGEJobs</a></tt> <tt class="py-op">=</tt> <tt class="py-number">128</tt> </tt>
+<a name="L98"></a><tt class="py-lineno"> 98</tt>  <tt class="py-line"> </tt>
+<a name="L99"></a><tt class="py-lineno"> 99</tt>  <tt class="py-line">    <tt class="py-comment"># both getHostName and getDomainName are used in the</tt> </tt>
+<a name="L100"></a><tt class="py-lineno">100</tt>  <tt class="py-line">    <tt class="py-comment"># siteConfig factory, so these are not designed to be</tt> </tt>
+<a name="L101"></a><tt class="py-lineno">101</tt>  <tt class="py-line">    <tt class="py-comment"># overridden at present:</tt> </tt>
+<a name="L102"></a><tt class="py-lineno">102</tt>  <tt class="py-line">    <tt id="link-12" class="py-name"><a title="src.pyflowConfig.DefaultSiteConfig.getHostName
+src.pyflowConfig.getHostName" class="py-name" href="#" onclick="return doclink('link-12', 'getHostName', 'link-6');">getHostName</a></tt> <tt class="py-op">=</tt> <tt class="py-name">staticmethod</tt><tt class="py-op">(</tt><tt id="link-13" class="py-name"><a title="src.pyflowConfig.DefaultSiteConfig.getHostName
+src.pyflowConfig.getHostName" class="py-name" href="#" onclick="return doclink('link-13', 'getHostName', 'link-6');">getHostName</a></tt><tt class="py-op">)</tt> </tt>
+<a name="L103"></a><tt class="py-lineno">103</tt>  <tt class="py-line">    <tt id="link-14" class="py-name"><a title="src.pyflowConfig.DefaultSiteConfig.getDomainName
+src.pyflowConfig.getDomainName" class="py-name" href="#" onclick="return doclink('link-14', 'getDomainName', 'link-8');">getDomainName</a></tt> <tt class="py-op">=</tt> <tt class="py-name">staticmethod</tt><tt class="py-op">(</tt><tt id="link-15" class="py-name"><a title="src.pyflowConfig.DefaultSiteConfig.getDomainName
+src.pyflowConfig.getDomainName" class="py-name" href="#" onclick="return doclink('link-15', 'getDomainName', 'link-8');">getDomainName</a></tt><tt class="py-op">)</tt> </tt>
+<a name="L104"></a><tt class="py-lineno">104</tt>  <tt class="py-line"> </tt>
+<a name="L105"></a><tt class="py-lineno">105</tt>  <tt class="py-line">    <tt class="py-decorator">@</tt><tt class="py-decorator">classmethod</tt> </tt>
+<a name="DefaultSiteConfig.qsubResourceArg"></a><div id="DefaultSiteConfig.qsubResourceArg-def"><a name="L106"></a><tt class="py-lineno">106</tt> <a class="py-toggle" href="#" id="DefaultSiteConfig.qsubResourceArg-toggle" onclick="return toggle('DefaultSiteConfig.qsubResourceArg');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="src.pyflowConfig.DefaultSiteConfig-class.html#qsubResourceArg">qsubResourceArg</a><tt class="py-op">(</tt><tt class="py-param">cls</tt><tt class="py-op">,</tt> <tt class="py-param">nCores</tt><tt class="py-op">,</tt> <tt class="py-param">memMb</tt><tt class="py-op">)</tt> <tt class="py-op">:</tt> </tt>
+</div><div id="DefaultSiteConfig.qsubResourceArg-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="DefaultSiteConfig.qsubResourceArg-expanded"><a name="L107"></a><tt class="py-lineno">107</tt>  <tt class="py-line">        <tt class="py-docstring">"""</tt> </tt>
+<a name="L108"></a><tt class="py-lineno">108</tt>  <tt class="py-line"><tt class="py-docstring">        When a task is launched using qsub in sge mode, it will call this</tt> </tt>
+<a name="L109"></a><tt class="py-lineno">109</tt>  <tt class="py-line"><tt class="py-docstring">        function to specify the requested number of threads and megabytes</tt> </tt>
+<a name="L110"></a><tt class="py-lineno">110</tt>  <tt class="py-line"><tt class="py-docstring">        of memory. The returned argument list will be appended to the qsub</tt> </tt>
+<a name="L111"></a><tt class="py-lineno">111</tt>  <tt class="py-line"><tt class="py-docstring">        arguments.</tt> </tt>
+<a name="L112"></a><tt class="py-lineno">112</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L113"></a><tt class="py-lineno">113</tt>  <tt class="py-line"><tt class="py-docstring">        nCores -- number of threads requested</tt> </tt>
+<a name="L114"></a><tt class="py-lineno">114</tt>  <tt class="py-line"><tt class="py-docstring">        memMb -- memory requested (in megabytes)</tt> </tt>
+<a name="L115"></a><tt class="py-lineno">115</tt>  <tt class="py-line"><tt class="py-docstring">        """</tt> </tt>
+<a name="L116"></a><tt class="py-lineno">116</tt>  <tt class="py-line">        <tt class="py-name">nCores</tt> <tt class="py-op">=</tt> <tt class="py-name">int</tt><tt class="py-op">(</tt><tt class="py-name">nCores</tt><tt class="py-op">)</tt> </tt>
+<a name="L117"></a><tt class="py-lineno">117</tt>  <tt class="py-line">        <tt class="py-name">memMb</tt> <tt class="py-op">=</tt> <tt class="py-name">int</tt><tt class="py-op">(</tt><tt class="py-name">memMb</tt><tt class="py-op">)</tt> </tt>
+<a name="L118"></a><tt class="py-lineno">118</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> <tt class="py-name">cls</tt><tt class="py-op">.</tt><tt id="link-16" class="py-name" targets="Class Method src.pyflowConfig.DefaultSiteConfig._qsubResourceArgConfig()=src.pyflowConfig.DefaultSiteConfig-class.html#_qsubResourceArgConfig,Class Method src.pyflowConfig.hvmemSGEConfig._qsubResourceArgConfig()=src.pyflowConfig.hvmemSGEConfig-class.html#_qsubResourceArgConfig"><a title="src.pyflowConfig.DefaultSiteConfig._qsubResourceArgConfig
+src.pyflowConfig.hvmemSGEConfig._qsubResourceArgConfig" class="py-name" href="#" onclick="return doclink('link-16', '_qsubResourceArgConfig', 'link-16');">_qsubResourceArgConfig</a></tt><tt class="py-op">(</tt><tt class="py-name">nCores</tt><tt class="py-op">,</tt> <tt class="py-name">memMb</tt><tt class="py-op">)</tt> </tt>
+</div><a name="L119"></a><tt class="py-lineno">119</tt>  <tt class="py-line"> </tt>
+<a name="L120"></a><tt class="py-lineno">120</tt>  <tt class="py-line">    <tt class="py-decorator">@</tt><tt class="py-decorator">classmethod</tt> </tt>
+<a name="DefaultSiteConfig._qsubResourceArgConfig"></a><div id="DefaultSiteConfig._qsubResourceArgConfig-def"><a name="L121"></a><tt class="py-lineno">121</tt> <a class="py-toggle" href="#" id="DefaultSiteConfig._qsubResourceArgConfig-toggle" onclick="return toggle('DefaultSiteConfig._qsubResourceArgConfig');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="src.pyflowConfig.DefaultSiteConfig-class.html#_qsubResourceArgConfig">_qsubResourceArgConfig</a><tt class="py-op">(</tt><tt class="py-param">cls</tt><tt class="py-op">,</tt> <tt class="py-param">nCores</tt><tt class="py-op">,</tt> <tt class="py-param">memMb</tt><tt class="py-op">)</tt> <tt class="py-op">:</tt> </tt>
+</div><div id="DefaultSiteConfig._qsubResourceArgConfig-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="DefaultSiteConfig._qsubResourceArgConfig-expanded"><a name="L122"></a><tt class="py-lineno">122</tt>  <tt class="py-line">        <tt class="py-docstring">"""</tt> </tt>
+<a name="L123"></a><tt class="py-lineno">123</tt>  <tt class="py-line"><tt class="py-docstring">        The default function is designed for maximum</tt> </tt>
+<a name="L124"></a><tt class="py-lineno">124</tt>  <tt class="py-line"><tt class="py-docstring">        portability  -- it just provides more memory</tt> </tt>
+<a name="L125"></a><tt class="py-lineno">125</tt>  <tt class="py-line"><tt class="py-docstring">        via more threads.</tt> </tt>
+<a name="L126"></a><tt class="py-lineno">126</tt>  <tt class="py-line"><tt class="py-docstring">        """</tt> </tt>
+<a name="L127"></a><tt class="py-lineno">127</tt>  <tt class="py-line"> </tt>
+<a name="L128"></a><tt class="py-lineno">128</tt>  <tt class="py-line">        <tt class="py-comment"># this is the memory we assume is available per</tt> </tt>
+<a name="L129"></a><tt class="py-lineno">129</tt>  <tt class="py-line">        <tt class="py-comment"># thread on the cluster:</tt> </tt>
+<a name="L130"></a><tt class="py-lineno">130</tt>  <tt class="py-line">        <tt class="py-comment">#</tt> </tt>
+<a name="L131"></a><tt class="py-lineno">131</tt>  <tt class="py-line">        <tt class="py-keyword">class</tt> <tt class="py-def-name">Constants</tt><tt class="py-op">(</tt><tt class="py-base-class">object</tt><tt class="py-op">)</tt> <tt class="py-op">:</tt> <tt class="py-name">megsPerCore</tt> <tt class="py-op">=</tt> <tt class="py-number">4096</tt> </tt>
+<a name="L132"></a><tt class="py-lineno">132</tt>  <tt class="py-line"> </tt>
+<a name="L133"></a><tt class="py-lineno">133</tt>  <tt class="py-line">        <tt class="py-name">memCores</tt> <tt class="py-op">=</tt> <tt class="py-number">1</tt> <tt class="py-op">+</tt> <tt class="py-op">(</tt><tt class="py-op">(</tt><tt class="py-name">memMb</tt> <tt class="py-op">-</tt> <tt class="py-number">1</tt><tt class="py-op">)</tt> <tt class="py-op">/</tt> <tt class="py-name">Constants</tt><tt class="py-op">.</tt><tt class="py-name">megsPerCore</tt><tt class="py-op">)</tt> </tt>
+<a name="L134"></a><tt class="py-lineno">134</tt>  <tt class="py-line"> </tt>
+<a name="L135"></a><tt class="py-lineno">135</tt>  <tt class="py-line">        <tt class="py-name">qsubCores</tt> <tt class="py-op">=</tt> <tt class="py-name">max</tt><tt class="py-op">(</tt><tt class="py-name">nCores</tt><tt class="py-op">,</tt> <tt class="py-name">memCores</tt><tt class="py-op">)</tt> </tt>
+<a name="L136"></a><tt class="py-lineno">136</tt>  <tt class="py-line"> </tt>
+<a name="L137"></a><tt class="py-lineno">137</tt>  <tt class="py-line">        <tt class="py-keyword">if</tt> <tt class="py-name">qsubCores</tt> <tt class="py-op">&lt;=</tt> <tt class="py-number">1</tt> <tt class="py-op">:</tt> <tt class="py-keyword">return</tt> <tt class="py-op">[</tt><tt class="py-op">]</tt> </tt>
+<a name="L138"></a><tt class="py-lineno">138</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> <tt class="py-op">[</tt><tt class="py-string">"-pe"</tt><tt class="py-op">,</tt> <tt class="py-string">"threaded"</tt><tt class="py-op">,</tt> <tt class="py-name">str</tt><tt class="py-op">(</tt><tt class="py-name">qsubCores</tt><tt class="py-op">)</tt><tt class="py-op">]</tt> </tt>
+</div><a name="L139"></a><tt class="py-lineno">139</tt>  <tt class="py-line"> </tt>
+<a name="L140"></a><tt class="py-lineno">140</tt>  <tt class="py-line"> </tt>
+<a name="L141"></a><tt class="py-lineno">141</tt>  <tt class="py-line">    <tt class="py-decorator">@</tt><tt class="py-decorator">classmethod</tt> </tt>
+<a name="DefaultSiteConfig.getSgeMakePrefix"></a><div id="DefaultSiteConfig.getSgeMakePrefix-def"><a name="L142"></a><tt class="py-lineno">142</tt> <a class="py-toggle" href="#" id="DefaultSiteConfig.getSgeMakePrefix-toggle" onclick="return toggle('DefaultSiteConfig.getSgeMakePrefix');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="src.pyflowConfig.DefaultSiteConfig-class.html#getSgeMakePrefix">getSgeMakePrefix</a><tt class="py-op">(</tt><tt class="py-param">cls</tt><tt class="py-op">,</tt> <tt class="py-param">nCores</tt><tt class="py-op">,</tt> <tt class="py-param">memMb</tt><tt class="py-op">,</tt> <tt class="py-param">schedulerArgList</tt><tt class="py-op">)</tt> <tt class="py-op">:</tt> </tt>
+</div><div id="DefaultSiteConfig.getSgeMakePrefix-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="DefaultSiteConfig.getSgeMakePrefix-expanded"><a name="L143"></a><tt class="py-lineno">143</tt>  <tt class="py-line">        <tt class="py-docstring">"""</tt> </tt>
+<a name="L144"></a><tt class="py-lineno">144</tt>  <tt class="py-line"><tt class="py-docstring">        This prefix will be added to ' -C directory', and run from</tt> </tt>
+<a name="L145"></a><tt class="py-lineno">145</tt>  <tt class="py-line"><tt class="py-docstring">        a local process to handle sge make jobs.</tt> </tt>
+<a name="L146"></a><tt class="py-lineno">146</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L147"></a><tt class="py-lineno">147</tt>  <tt class="py-line"><tt class="py-docstring">        Note that memMb hasn't been well defined for make jobs yet,</tt> </tt>
+<a name="L148"></a><tt class="py-lineno">148</tt>  <tt class="py-line"><tt class="py-docstring">        is it the per task memory limit? The first application to</tt> </tt>
+<a name="L149"></a><tt class="py-lineno">149</tt>  <tt class="py-line"><tt class="py-docstring">        accually make use of this will have to setup the convention,</tt> </tt>
+<a name="L150"></a><tt class="py-lineno">150</tt>  <tt class="py-line"><tt class="py-docstring">        it is ignored right now...</tt> </tt>
+<a name="L151"></a><tt class="py-lineno">151</tt>  <tt class="py-line"><tt class="py-docstring">        """</tt> </tt>
+<a name="L152"></a><tt class="py-lineno">152</tt>  <tt class="py-line">        <tt class="py-name">nCores</tt> <tt class="py-op">=</tt> <tt class="py-name">int</tt><tt class="py-op">(</tt><tt class="py-name">nCores</tt><tt class="py-op">)</tt> </tt>
+<a name="L153"></a><tt class="py-lineno">153</tt>  <tt class="py-line">        <tt class="py-name">memMb</tt> <tt class="py-op">=</tt> <tt class="py-name">int</tt><tt class="py-op">(</tt><tt class="py-name">memMb</tt><tt class="py-op">)</tt> </tt>
+<a name="L154"></a><tt class="py-lineno">154</tt>  <tt class="py-line"> </tt>
+<a name="L155"></a><tt class="py-lineno">155</tt>  <tt class="py-line">        <tt class="py-name">retval</tt> <tt class="py-op">=</tt> <tt class="py-op">[</tt><tt class="py-string">"qmake"</tt><tt class="py-op">,</tt> </tt>
+<a name="L156"></a><tt class="py-lineno">156</tt>  <tt class="py-line">                <tt class="py-string">"-V"</tt><tt class="py-op">,</tt> </tt>
+<a name="L157"></a><tt class="py-lineno">157</tt>  <tt class="py-line">                <tt class="py-string">"-now"</tt><tt class="py-op">,</tt> <tt class="py-string">"n"</tt><tt class="py-op">,</tt> </tt>
+<a name="L158"></a><tt class="py-lineno">158</tt>  <tt class="py-line">                <tt class="py-string">"-cwd"</tt><tt class="py-op">,</tt> </tt>
+<a name="L159"></a><tt class="py-lineno">159</tt>  <tt class="py-line">                <tt class="py-string">"-N"</tt><tt class="py-op">,</tt> <tt class="py-string">"pyflowMakeTask"</tt><tt class="py-op">]</tt> </tt>
+<a name="L160"></a><tt class="py-lineno">160</tt>  <tt class="py-line"> </tt>
+<a name="L161"></a><tt class="py-lineno">161</tt>  <tt class="py-line">        <tt class="py-comment"># user arguments to run() (usually q specification:</tt> </tt>
+<a name="L162"></a><tt class="py-lineno">162</tt>  <tt class="py-line">        <tt class="py-name">retval</tt><tt class="py-op">.</tt><tt class="py-name">extend</tt><tt class="py-op">(</tt><tt class="py-name">schedulerArgList</tt><tt class="py-op">)</tt> </tt>
+<a name="L163"></a><tt class="py-lineno">163</tt>  <tt class="py-line"> </tt>
+<a name="L164"></a><tt class="py-lineno">164</tt>  <tt class="py-line">        <tt class="py-comment">#### use qmake parallel environment:</tt> </tt>
+<a name="L165"></a><tt class="py-lineno">165</tt>  <tt class="py-line">        <tt class="py-comment"># retval.extend(["-pe","make",str(nCores),"--"])</tt> </tt>
+<a name="L166"></a><tt class="py-lineno">166</tt>  <tt class="py-line"> </tt>
+<a name="L167"></a><tt class="py-lineno">167</tt>  <tt class="py-line">        <tt class="py-comment">#### ...OR use 'dynamic' sge make environment:</tt> </tt>
+<a name="L168"></a><tt class="py-lineno">168</tt>  <tt class="py-line">        <tt class="py-name">retval</tt><tt class="py-op">.</tt><tt class="py-name">extend</tt><tt class="py-op">(</tt><tt class="py-op">[</tt><tt class="py-string">"--"</tt><tt class="py-op">,</tt> <tt class="py-string">"-j"</tt><tt class="py-op">,</tt> <tt class="py-name">str</tt><tt class="py-op">(</tt><tt class="py-name">nCores</tt><tt class="py-op">)</tt><tt class="py-op">]</tt><tt class="py-op">)</tt> </tt>
+<a name="L169"></a><tt class="py-lineno">169</tt>  <tt class="py-line"> </tt>
+<a name="L170"></a><tt class="py-lineno">170</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> <tt class="py-name">retval</tt> </tt>
+</div></div><a name="L171"></a><tt class="py-lineno">171</tt>  <tt class="py-line"> </tt>
+<a name="getEnvVar"></a><div id="getEnvVar-def"><a name="L172"></a><tt class="py-lineno">172</tt>  <tt class="py-line"> </tt>
+<a name="L173"></a><tt class="py-lineno">173</tt>  <tt class="py-line"> </tt>
+<a name="L174"></a><tt class="py-lineno">174</tt> <a class="py-toggle" href="#" id="getEnvVar-toggle" onclick="return toggle('getEnvVar');">-</a><tt class="py-line"><tt class="py-keyword">def</tt> <a class="py-def-name" href="src.pyflowConfig-module.html#getEnvVar">getEnvVar</a><tt class="py-op">(</tt><tt class="py-param">key</tt><tt class="py-op">)</tt> <tt class="py-op">:</tt> </tt>
+</div><div id="getEnvVar-collapsed" style="display:none;" pad="+++" indent="++++"></div><div id="getEnvVar-expanded"><a name="L175"></a><tt class="py-lineno">175</tt>  <tt class="py-line">    <tt class="py-keyword">if</tt> <tt class="py-name">key</tt> <tt class="py-keyword">in</tt> <tt class="py-name">os</tt><tt class="py-op">.</tt><tt class="py-name">environ</tt> <tt class="py-op">:</tt> <tt class="py-keyword">return</tt> <tt class="py-name">os</tt><tt class="py-op">.</tt><tt class="py-name">environ</tt><tt class="py-op">[</tt><tt class="py-name">key</tt><tt class="py-op">]</tt> </tt>
+<a name="L176"></a><tt class="py-lineno">176</tt>  <tt class="py-line">    <tt class="py-keyword">return</tt> <tt class="py-name">None</tt> </tt>
+</div><a name="L177"></a><tt class="py-lineno">177</tt>  <tt class="py-line"> </tt>
+<a name="hvmemSGEConfig"></a><div id="hvmemSGEConfig-def"><a name="L178"></a><tt class="py-lineno">178</tt>  <tt class="py-line"> </tt>
+<a name="L179"></a><tt class="py-lineno">179</tt>  <tt class="py-line"> </tt>
+<a name="L180"></a><tt class="py-lineno">180</tt> <a class="py-toggle" href="#" id="hvmemSGEConfig-toggle" onclick="return toggle('hvmemSGEConfig');">-</a><tt class="py-line"><tt class="py-keyword">class</tt> <a class="py-def-name" href="src.pyflowConfig.hvmemSGEConfig-class.html">hvmemSGEConfig</a><tt class="py-op">(</tt><tt class="py-base-class">DefaultSiteConfig</tt><tt class="py-op">)</tt> <tt class="py-op">:</tt> </tt>
+</div><div id="hvmemSGEConfig-collapsed" style="display:none;" pad="+++" indent="++++"></div><div id="hvmemSGEConfig-expanded"><a name="L181"></a><tt class="py-lineno">181</tt>  <tt class="py-line">    <tt class="py-docstring">"""</tt> </tt>
+<a name="L182"></a><tt class="py-lineno">182</tt>  <tt class="py-line"><tt class="py-docstring">    This config assumes 'h_vmem' is defined on the SGE instance</tt> </tt>
+<a name="L183"></a><tt class="py-lineno">183</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L184"></a><tt class="py-lineno">184</tt>  <tt class="py-line"><tt class="py-docstring">    """</tt> </tt>
+<a name="L185"></a><tt class="py-lineno">185</tt>  <tt class="py-line"> </tt>
+<a name="L186"></a><tt class="py-lineno">186</tt>  <tt class="py-line">    <tt class="py-decorator">@</tt><tt class="py-decorator">classmethod</tt> </tt>
+<a name="hvmemSGEConfig._qsubResourceArgConfig"></a><div id="hvmemSGEConfig._qsubResourceArgConfig-def"><a name="L187"></a><tt class="py-lineno">187</tt> <a class="py-toggle" href="#" id="hvmemSGEConfig._qsubResourceArgConfig-toggle" onclick="return toggle('hvmemSGEConfig._qsubResourceArgConfig');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="src.pyflowConfig.hvmemSGEConfig-class.html#_qsubResourceArgConfig">_qsubResourceArgConfig</a><tt class="py-op">(</tt><tt class="py-param">cls</tt><tt class="py-op">,</tt> <tt class="py-param">nCores</tt><tt class="py-op">,</tt> <tt class="py-param">memMb</tt><tt class="py-op">)</tt> <tt class="py-op">:</tt> </tt>
+</div><div id="hvmemSGEConfig._qsubResourceArgConfig-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="hvmemSGEConfig._qsubResourceArgConfig-expanded"><a name="L188"></a><tt class="py-lineno">188</tt>  <tt class="py-line"> </tt>
+<a name="L189"></a><tt class="py-lineno">189</tt>  <tt class="py-line">        <tt class="py-name">retval</tt> <tt class="py-op">=</tt> <tt class="py-op">[</tt><tt class="py-op">]</tt> </tt>
+<a name="L190"></a><tt class="py-lineno">190</tt>  <tt class="py-line"> </tt>
+<a name="L191"></a><tt class="py-lineno">191</tt>  <tt class="py-line">        <tt class="py-comment"># specify memory requirements</tt> </tt>
+<a name="L192"></a><tt class="py-lineno">192</tt>  <tt class="py-line">        <tt class="py-name">memGb</tt> <tt class="py-op">=</tt> <tt class="py-number">1</tt> <tt class="py-op">+</tt> <tt class="py-op">(</tt><tt class="py-op">(</tt><tt class="py-name">memMb</tt> <tt class="py-op">-</tt> <tt class="py-number">1</tt><tt class="py-op">)</tt> <tt class="py-op">/</tt> <tt class="py-number">1024</tt><tt class="py-op">)</tt> </tt>
+<a name="L193"></a><tt class="py-lineno">193</tt>  <tt class="py-line">        <tt class="py-name">reqArg</tt> <tt class="py-op">=</tt> <tt class="py-string">"h_vmem=%iG"</tt> <tt class="py-op">%</tt> <tt class="py-op">(</tt><tt class="py-name">memGb</tt><tt class="py-op">)</tt> </tt>
+<a name="L194"></a><tt class="py-lineno">194</tt>  <tt class="py-line">        <tt class="py-name">retval</tt><tt class="py-op">.</tt><tt class="py-name">extend</tt><tt class="py-op">(</tt><tt class="py-op">[</tt><tt class="py-string">"-l"</tt><tt class="py-op">,</tt> <tt class="py-name">reqArg</tt><tt class="py-op">]</tt><tt class="py-op">)</tt> </tt>
+<a name="L195"></a><tt class="py-lineno">195</tt>  <tt class="py-line"> </tt>
+<a name="L196"></a><tt class="py-lineno">196</tt>  <tt class="py-line">        <tt class="py-keyword">if</tt> <tt class="py-name">nCores</tt> <tt class="py-op">&gt;</tt> <tt class="py-number">1</tt> <tt class="py-op">:</tt> </tt>
+<a name="L197"></a><tt class="py-lineno">197</tt>  <tt class="py-line">            <tt class="py-name">retval</tt><tt class="py-op">.</tt><tt class="py-name">extend</tt><tt class="py-op">(</tt><tt class="py-op">[</tt><tt class="py-string">"-pe"</tt><tt class="py-op">,</tt> <tt class="py-string">"threaded"</tt><tt class="py-op">,</tt> <tt class="py-name">str</tt><tt class="py-op">(</tt><tt class="py-name">nCores</tt><tt class="py-op">)</tt><tt class="py-op">]</tt><tt class="py-op">)</tt> </tt>
+<a name="L198"></a><tt class="py-lineno">198</tt>  <tt class="py-line"> </tt>
+<a name="L199"></a><tt class="py-lineno">199</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> <tt class="py-name">retval</tt> </tt>
+</div></div><a name="L200"></a><tt class="py-lineno">200</tt>  <tt class="py-line"> </tt>
+<a name="siteConfigFactory"></a><div id="siteConfigFactory-def"><a name="L201"></a><tt class="py-lineno">201</tt>  <tt class="py-line"> </tt>
+<a name="L202"></a><tt class="py-lineno">202</tt>  <tt class="py-line"> </tt>
+<a name="L203"></a><tt class="py-lineno">203</tt>  <tt class="py-line"><tt class="py-comment">#</tt> </tt>
+<a name="L204"></a><tt class="py-lineno">204</tt>  <tt class="py-line"><tt class="py-comment"># final step is the selection of this run's siteConfig object:</tt> </tt>
+<a name="L205"></a><tt class="py-lineno">205</tt>  <tt class="py-line"><tt class="py-comment">#</tt> </tt>
+<a name="L206"></a><tt class="py-lineno">206</tt>  <tt class="py-line"> </tt>
+<a name="L207"></a><tt class="py-lineno">207</tt> <a class="py-toggle" href="#" id="siteConfigFactory-toggle" onclick="return toggle('siteConfigFactory');">-</a><tt class="py-line"><tt class="py-keyword">def</tt> <a class="py-def-name" href="src.pyflowConfig-module.html#siteConfigFactory">siteConfigFactory</a><tt class="py-op">(</tt><tt class="py-op">)</tt> <tt class="py-op">:</tt> </tt>
+</div><div id="siteConfigFactory-collapsed" style="display:none;" pad="+++" indent="++++"></div><div id="siteConfigFactory-expanded"><a name="L208"></a><tt class="py-lineno">208</tt>  <tt class="py-line">    <tt class="py-comment"># TODO: add an import time test to determine if h_vmem is valid</tt> </tt>
+<a name="L209"></a><tt class="py-lineno">209</tt>  <tt class="py-line">    <tt class="py-keyword">return</tt>  <tt id="link-17" class="py-name" targets="Class src.pyflowConfig.hvmemSGEConfig=src.pyflowConfig.hvmemSGEConfig-class.html"><a title="src.pyflowConfig.hvmemSGEConfig" class="py-name" href="#" onclick="return doclink('link-17', 'hvmemSGEConfig', 'link-17');">hvmemSGEConfig</a></tt> </tt>
+</div><a name="L210"></a><tt class="py-lineno">210</tt>  <tt class="py-line"> </tt>
+<a name="L211"></a><tt class="py-lineno">211</tt>  <tt class="py-line"> </tt>
+<a name="L212"></a><tt class="py-lineno">212</tt>  <tt class="py-line"><tt class="py-name">siteConfig</tt> <tt class="py-op">=</tt> <tt id="link-18" class="py-name" targets="Function src.pyflowConfig.siteConfigFactory()=src.pyflowConfig-module.html#siteConfigFactory"><a title="src.pyflowConfig.siteConfigFactory" class="py-name" href="#" onclick="return doclink('link-18', 'siteConfigFactory', 'link-18');">siteConfigFactory</a></tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+<a name="L213"></a><tt class="py-lineno">213</tt>  <tt class="py-line"> </tt><script type="text/javascript">
+<!--
+expandto(location.href);
+// -->
+</script>
+</pre>
+<br />
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="src-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+      <th class="navbar" width="100%"></th>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%%">
+  <tr>
+    <td align="left" class="footer">
+    Generated by Epydoc 3.0.1
+    on Fri May 19 16:44:20 2017
+    </td>
+    <td align="right" class="footer">
+      <a target="mainFrame" href="http://epydoc.sourceforge.net"
+        >http://epydoc.sourceforge.net</a>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  <!--
+  // Private objects are initially displayed (because if
+  // javascript is turned off then we want them to be
+  // visible); but by default, we want to hide them.  So hide
+  // them unless we have a cookie that says to show them.
+  checkCookie();
+  // -->
+</script>
+</body>
+</html>
