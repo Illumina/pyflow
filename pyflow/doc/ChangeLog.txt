@@ -1,3 +1,8 @@
+v1.1.15 20170519
+* Add new launchTasksUntil demo
+* Add new WorkflowRunner.cancelTaskTree() method
+* Add new WorkflowRunner.isTaskDone() method
+* Add automated source formatting scripts
 v1.1.14 20170112
 * STREL-391 improve task throughput for nodes with 100's of cores
 v1.1.13 20160414
