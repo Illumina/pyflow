@@ -482,6 +482,46 @@ class TestWorkflowRunner(unittest.TestCase) :
         except :
             self.fail("Should not raise Exception")
 
+    def test_subWorkflowTaskStatusQuery(self) :
+        """
+        Test the function of isTaskComplete and isTaskDone within a subworkflow
+        """
+
+        import time
+
+        def __init__(self) :
+            self.taskStatus0 = False
+            self.taskStatus1 = False
+            self.taskStatus2 = False
+            self.taskStatus3 = False
+
+        class SelfWorkflow2(WorkflowRunner) :
+            def workflow(self2) :
+                self2.addTask("A2",getSleepCmd()+["0"])
+
+                # TODO Find a more robust way to ensure that A2 'should' be complete by the time a query is made below
+                time.sleep(102)
+                self.taskStatus2 = self2.isTaskComplete("A2")
+                (self.taskStatus3, _) = self2.isTaskDone("A2")
+
+        class SelfWorkflow(WorkflowRunner) :
+            def workflow(self2) :
+                self2.addTask("A1",getSleepCmd()+["0"])
+                time.sleep(1)
+                self.taskStatus0 = self2.isTaskComplete("A1")
+                (self.taskStatus1, _) = self2.isTaskDone("A1")
+                self2.addWorkflowTask("W2",SelfWorkflow2())
+
+        try :
+            w=SelfWorkflow()
+            self.assertEqual(w.run("local", self.testPath, isQuiet=True), 0)
+            self.assertTrue(self.taskStatus0)
+            self.assertTrue(self.taskStatus1)
+            self.assertTrue(self.taskStatus2)
+            self.assertTrue(self.taskStatus3)
+        except :
+            self.fail("Should not raise Exception")
+
 
 
 if __name__ == '__main__' :

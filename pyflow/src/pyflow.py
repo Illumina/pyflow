@@ -3565,7 +3565,7 @@ class WorkflowRunner(object) :
 
         # hijack! -- take all public methods at the WorkflowRunner level
         # (except workflow()), and insert the self copy:
-        publicExclude = ["workflow", "addTask", "addWorkflowTask", "waitForTasks"]
+        publicExclude = ["workflow", "addTask", "addWorkflowTask", "waitForTasks", "isTaskComplete", "isTaskDone"]
         for (n, _v) in inspect.getmembers(WorkflowRunner, predicate=inspect.ismethod) :
             if n[0] == "_" : continue  # skip private/special methods
             if n in publicExclude : continue
