@@ -498,9 +498,7 @@ class TestWorkflowRunner(unittest.TestCase) :
         class SelfWorkflow2(WorkflowRunner) :
             def workflow(self2) :
                 self2.addTask("A2",getSleepCmd()+["0"])
-
-                # TODO Find a more robust way to ensure that A2 'should' be complete by the time a query is made below
-                time.sleep(102)
+                time.sleep(1)
                 self.taskStatus2 = self2.isTaskComplete("A2")
                 (self.taskStatus3, _) = self2.isTaskDone("A2")
 

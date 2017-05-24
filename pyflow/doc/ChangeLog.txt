@@ -1,4 +1,5 @@
 v1.1.16 20170523
+* Improve task processing time and query accuracy
 * Fix task status query methods to work correctly within subworkflows
 v1.1.15 20170519
 * Add new launchTasksUntil demo

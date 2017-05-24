@@ -3853,7 +3853,7 @@ class WorkflowRunner(object) :
         return WorkflowRunner._allStop.isSet()
 
     def _addTaskCore(self, namespace, label, payload, dependencies) :
-        # private core taskAdd routine for hijacking
+        # private core addTask routine for hijacking
         # fromWorkflow is the workflow instance used to launch the task
         #
 
@@ -3942,6 +3942,11 @@ class WorkflowRunner(object) :
 
         if not self._tdag.isTaskPresent(namespace, taskLabel) :
             return (False, False)
+
+        # Run a task harvest just before checking the task status
+        # to help ensure the status is up to date
+        self._tman.harvestTasks()
+
         task = self._tdag.getTask(namespace, taskLabel)
         return ( task.isDone(), task.isError() )
 
@@ -3963,9 +3968,12 @@ class WorkflowRunner(object) :
 
 
     def _startTaskManager(self) :
-        # start a new task manager if one isn't already running:
+        # Start a new task manager if one isn't already running. If it is running
+        # provide a hint that a new task has just been added to the workflow.
         #
-        if (self._tman is not None) and (self._tman.isAlive()) : return
+        if (self._tman is not None) and (self._tman.isAlive()) :
+            self._tdag.isFinishedEvent.set()
+            return
         if not self._cdata().isTaskManagerException :
             self._tman = TaskManager(self._cdata(), self._tdag)
             self._tman.start()
