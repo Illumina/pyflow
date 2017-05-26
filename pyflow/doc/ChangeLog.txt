@@ -1,3 +1,7 @@
+v1.1.17 20170526
+* Make workflow task specification notice less verbose
+* Fix cancelTaskTree to work correctly within subworkflows
+* Modify cancelTaskTree to ignore running tasks
 v1.1.16 20170523
 * Improve task processing time and query accuracy
 * Fix task status query methods to work correctly within subworkflows
