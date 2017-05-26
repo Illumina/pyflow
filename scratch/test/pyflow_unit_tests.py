@@ -3,6 +3,7 @@
 import unittest
 import os
 import sys
+import time
 
 scriptDir=os.path.abspath(os.path.dirname(__file__))
 
@@ -122,7 +123,7 @@ class TestWorkflowRunner(unittest.TestCase) :
         """
         Test that when two pyflow jobs are launched with the same dataDir, the second will fail.
         """
-        import threading,time
+        import threading
 
         class StallWorkflow(WorkflowRunner) :
             def workflow(self2) :
@@ -440,16 +441,14 @@ class TestWorkflowRunner(unittest.TestCase) :
         Test that tasks can be canceled.
         """
 
-        import time
-
         filePath=os.path.join(self.testPath,"W2B2_task_marker.txt")
 
         class SubWorkflow(WorkflowRunner) :
             def workflow(self2) :
-                self2.addTask("A2", getSleepCmd()+["30"])
+                self2.addTask("A2", getSleepCmd()+["3"])
                 self2.addTask("B2","echo foo > "+filePath, dependencies="A2")
                 time.sleep(1)
-                self2.cancelTaskTree("A2")
+                self2.cancelTaskTree("B2")
 
 
         class SelfWorkflow(WorkflowRunner) :
@@ -459,7 +458,7 @@ class TestWorkflowRunner(unittest.TestCase) :
                 self2.addTask("C", getSleepCmd()+["30"], dependencies="B")
 
                 time.sleep(1)
-                self2.cancelTaskTree("B")
+                self2.cancelTaskTree("A")
 
                 self2.addWorkflowTask("W2", SubWorkflow(), dependencies="A")
 
@@ -512,8 +511,6 @@ class TestWorkflowRunner(unittest.TestCase) :
         """
         Test the function of isTaskComplete and isTaskDone within a subworkflow
         """
-
-        import time
 
         def __init__(self) :
             self.taskStatus0 = False

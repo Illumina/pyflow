@@ -1942,21 +1942,25 @@ class TaskManager(StoppableThread) :
         """
         Cancel a task and all of its children, without labeling the canceled tasks as errors
 
-        A canceled task will be stopped if it is running, or unqueued if it is waiting, and will be put into the
-        waiting/ignored state unless it has already completed.
+        A canceled task will not be stopped if it is already running (this is planned for the future), but will
+        be unqueued if it is waiting, and put into the waiting/ignored state unless it has already completed.
         """
 
         # Recursively cancel child tasks:
         for child in task.children :
             self.cancelTaskTree(child)
 
-        self._infoLog("Canceling %s '%s' from %s" % (task.payload.desc(), task.fullLabel(), namespaceLabel(task.namespace)))
-
-        # Stop the task if it is running:
+        # In theory we would like to cancel running tasks, but this will take considerable extra development,
+        # for now runningTasks will need to be ignored:
         if task in self.runningTasks :
-            taskRunner = self.runningTasks[task]
-            taskRunner.stop()
-            self._removeTaskFromRunningSet(task)
+            return
+
+#            # some of the logic required for running task cancelation:
+#            taskRunner = self.runningTasks[task]
+#            taskRunner.stop()
+#            self._removeTaskFromRunningSet(task)
+
+        self._infoLog("Canceling %s '%s' from %s" % (task.payload.desc(), task.fullLabel(), namespaceLabel(task.namespace)))
 
         # Reset the task to be ignored unless it is already done:
         if not task.isDone() :
@@ -3641,9 +3645,11 @@ class WorkflowRunner(object) :
 
     def cancelTaskTree(self, taskLabel) :
         """
-        Cancel the given task and all of its dependencies. Canceling means that any running jobs will be stopped and
-        any waiting job will be unqueued. Canceled tasks will not be treated as errors. Canceled tasks that are not
-        already complete will be put into the waiting/ignored state.
+        Cancel the given task and all of its dependencies.
+
+        A canceled task will not be stopped if it is already running (this is planned for the future), but will
+        be unqueued if it is waiting, and put into the waiting/ignored state unless it has already completed.
+        Canceled tasks will not be treated as errors.
         """
         self._cancelTaskTreeCore(self._getNamespace(), taskLabel)
 
