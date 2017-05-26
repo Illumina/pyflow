@@ -18,6 +18,16 @@ except :
     from pyflow import isWindows,WorkflowRunner
 
 
+def getTracebackStr() :
+    import traceback
+    return traceback.format_exc()
+
+
+def summarizeUnexpectedTestException(testObject) :
+    sys.stderr.write("\nUnexpected Exception:\n%s\n" % (getTracebackStr()))
+    testObject.fail("Should not raise Exception")
+
+
 def getRmCmd() :
     if isWindows():
         return ["del","/f"]
@@ -405,7 +415,7 @@ class TestWorkflowRunner(unittest.TestCase) :
             w=SelfWorkflow()
             self.assertEqual(w.run("local",self.testPath,isQuiet=True), 0)
         except :
-            self.fail("Should not raise Exception")
+            summarizeUnexpectedTestException(self)
 
     def test_checkpointChain(self) :
         """
@@ -423,21 +433,35 @@ class TestWorkflowRunner(unittest.TestCase) :
             w=SelfWorkflow()
             self.assertEqual(w.run("local",self.testPath,isQuiet=True), 0)
         except :
-            self.fail("Should not raise Exception")
+            summarizeUnexpectedTestException(self)
 
     def test_cancelTaskTree(self) :
         """
         Test that tasks can be canceled.
         """
 
+        import time
+
+        filePath=os.path.join(self.testPath,"W2B2_task_marker.txt")
+
+        class SubWorkflow(WorkflowRunner) :
+            def workflow(self2) :
+                self2.addTask("A2", getSleepCmd()+["30"])
+                self2.addTask("B2","echo foo > "+filePath, dependencies="A2")
+                time.sleep(1)
+                self2.cancelTaskTree("A2")
+
+
         class SelfWorkflow(WorkflowRunner) :
             def workflow(self2) :
                 self2.addTask("A", getSleepCmd()+["3"])
                 self2.addTask("B", getSleepCmd()+["30"], dependencies="A")
                 self2.addTask("C", getSleepCmd()+["30"], dependencies="B")
-                import time
+
                 time.sleep(1)
                 self2.cancelTaskTree("B")
+
+                self2.addWorkflowTask("W2", SubWorkflow(), dependencies="A")
 
         try :
             w=SelfWorkflow()
@@ -445,8 +469,10 @@ class TestWorkflowRunner(unittest.TestCase) :
             self.assertTrue(w.isTaskComplete("A"))
             self.assertFalse(w.isTaskComplete("B"))
             self.assertFalse(w.isTaskComplete("C"))
+            self.assertFalse(os.path.exists(filePath))
+
         except :
-            self.fail("Should not raise Exception")
+            summarizeUnexpectedTestException(self)
 
     def test_isTaskDone(self) :
         """
@@ -480,7 +506,7 @@ class TestWorkflowRunner(unittest.TestCase) :
             self.assertEqual(w.run("local", self.testPath, isQuiet=True), 0)
             self.assertEqual(w.isTaskComplete("B"), False)
         except :
-            self.fail("Should not raise Exception")
+            summarizeUnexpectedTestException(self)
 
     def test_subWorkflowTaskStatusQuery(self) :
         """
@@ -495,7 +521,7 @@ class TestWorkflowRunner(unittest.TestCase) :
             self.taskStatus2 = False
             self.taskStatus3 = False
 
-        class SelfWorkflow2(WorkflowRunner) :
+        class SubWorkflow(WorkflowRunner) :
             def workflow(self2) :
                 self2.addTask("A2",getSleepCmd()+["0"])
                 time.sleep(1)
@@ -508,7 +534,7 @@ class TestWorkflowRunner(unittest.TestCase) :
                 time.sleep(1)
                 self.taskStatus0 = self2.isTaskComplete("A1")
                 (self.taskStatus1, _) = self2.isTaskDone("A1")
-                self2.addWorkflowTask("W2",SelfWorkflow2())
+                self2.addWorkflowTask("W2",SubWorkflow())
 
         try :
             w=SelfWorkflow()
@@ -518,7 +544,7 @@ class TestWorkflowRunner(unittest.TestCase) :
             self.assertTrue(self.taskStatus2)
             self.assertTrue(self.taskStatus3)
         except :
-            self.fail("Should not raise Exception")
+            summarizeUnexpectedTestException(self)
 
 
 
