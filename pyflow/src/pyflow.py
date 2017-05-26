@@ -1947,6 +1947,7 @@ class TaskManager(StoppableThread) :
         for task in notrunning :
             self._removeTaskFromRunningSet(task)
 
+
     @lockMethod
     def cancelTaskTree(self, task) :
         """
@@ -1965,18 +1966,14 @@ class TaskManager(StoppableThread) :
         if task in self.runningTasks :
             return
 
-#            # some of the logic required for running task cancelation:
-#            taskRunner = self.runningTasks[task]
-#            taskRunner.stop()
-#            self._removeTaskFromRunningSet(task)
+        #            # some of the logic required for running task cancelation:
+        #            taskRunner = self.runningTasks[task]
+        #            taskRunner.stop()
+        #            self._removeTaskFromRunningSet(task)
 
         self._infoLog("Canceling %s '%s' from %s" % (task.payload.desc(), task.fullLabel(), namespaceLabel(task.namespace)))
 
-        # Reset the task to be ignored unless it is already done:
-        if not task.isDone() :
-            task.runstate = "waiting"
-            task.isIgnoreThis = True
-
+        self.tdag.cancelTask(task)
 
 
     @lockMethod
@@ -2314,6 +2311,34 @@ class TaskDAG(object) :
             if node.isIgnoreThis : continue
             retval.append(node)
         return retval
+
+    @lockMethod
+    def cancelTask(self, task) :
+        # Nothing to do if task is already done
+        if task.isDone() : return
+
+        # Nothing to do if task is already ignored
+        if task.isIgnoreThis : return
+
+        # Can't cancel a task with uncanceled children:
+        for child in task.children :
+            assert(child.isIgnoreThis)
+
+        task.runstate = "waiting"
+        task.isIgnoreThis = True
+
+        if task in self.tailNodes :
+            self.tailNodes.remove(task)
+
+        for parent in task.parents :
+            isTailNode = True
+            for child in parent.children :
+                if not child.isIgnoreThis :
+                    isTailNode = False
+                    break
+
+            if isTailNode : self.tailNodes.add(parent)
+
 
     def _isRunExhaustedNode(self, node, searched) :
 
