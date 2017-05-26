@@ -468,9 +468,19 @@ def namespaceJoin(a, b) :
     return a + namespaceSep + b
 
 
+def namespaceTypeLabel(namespace) :
+    """
+    Provide a consistent naming scheme to users for embedded workflows
+    """
+    if namespace == "" :
+        return "master workflow"
+    else :
+        return "sub-workflow"
+
+
 def namespaceLabel(namespace) :
     """
-    provide a consistent naming scheme to users for embedded workflows
+    Provide a consistent naming scheme to users for embedded workflows
     """
     if namespace == "" :
         return "master workflow"
@@ -1105,13 +1115,13 @@ class WorkflowTaskRunner(BaseTaskRunner) :
 
     def _run(self) :
         namespace = self.workflow._getNamespace()
-        nsLabel = namespaceLabel(namespace)
-        self.infoLog("Starting task specification for %s" % (nsLabel))
+        nstLabel = namespaceTypeLabel(namespace)
+        self.infoLog("Starting task specification for %s" % (nstLabel))
         self.workflow._setRunning(True)
         self.workflow.workflow()
         self.workflow._setRunning(False)
         self.runStatus.isSpecificationComplete.set()
-        self.infoLog("Finished task specification for %s, waiting for task completion" % (nsLabel))
+        self.infoLog("Finished task specification for %s" % (nstLabel))
         retval = self.workflow._waitForTasksCore(namespace, isVerbose=False)
         retmsg = ""
         return (retval, retmsg)
