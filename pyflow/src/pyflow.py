@@ -2577,8 +2577,10 @@ class TaskDAG(object) :
     @lockMethod
     def writeTaskStatus(self) :
         """
-        (atomic on *nix) update of the runstate and errorstate for all tasks
+        Update the runstate and errorstate for all tasks. This is intended to be atomic, but can
+        only be made so on unix.
         """
+
         # don't write task status during dry runs:
         if self.isDryRun : return
 
@@ -2586,11 +2588,11 @@ class TaskDAG(object) :
         tmpFp = open(tmpFile, "w")
         tmpFp.write(taskStateHeader())
         for (namespace, label) in self.addOrder :
-            node = self.labelMap[(namespace, label)]
-            runstateUpdateTimeStr = timeStampToTimeStr(node.runstateUpdateTimeStamp)
-            tmpFp.write("%s\t%s\t%s\t%i\t%s\n" % (label, namespace, node.runstate, node.errorstate, runstateUpdateTimeStr))
-        tmpFp.close()
+            task = self.labelMap[(namespace, label)]
+            runstateUpdateTimeStr = timeStampToTimeStr(task.runstateUpdateTimeStamp)
+            tmpFp.write("%s\t%s\t%s\t%i\t%s\n" % (label, namespace, task.runstate, task.errorstate, runstateUpdateTimeStr))
 
+        tmpFp.close()
         forceRename(tmpFile, self.taskStateFile)
 
 
@@ -2644,7 +2646,7 @@ class TaskDAG(object) :
 
         def getTaskLineFromTask(task) :
             """
-            translate a task into its single-line summary format in the taskInfo file
+            Create a single-line summary of the input task for use in the taskInfo file
             """
             depstring = ""
             if len(task.parents) :
@@ -2686,6 +2688,75 @@ class TaskDAG(object) :
         for taskLine in newTaskLines :
             fp.write(taskLine + "\n")
         fp.close()
+
+
+    def _createContinuedStateFile(self, taskStateFile) :
+        """
+        Create continued version of task state file
+        """
+
+        if not os.path.isfile(taskStateFile) : return set()
+
+        tmpFile = taskStateFile + ".update.incomplete"
+        tmpfp = open(tmpFile, "w")
+        tmpfp.write(taskStateHeader())
+        complete = set()
+        for words in taskStateParser(taskStateFile) :
+            (runState, errorCode) = words[2:4]
+            if (runState != "complete") or (int(errorCode) != 0) : continue
+            tmpfp.write("\t".join(words) + "\n")
+            (label, namespace) = words[0:2]
+            complete.add(namespaceJoin(namespace, label))
+
+        tmpfp.close()
+        forceRename(tmpFile, taskStateFile)
+        return complete
+
+
+    def _createContinuedInfoFile(self, taskInfoFile, complete) :
+        """
+        Initialize TaskDAG to include placeholders of all tasks which have already been completed.
+        Also update task info file to only retain completed tasks.
+
+        Placeholder tasks are used to check that the underlying task definitions have not unexpectedly
+        changed over the interrupt/resume cycle.
+        """
+
+        if not os.path.isfile(taskInfoFile) : return
+
+        tmpFile = taskInfoFile + ".update.incomplete"
+        tmpfp = open(tmpFile, "w")
+        tmpfp.write(taskInfoHeader())
+        for words in taskInfoParser(taskInfoFile) :
+            (label, namespace, ptype, nCores, memMb, priority, isForceLocal, depStr, cwdStr, command) = words
+            fullLabel = namespaceJoin(namespace, label)
+            if fullLabel not in complete : continue
+
+            tmpfp.write("\t".join(words) + "\n")
+            self.lastTaskIdWritten += 1
+
+            if   ptype == "command" :
+                if command == "" : command = None
+                payload = CmdPayload(fullLabel, Command(command, cwdStr), int(nCores), int(memMb), int(priority), argToBool(isForceLocal))
+            elif ptype == "workflow" :
+                payload = WorkflowPayload(None)
+            else : assert 0
+
+            self.addTask(namespace, label, payload, getTaskInfoDepSet(depStr), isContinued=True)
+
+        tmpfp.close()
+        forceRename(tmpFile, taskInfoFile)
+
+
+    @lockMethod
+    def setupContinuedWorkflow(self) :
+        """
+        Take care of all continuation specific setup activities. Read previous task state files if they exist
+        and initialize taskDAG to reflect all tasks which have already been completed. Update task state files
+        to reflect completed tasks only.
+        """
+        complete = self._createContinuedStateFile(self.taskStateFile)
+        self._createContinuedInfoFile(self.taskInfoFile, complete)
 
 
 
@@ -4191,7 +4262,8 @@ class WorkflowRunner(object) :
         backupFile(cdata.taskInfoFile)
 
         if cdata.param.isContinue :
-            self._setupContinuedWorkflow()
+            # Take care of all continuation specific setup activities
+            self._tdag.setupContinuedWorkflow()
 
         self._taskInfoWriter = TaskFileWriter(self._tdag.writeTaskInfo)
         self._taskStatusWriter = TaskFileWriter(self._tdag.writeTaskStatus)
@@ -4201,68 +4273,6 @@ class WorkflowRunner(object) :
 
         self._taskInfoWriter.start()
         self._taskStatusWriter.start()
-
-
-
-    def _createContinuedStateFile(self) :
-        #
-        # create continued version of task state file
-        #
-
-        cdata = self._cdata()
-        if not os.path.isfile(cdata.taskStateFile) : return set()
-
-        tmpFile = cdata.taskStateFile + ".update.incomplete"
-        tmpfp = open(tmpFile, "w")
-        tmpfp.write(taskStateHeader())
-        complete = set()
-        for words in taskStateParser(cdata.taskStateFile) :
-            (runState, errorCode) = words[2:4]
-            if (runState != "complete") or (int(errorCode) != 0) : continue
-            tmpfp.write("\t".join(words) + "\n")
-            (label, namespace) = words[0:2]
-            complete.add(namespaceJoin(namespace, label))
-
-        tmpfp.close()
-        forceRename(tmpFile, cdata.taskStateFile)
-        return complete
-
-
-    def _createContinuedInfoFile(self, complete) :
-        #
-        # create continued version of task info file
-        #
-
-        cdata = self._cdata()
-        if not os.path.isfile(cdata.taskInfoFile) : return
-
-        tmpFile = cdata.taskInfoFile + ".update.incomplete"
-        tmpfp = open(tmpFile, "w")
-        tmpfp.write(taskInfoHeader())
-        for words in taskInfoParser(cdata.taskInfoFile) :
-            (label, namespace, ptype, nCores, memMb, priority, isForceLocal, depStr, cwdStr, command) = words
-            fullLabel = namespaceJoin(namespace, label)
-            if fullLabel not in complete : continue
-            tmpfp.write("\t".join(words) + "\n")
-            if   ptype == "command" :
-                if command == "" : command = None
-                payload = CmdPayload(fullLabel, Command(command, cwdStr), int(nCores), int(memMb), int(priority), argToBool(isForceLocal))
-            elif ptype == "workflow" :
-                payload = WorkflowPayload(None)
-            else : assert 0
-
-            self._tdag.addTask(namespace, label, payload, getTaskInfoDepSet(depStr), isContinued=True)
-
-        tmpfp.close()
-        forceRename(tmpFile, cdata.taskInfoFile)
-
-
-
-    def _setupContinuedWorkflow(self) :
-        # reduce both state files to completed states only.
-        complete = self._createContinuedStateFile()
-        self._createContinuedInfoFile(complete)
-
 
 
     def _initMessage(self) :
