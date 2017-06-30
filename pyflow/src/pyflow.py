@@ -1824,7 +1824,7 @@ class TaskManager(StoppableThread) :
     @lockMethod
     def _startTasks(self) :
         """
-        determine what tasks, if any, can be started
+        Determine what tasks, if any, can be started
 
         Note that the lock is here to protect self.runningTasks
         """
@@ -1835,15 +1835,14 @@ class TaskManager(StoppableThread) :
             if self.stopped() : return
             self._infoLog("Completed %s: '%s' launched from %s" % (node.payload.desc(), node.fullLabel(), namespaceLabel(node.namespace)))
 
-        # launch all workflows first, then command tasks as resources
-        # allow:
+        # launch all workflows first, then launch command tasks as resources allow:
         ready_workflows = [r for r in ready if r.payload.type() == "workflow"]
         for task in ready_workflows :
             if self.stopped() : return
             self._launchTask(task)
 
-        # task submission could be shutdown, eg. in response to a task
-        # error:
+        # Task submission could be shutdown, eg. in response to a task error, so check for this state and stop if so
+        # TODO can this be moved above workflow launch?
         if (not self._cdata.isTaskSubmissionActive()) : return
 
         isNonLocal = (self._cdata.param.mode != "local")
@@ -2089,6 +2088,8 @@ class TaskNode(object) :
         self.label = label
         self.payload = payload
         self.isContinued = isContinued
+
+        assert(isWriteTaskStatus is not None)
         self.isWriteTaskStatus = isWriteTaskStatus
 
         # if true, do not execute this task or honor it as a dependency for child tasks
@@ -2242,9 +2243,11 @@ class TaskDAG(object) :
                  startFromTasks, ignoreTasksAfter, resetTasks,
                  flowLog) :
         """
-        No other object gets to access the taskStateFile, file locks
+        No other object/thread gets to access the taskStateFile, so file locks
         are not required (but thread locks are)
         """
+
+        # If isConintue is true, this is a run which is continuing from a previous interrupted state.
         self.isContinue = isContinue
         self.isForceContinue = isForceContinue
         self.isDryRun = isDryRun
@@ -2450,11 +2453,15 @@ class TaskDAG(object) :
     @lockMethod
     def addTask(self, namespace, label, payload, dependencies, isContinued=False) :
         """
-        add new task to the DAG
+        Add new task to the task DAG
 
-        isContinued indicates the task is being read from state history during a continuation run
+        @param isContinued If true, the task is being read from state history while resuming an interrupted run
         """
-        # internal data structures use these separately, but for logging we
+
+        # We should not expect to see isContinued task input unless this is a continued workflow:
+        assert(not (isContinued and (not self.isContinue)))
+
+        # internal data structures use the task namespace and label separately, but for logging we
         # create one string:
         fullLabel = namespaceJoin(namespace, label)
 
@@ -2524,7 +2531,7 @@ class TaskDAG(object) :
         if label in self.ignoreTasksAfter :
             task.isIgnoreChildren = True
 
-        # determine if this is an ignoreTasksAfter descendent
+        # determine if this is an ignoreTasksAfter descendant
         for p in task.parents :
             if p.isIgnoreChildren :
                 task.isIgnoreThis = True
@@ -2692,7 +2699,15 @@ class TaskDAG(object) :
 
     def _createContinuedStateFile(self, taskStateFile) :
         """
-        Create continued version of task state file
+        Update task state file for a 'continued' run, meaning a run which is being resumed after interrupt.
+
+        In this scenario, the existing task state file is read in but only tasks which are complete retain status,
+        and any other state (running, queued, etc.) is lost, reflecting the atomic nature of these tasks -- having
+        not completed they must be completely restarted.
+
+        The filtered task output is written to a new task file and swapped in to replace the old task state file.
+
+        The function returns the set of full names for complete tasks
         """
 
         if not os.path.isfile(taskStateFile) : return set()
@@ -2720,6 +2735,10 @@ class TaskDAG(object) :
 
         Placeholder tasks are used to check that the underlying task definitions have not unexpectedly
         changed over the interrupt/resume cycle.
+
+        Update the task info file when a run is attempting to continue from where it left off after interruption.
+
+        @param complete: Fullnames of all completed tasks
         """
 
         if not os.path.isfile(taskInfoFile) : return
@@ -2755,6 +2774,14 @@ class TaskDAG(object) :
         and initialize taskDAG to reflect all tasks which have already been completed. Update task state files
         to reflect completed tasks only.
         """
+
+        # Ensure that state file notifiers have been initialized as a precondition to this step, because
+        # we create new tasks while reading the info file, and the state file notifiers are copied from
+        # this object into the individual tasks.
+        #
+        assert(self.isWriteTaskInfo is not None)
+        assert(self.isWriteTaskStatus is not None)
+
         complete = self._createContinuedStateFile(self.taskStateFile)
         self._createContinuedInfoFile(self.taskInfoFile, complete)
 
@@ -4261,10 +4288,6 @@ class WorkflowRunner(object) :
         backupFile(cdata.taskStateFile)
         backupFile(cdata.taskInfoFile)
 
-        if cdata.param.isContinue :
-            # Take care of all continuation specific setup activities
-            self._tdag.setupContinuedWorkflow()
-
         self._taskInfoWriter = TaskFileWriter(self._tdag.writeTaskInfo)
         self._taskStatusWriter = TaskFileWriter(self._tdag.writeTaskStatus)
 
@@ -4273,6 +4296,11 @@ class WorkflowRunner(object) :
 
         self._taskInfoWriter.start()
         self._taskStatusWriter.start()
+
+        if cdata.param.isContinue :
+            # Make workflow changes required when resuming after an interrupt, where the client has requested the
+            # workflow continue from where it left off (ie. 'isContinued')
+            self._tdag.setupContinuedWorkflow()
 
 
     def _initMessage(self) :
