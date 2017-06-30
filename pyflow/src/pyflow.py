@@ -2693,9 +2693,10 @@ class TaskDAG(object) :
 #
 
 
-# special exception used for the case where pyflow data dir is already in use:
-#
 class DataDirException(Exception) :
+    """
+    Special exception used for the case where pyflow data dir is already in use
+    """
     def __init__(self, msg) :
         Exception.__init__(self)
         self.msg = msg
@@ -3340,8 +3341,13 @@ class WorkflowRunner(object) :
                 msg = "Keyboard Interrupt, shutting down running tasks..."
                 self._killWorkflow(msg)
             except DataDirException, e:
+                # Special exception for when pyflow directory can't be initialized.
+                # A killWorkflow is not needed for this case, because no workflow
+                # could be started.
                 self._notify(e.msg,logState=LogState.ERROR)
             except:
+                # For unhandled/unknown exceptions, catch here to write some supplemental
+                # data (thread name, etc.) before releasing the exception down the stack
                 exceptionMessaging()
                 raise
 
@@ -3550,7 +3556,6 @@ class WorkflowRunner(object) :
         payload = CmdPayload(fullLabel, cmd, nCores, memMb, priority, isForceLocal, isCommandMakePath, isTaskStable, mutex, task_retry)
         self._addTaskCore(self._getNamespace(), label, payload, dependencies)
         return label
-
 
 
 
@@ -4029,8 +4034,18 @@ class WorkflowRunner(object) :
         self._cdata().emailNotification(msg, self._flowLog)
 
 
+    def _flushFileWriters(self) :
+        """
+        Some file updates are buffered on separate threads to improve workflow performance. Thus function provides a
+        central point to request that all such buffers are flushed.
+        """
+        self._taskInfoWriter.flush()
+        self._taskStatusWriter.flush()
+
+
     def _killWorkflow(self, errorMsg) :
         self._notify(errorMsg,logState=LogState.ERROR)
+        self._flushFileWriters()
         self._shutdownAll(timeoutSec=10)
         sys.exit(1)
 
@@ -4141,8 +4156,7 @@ class WorkflowRunner(object) :
             runStatus.errorCode = 1
             runStatus.errorMessage = "Thread: '%s', has stopped without a traceable cause" % (trun.getName())
 
-        self._taskInfoWriter.flush()
-        self._taskStatusWriter.flush()
+        self._flushFileWriters()
 
         return self._evalWorkflow(runStatus)
 
