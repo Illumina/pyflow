@@ -1828,8 +1828,10 @@ class TaskManager(StoppableThread) :
 
         Note that the lock is here to protect self.runningTasks
         """
-        # trace through DAG, completing any empty-command checkpoints
-        # found with all dependencies completed:
+
+        # Trace through DAG, completing any empty-command checkpoints
+        # found with all dependencies completed, then report everything
+        # else with completed dependencies that's ready to run
         (ready, completed) = self.tdag.getReadyTasks()
         for node in completed:
             if self.stopped() : return
@@ -2041,6 +2043,7 @@ class CmdPayload(object) :
         self.isForceLocal = isForceLocal
         self.isCmdMakePath = isCmdMakePath
         self.isTaskStable = isTaskStable
+        self.isTaskEphemeral = False
         self.mutex = mutex
         self.retry = retry
 
@@ -2058,9 +2061,10 @@ class CmdPayload(object) :
 
 
 class WorkflowPayload(object) :
-    def __init__(self, workflow) :
+    def __init__(self, workflow, isTaskEphemeral=False) :
         self.workflow = workflow
         self.isTaskStable = True
+        self.isTaskEphemeral = isTaskEphemeral
 
     def type(self) :
         return "workflow"
@@ -2429,7 +2433,10 @@ class TaskDAG(object) :
         for c in node.parents :
             self._markCheckPointsCompleteFromNode(c, completed, searched)
 
-        if (node.payload.type() == "command") and (node.payload.cmd.cmd is None) and (node.isReady()) :
+        def isCheckpointTask(task) :
+            return (task.payload.type() == "command") and (task.payload.cmd.cmd is None)
+
+        if node.isReady() and isCheckpointTask(node) :
             node.setRunstate("complete")
             completed.add(node)
 
@@ -2437,12 +2444,11 @@ class TaskDAG(object) :
     @lockMethod
     def markCheckPointsComplete(self) :
         """
-        traverse from tail nodes up, marking any checkpoint tasks
-        (task.cmd=None) jobs that are ready as complete, return set
-        of newly completed tasks:
+        Traverse from tail nodes up, marking any checkpoint tasks
+        that are ready as complete, return set of newly completed tasks:
         """
         completed = set()
-        # searched is used to restrict the complexity of this
+        # 'searched' set is used to restrict the complexity of this
         # operation on large graphs:
         searched = set()
         for node in self.getTailNodes() :
@@ -2488,6 +2494,23 @@ class TaskDAG(object) :
                 if payload.type() == "command" :
                     task.payload.cmd = payload.cmd
                     task.payload.isCmdMakePath = payload.isCmdMakePath
+
+                # Deal with resuming ephemeral tasks
+                if payload.isTaskEphemeral :
+                    def doesTaskHaveFinishedChildren(task) :
+                        # Check for completed children (completed children, but not incomplete children, must have been
+                        # entered by this point in a continued run:
+                        for child in task.children :
+                            if child.isComplete() : return True
+                        return False
+
+                    if not doesTaskHaveFinishedChildren(task) :
+                        if payload.type() == "workflow" :
+                            # workflow logic is not recorded in the state file, so on continuation it needs to be added back in:
+                            task.payload.workflow = payload.workflow
+                        task.setRunstate("waiting")
+                        task.payload.isTaskEphemeral = True
+
                 task.isContinued = False
                 return
             else:
@@ -3657,7 +3680,7 @@ class WorkflowRunner(object) :
 
 
 
-    def addWorkflowTask(self, label, workflowRunnerInstance, dependencies=None) :
+    def addWorkflowTask(self, label, workflowRunnerInstance, dependencies=None, isEphemeral=False) :
         """
         Add another WorkflowRunner instance as a task to this
         workflow. The added Workflow's workflow() method will be
@@ -3693,6 +3716,11 @@ class WorkflowRunner(object) :
                         tasks. Dependent tasks must already exist in
                         the workflow.
         @type dependencies: A single string, or set, tuple or list of strings
+
+        @param isEphemeral: If true, the workflow will be rerun under certain conditions when an
+                interrupt/resume cycle occurs, even if it already successfully completed. This will
+                only occur if (1) no downstream dependencies have already completed and (2) the
+                parent workflow is not complete. (default: False)
         """
 
         self._requireInWorkflow()
@@ -3728,7 +3756,7 @@ class WorkflowRunner(object) :
 
         # add workflow task to the task-dag, and launch a new taskrunner thread
         # if one isn't already running:
-        payload = WorkflowPayload(workflowCopy)
+        payload = WorkflowPayload(workflowCopy, isTaskEphemeral=isEphemeral)
         self._addTaskCore(self._getNamespace(), label, payload, dependencies)
         return label
 
