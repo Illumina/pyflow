@@ -1,3 +1,7 @@
+v1.1.18 20170713
+* Add ephemeral sub-workflow option
+* Add method to indicate stopped workflows
+* Reduce infrequent interpreter shutdown errors
 * [#19] Prevent repeated state file tasks on resumming interrupted run 
 * [#18] Flush task state files on interrupt
 v1.1.17 20170526
