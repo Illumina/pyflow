@@ -3892,6 +3892,20 @@ class WorkflowRunner(object) :
         return self._cdata().param.isDryRun
 
 
+    def isWorkflowStopping(self) :
+        """
+        Return true if the workflow is in the process of stopping
+
+        Usually the workflow is stopped due to a task error. The goal of this behavior is
+        to allow currently running tasks to complete but not launch any new tasks.
+
+        It is not essential that a workflow check this method and respond by stopping workflow
+        execution unless it implements some type of potentially infinite loop dependent on task
+        outcome.
+        """
+        return (not self._cdata().isTaskSubmissionActive())
+
+
     @staticmethod
     def runModeDefaultCores(mode) :
         """
