@@ -4245,8 +4245,15 @@ class WorkflowRunner(object) :
         trun.start()
         # can't join() because that blocks SIGINT
         ewaiter = ExpWaiter(1, 1.7, 15,runStatus.isComplete)
-        while True :
-            if not trun.isAlive() : break
+
+        def isWorkflowRunning() :
+            """
+            Return true so long as the primary workflow threads (TaskRunner and TaskManager)
+            are still alive
+            """
+            return trun.isAlive() or ((self._tman is not None) and self._tman.isAlive())
+
+        while isWorkflowRunning() :
             ewaiter.wait()
 
         if not runStatus.isComplete.isSet() :
@@ -4379,6 +4386,7 @@ class WorkflowRunner(object) :
         msg.extend(["Workflow successfully completed all tasks",
                     "Elapsed time for full workflow: %s sec" % (elapsed)])
         self._notify(msg,logState=LogState.INFO)
+
         return 0
 
 
