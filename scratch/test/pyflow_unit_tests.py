@@ -481,7 +481,7 @@ class TestWorkflowRunner(unittest.TestCase) :
         class SelfWorkflow(WorkflowRunner) :
             def workflow(self2) :
                 self2.addTask("A",getSleepCmd()+["1"])
-                self2.addTask("B","boogyman!",dependencies="A")
+                self2.addTask("B","false",dependencies="A")
 
         try :
             w=SelfWorkflow()
@@ -540,6 +540,38 @@ class TestWorkflowRunner(unittest.TestCase) :
             self.assertTrue(self.taskStatus1)
             self.assertTrue(self.taskStatus2)
             self.assertTrue(self.taskStatus3)
+        except :
+            summarizeUnexpectedTestException(self)
+
+    def test_isWorkflowStopping(self) :
+        """
+        Test the isWorkflowStopping method
+        """
+
+        def __init__(self) :
+            self.isWorkflowStoppingTest1 = True
+            self.isWorkflowStoppingTest2 = False
+
+        class SubWorkflow1(WorkflowRunner) :
+            def workflow(self2) :
+                self2.addTask("Task1","false")
+
+        class SubWorkflow2(WorkflowRunner) :
+            def workflow(self2) :
+                time.sleep(1)
+                self.isWorkflowStoppingTest2 = self2.isWorkflowStopping()
+
+        class SelfWorkflow(WorkflowRunner) :
+            def workflow(self2) :
+                self.isWorkflowStoppingTest1 = self2.isWorkflowStopping()
+                self2.addWorkflowTask("W1",SubWorkflow1())
+                self2.addWorkflowTask("W2",SubWorkflow2())
+
+        try :
+            w=SelfWorkflow()
+            self.assertEqual(w.run("local", self.testPath, isQuiet=True, nCores=2), 1)
+            self.assertFalse(self.isWorkflowStoppingTest1)
+            self.assertTrue(self.isWorkflowStoppingTest2)
         except :
             summarizeUnexpectedTestException(self)
 
