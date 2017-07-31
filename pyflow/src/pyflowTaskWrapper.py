@@ -263,7 +263,7 @@ The parameter pickle file contains all of the task parameters required by the wr
     terrFp = open(params.errFile, "a")
 
     # always keep last N lines of task stderr:
-    fifo = SimpleFifo(20)
+    fifo = SimpleFifo(40)
 
     isWin=isWindows()
 
