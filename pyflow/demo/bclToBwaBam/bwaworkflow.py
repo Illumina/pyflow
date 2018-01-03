@@ -521,7 +521,7 @@ def flowcellBamListMergeFlow(self, taskPrefix="", dependencies=set()) :
     # TODO: what if there's an NFS delay updating all the bams while
     # we're reading them out here? make this process more robust -- we
     # should know how many BAM's we're expecting, in a way that's
-    # robust to interuption/restart
+    # robust to interruption/restart
     #
     bams = {}
     bamDigger = FileDigger(".bam", ["Flowcell_", "bam", "Project_", "Sample_"])
@@ -564,7 +564,7 @@ def flowcellBamListMergeFlow(self, taskPrefix="", dependencies=set()) :
     #
 
     # mergedBams contains all bams from the current run, we also add any from a
-    # previous interupted run:
+    # previous interrupted run:
     mergedBamDigger = FileDigger(mergedBamExt, ["Project_", "Sample_"])
     for (project, sample, bamFile) in mergedBamDigger.getNextFile(mergedBamDir) :
         key = (project, sample)

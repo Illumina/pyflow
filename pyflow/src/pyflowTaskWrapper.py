@@ -322,7 +322,7 @@ The parameter pickle file contains all of the task parameters required by the wr
 
 
     except KeyboardInterrupt:
-        msg = "[ERROR] Keyboard Interupt, shutting down task."
+        msg = "[ERROR] Keyboard Interrupt, shutting down task."
         bling.wrapperLog(terrFp, msg)
         sys.exit(1)
     except:

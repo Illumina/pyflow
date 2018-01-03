@@ -66,7 +66,7 @@ def get_run_options() :
     from optparse import OptionParser
     import textwrap
 
-    epilog=\"""Note this script can be re-run to continue the workflow run in case of interuption.
+    epilog=\"""Note this script can be re-run to continue the workflow run in case of interruption.
 Also note that dryRun option has limited utility when task definition depends on upstream task results,
 in which case the dry run will not cover the full 'live' run task set)\"""
 

@@ -67,7 +67,7 @@ def getDemoRunOptions() :
     parser.add_option("-g", "--memGb", type="string", dest="memGb",
 	               help="Gigabytes of memory available to run workflow -- only meaningful in local mode, must be an integer or 'unlimited' (default: 2*jobs for local mode, 'unlimited' for sge mode)")
     parser.add_option("-r", "--resume", dest="isResume", action="store_true", default=False,
-                      help="Resume a workflow from the point of interuption. This flag has no effect on a new workflow run.")
+                      help="Resume a workflow from the point of interruption. This flag has no effect on a new workflow run.")
 
     isEmail = isLocalSmtp()
     emailHelp=SUPPRESS_HELP

@@ -197,7 +197,7 @@ v0.5 20120220
 * Fix sub-workflows to shutdown properly after task shutdown
 * More robust handling of commands with quoting and special characters
 * Non-breaking API change: isTaskComplete lets you query whether a task
-is in the workflow and completed  -- useful for sane interupt/resume behavior
+is in the workflow and completed  -- useful for sane interrupt/resume behavior
 * Non-breaking API change: limitNCores(n) and limitMemMb(n) can be used now to
 reduce your resource request to the maximum available for this run.
 

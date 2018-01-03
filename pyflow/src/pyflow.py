@@ -4386,7 +4386,7 @@ class WorkflowRunner(object) :
 
         if not self._cdata().isTaskError() : return []
         # this case has already been emailed in the TaskManager @ first error occurrence:
-        msg = ["Worklow terminated due to the following task errors:"]
+        msg = ["Workflow terminated due to the following task errors:"]
         for task in self._cdata().taskErrors :
             msg.extend(task.getTaskErrorMsg())
         return msg

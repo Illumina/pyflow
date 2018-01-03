@@ -117,7 +117,7 @@ prefixed with "[time] [hosname] [workflow_run] [component] ". Where:
 is composed of (1) the run() PID and (2) the number of times run() has been called on
 the workflow by the same process. These two values are joined by an underscore
 - 'component' - the name of the pyflow thread, the primary threads are
-  'WorkflowManager' which runs the worklow() method, and 'TaskManager' which
+  'WorkflowManager' which runs the workflow() method, and 'TaskManager' which
   polls the task graph and launches jobs.
 
 In the task logs, only the stderr stream is decorated. The prefix in
