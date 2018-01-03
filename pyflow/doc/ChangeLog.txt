@@ -1,3 +1,6 @@
+v1.1.19 20180102
+* Minor fix/adjustments, primarily doubling the default number of stderr lines
+forwarded from failed task to 40.
 v1.1.18 20170713
 * Add ephemeral sub-workflow option
 * Add method to indicate stopped workflows
