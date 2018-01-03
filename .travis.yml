@@ -9,6 +9,10 @@ language: python
 # This removes the system python link which is probably not
 # smart, but the test works so leaving it for now.
 # 
+
+# Add this to continue python 2.4 testing a little longer..
+group: deprecated-2017Q4
+
 matrix: 
   include: 
     - os: linux
