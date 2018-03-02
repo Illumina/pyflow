@@ -3310,7 +3310,7 @@ class WorkflowRunner(object) :
         @param retryMode: Modes are 'nonlocal' and 'all'. For 'nonlocal'
                 retries are not attempted in local run mode. For 'all'
                 retries are attempted for any run mode. The default mode
-                is 'nonolocal'.
+                is 'nonlocal'.
 
         @param mailTo: An email address or container of email addresses. Notification
                   will be sent to each email address when
