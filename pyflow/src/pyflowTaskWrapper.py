@@ -64,7 +64,7 @@ def timeStampToTimeStr(ts) :
     """
     converts timeStamp (time.time()) output to timeStr
     """
-    return datetime.datetime.utcfromtimestamp(ts).isoformat()
+    return datetime.datetime.utcfromtimestamp(ts).isoformat() + "Z"
 
 def timeStrNow():
     return timeStampToTimeStr(time.time())
