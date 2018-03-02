@@ -1906,14 +1906,43 @@ class TaskManager(StoppableThread) :
         for task in self.runningTasks.keys() :
             if self.stopped() : break
             trun = self.runningTasks[task]
-            if not task.runStatus.isComplete.isSet() :
-                if trun.isAlive() : continue
-                # if not complete and thread is dead then we don't know what happened, very bad!:
-                task.errorstate = 1
-                task.errorMessage = "Thread: '%s', has stopped without a traceable cause" % (trun.getName())
+
+            # Check to make sure the thread has not shut down without setting the isComplete event.
+            #  - Failing to check this condition could lead to an infinite polling cycle waiting for
+            #    isComplete to be set
+            #
+            # If modifying the logic below, not there is sensitivity towards a potential race condition here.
+            # Below we check:
+            # 1. If the trun thread is alive
+            # 2. If the isComplete event is true
+            #
+            # We need to check the joint condition (thread is not alive) && (isComplete is not true), while the
+            # status of either thread and isComplete could change. This can be done easily without locking because
+            # thread can only move from the alive to not alive state and isComplete can only move from not true to
+            # true. Thus it is safe to make the two checks in the order (thread is not alive), then
+            # (isComplete is not true), but it is not safe to check the reverse order.
+            #
+            if not trun.isAlive() :
+                if task.runStatus.isComplete.isSet() :
+                    # normal case for a completed task
+                    task.errorstate = task.runStatus.errorCode
+                    task.errorMessage = task.runStatus.errorMessage
+                else :
+                    # If isComplete is not set, but the thread is already dead, then we don't know what happened.
+                    # This is an error we would hope to never see!:
+                    task.errorstate = 1
+                    task.errorMessage = "Thread: '%s', has stopped without a traceable cause" % (trun.getName())
             else :
-                task.errorstate = task.runStatus.errorCode
-                task.errorMessage = task.runStatus.errorMessage
+                if task.runStatus.isComplete.isSet() :
+                    # Go ahead and call the task complete if this event is set, even if the thread is alive, this
+                    # is kept here just in case of some kind of stall in the thread shutdown procedure, but the
+                    # need for this logic has not been demonstrated and tested, so this could be simplified out
+                    # with appropriate testing.
+                    task.errorstate = task.runStatus.errorCode
+                    task.errorMessage = task.runStatus.errorMessage
+                else :
+                    # normal case for a task which is still running
+                    continue
 
             if task.errorstate == 0 :
                 task.setRunstate("complete")
