@@ -1,3 +1,10 @@
+v1.1.20 20180302
+* Close infrequent race condition in task resolution (STREL-853)
+  * Under the race condition error, a non-failing task would be logged as failing
+    with the message "TASKNAME has stopped without a traceable cause"
+  * The error rate was believed to be very infrequent, but possibly agrevated
+    by many very short-running tasks and/or specific python versions.
+* Make timezone explicit in logging time stamps
 v1.1.19 20180102
 * Minor fix/adjustments, primarily doubling the default number of stderr lines
 forwarded from failed task to 40.
