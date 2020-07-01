@@ -1173,8 +1173,11 @@ class CommandTaskRunner(BaseTaskRunner) :
                      'cmd' : self.cmd.cmd, 'isShellCmd' : (self.cmd.type == "str") }
 
         argFile = os.path.join(self.tmpDir, "taskWrapperParameters.pickle")
-        pickle.dump(taskInfo, open(argFile, "w"))
-
+        f = open(argFile, "w")
+        pickle.dump(taskInfo, f)
+        f.flush()
+        f.close()
+        
         self.wrapperCmd = [self.taskWrapper, self.runid, self.taskStr, argFile]
 
 
